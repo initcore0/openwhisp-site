@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>OpenWhisp — Local-first dictation for macOS</title>
+  <meta name="description" content="Local-first dictation for macOS. Hold a key, speak, release — your words are transcribed on-device with whisper.cpp and typed into any app. No account, no subscription, open source.">
+  <link rel="canonical" href="PLACEHOLDER_SITE_URL">
+  <meta name="theme-color" content="#0B0E14">
+  <meta name="color-scheme" content="dark light">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="OpenWhisp">
+  <meta property="og:title" content="OpenWhisp — Local-first dictation for macOS">
+  <meta property="og:description" content="Hold a key, speak, release. Your words are transcribed on-device and typed into any app. No account, no subscription, open source.">
+  <meta property="og:url" content="PLACEHOLDER_SITE_URL">
+  <meta property="og:image" content="PLACEHOLDER_SITE_URLog-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="OpenWhisp — a glowing waveform over the words 'Speak. It's typed. Nothing leaves your Mac.'">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="OpenWhisp — Local-first dictation for macOS">
+  <meta name="twitter:description" content="Hold a key, speak, release. On-device transcription, typed into any app. No account, no subscription, open source.">
+  <meta name="twitter:image" content="PLACEHOLDER_SITE_URLog-image.png">
+
+  <!-- Icons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "OpenWhisp",
+    "description": "Local-first dictation for macOS. Hold a key, speak, release — your words are transcribed on-device with whisper.cpp and typed into any app.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "macOS 14.0 or later, Apple Silicon",
+    "url": "PLACEHOLDER_SITE_URL",
+    "downloadUrl": "https://github.com/initcore0/openwhisp/releases/latest",
+    "softwareVersion": "1.0.0",
+    "license": "https://github.com/initcore0/openwhisp/blob/main/LICENSE",
+    "sameAs": "https://github.com/initcore0/openwhisp",
+    "isAccessibleForFree": true,
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="nav" role="banner">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top" aria-label="OpenWhisp home">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <g fill="currentColor">
+            <rect x="5"  y="17" width="3" height="6"  rx="1.5"/>
+            <rect x="11" y="13" width="3" height="14" rx="1.5"/>
+            <rect x="17" y="8"  width="3" height="24" rx="1.5"/>
+            <rect x="23" y="11" width="3" height="18" rx="1.5"/>
+            <rect x="29" y="15" width="3" height="10" rx="1.5"/>
+            <rect x="35" y="18" width="2.5" height="4" rx="1.25"/>
+          </g>
+        </svg>
+        <span class="brand-name">OpenWhisp</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="https://github.com/initcore0/openwhisp" rel="noopener">GitHub</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <span id="top"></span>
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow">Local-first dictation for macOS</p>
+          <h1 id="hero-title">Speak. It&rsquo;s typed.<br><span class="accent">Nothing leaves your Mac.</span></h1>
+          <p class="lede">Hold a key, talk, release. OpenWhisp transcribes your voice on-device and types it straight into whatever app you&rsquo;re using &mdash; no account, no subscription, no audio sent to the cloud.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://github.com/initcore0/openwhisp/releases/latest/download/OpenWhisp.dmg">
+              Download for macOS
+            </a>
+            <a class="btn btn-ghost" href="https://github.com/initcore0/openwhisp" rel="noopener">
+              View on GitHub
+            </a>
+          </div>
+          <p class="cta-note">macOS&nbsp;14+ &middot; Apple&nbsp;Silicon &middot; MIT&nbsp;licensed &middot; Free</p>
+        </div>
+
+        <div class="hero-demo" aria-hidden="false">
+          <!-- The signature: a re-creation of OpenWhisp's own "Quiet Glass" overlay -->
+          <figure class="overlay" aria-label="Demonstration of OpenWhisp listening and transcribing speech into text">
+            <canvas id="wave" class="overlay-wave" width="640" height="120"></canvas>
+            <figcaption class="overlay-text">
+              <span id="overlay-transcript" class="overlay-transcript"></span><span class="caret" aria-hidden="true"></span>
+            </figcaption>
+            <p class="overlay-hint"><kbd>hold</kbd> to talk &middot; release to insert</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- PITCH STRIP -->
+    <section class="pillars" aria-label="Why OpenWhisp">
+      <div class="wrap pillars-grid">
+        <div class="pillar">
+          <h2>Never phones home</h2>
+          <p>Transcription runs entirely on your machine and works offline. Your audio never leaves the Mac unless you explicitly turn on a cloud model.</p>
+        </div>
+        <div class="pillar">
+          <h2>Pay once, own it</h2>
+          <p>No account, no subscription, no usage meter. It runs on hardware you already own, and the source is yours to read and change.</p>
+        </div>
+        <div class="pillar">
+          <h2>A power user&rsquo;s kit</h2>
+          <p>Swap the LLM backend, edit the prompts, set per-app modes, teach it your vocabulary. Sensible defaults out of the box, hackable underneath.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <p class="eyebrow eyebrow-center">The whole interaction</p>
+        <h2 id="how-title" class="section-title">Three moves, then it&rsquo;s in your document</h2>
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num">1</span>
+            <h3>Hold the key</h3>
+            <p>Press and hold your push-to-talk key &mdash; <kbd>Fn</kbd> or <kbd>&#8963;&nbsp;Space</kbd>. A quiet overlay appears at the bottom of the screen.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">2</span>
+            <h3>Speak naturally</h3>
+            <p>Say your sentence. Your words stream into the overlay as you talk, with filler words and stray punctuation cleaned up on the fly.</p>
+          </li>
+          <li class="step">
+            <span class="step-num">3</span>
+            <h3>Release to insert</h3>
+            <p>Let go and the finished text is typed into the focused app. Changed your mind mid-sentence? Press <kbd>Esc</kbd> to cancel.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features" class="features" aria-labelledby="features-title">
+      <div class="wrap">
+        <p class="eyebrow eyebrow-center">What you get</p>
+        <h2 id="features-title" class="section-title">Built for everyday dictation, tuned for control</h2>
+        <div class="feature-grid">
+          <article class="feature">
+            <h3>Smart formatting</h3>
+            <p>Capitalization, punctuation, and filler removal are on by default. Say &ldquo;new line&rdquo; or &ldquo;comma&rdquo; and it does the right thing.</p>
+          </article>
+          <article class="feature">
+            <h3>Custom vocabulary</h3>
+            <p>Teach it your names and jargon, and add &ldquo;heard&nbsp;&rarr;&nbsp;correct&rdquo; fixes so &ldquo;clod code&rdquo; always lands as &ldquo;Claude&nbsp;Code.&rdquo;</p>
+          </article>
+          <article class="feature">
+            <h3>Optional AI cleanup</h3>
+            <p>Run a final rewrite pass through your own local LLM (llama.cpp or Ollama) to stay private, or point it at OpenAI if you prefer.</p>
+          </article>
+          <article class="feature">
+            <h3>Voice commands</h3>
+            <p>End a dictation with an instruction &mdash; &ldquo;&hellip;make this formal&rdquo; &mdash; and it&rsquo;s applied to the rest, then stripped from the output.</p>
+          </article>
+          <article class="feature">
+            <h3>Per-app modes</h3>
+            <p>Set the language, output style, and cleanup per application, so your terminal and your email client behave differently.</p>
+          </article>
+          <article class="feature">
+            <h3>Transcription history</h3>
+            <p>A local, searchable list of everything you&rsquo;ve dictated, ready to copy or reuse. Stored on your machine, never uploaded.</p>
+          </article>
+          <article class="feature">
+            <h3>Twelve languages</h3>
+            <p>Pick a language or let it auto-detect, with optional translate-to-English. Models range from tiny to large-v3.</p>
+          </article>
+          <article class="feature">
+            <h3>Your choice of engine</h3>
+            <p>whisper.cpp by default, with Apple&rsquo;s native speech recognizer available as an alternative streaming engine.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRIVACY -->
+    <section id="privacy" class="privacy" aria-labelledby="privacy-title">
+      <div class="wrap privacy-inner">
+        <div class="privacy-copy">
+          <p class="eyebrow">Privacy by construction</p>
+          <h2 id="privacy-title" class="section-title">The default is &ldquo;stays on this Mac&rdquo;</h2>
+          <ul class="privacy-list">
+            <li>Audio is recorded locally and the recording is deleted after each transcription.</li>
+            <li>History, settings, and any API keys live on your machine &mdash; keys in the macOS Keychain, not in plain text.</li>
+            <li>The <em>only</em> time text leaves your machine is if you turn on AI cleanup with the OpenAI provider. The local provider keeps everything on your machine or LAN.</li>
+            <li>Your transcript text is never written to the app&rsquo;s log files.</li>
+          </ul>
+        </div>
+        <div class="privacy-diagram" role="img" aria-label="Diagram: microphone, transcription, and the typed result all sit inside a boundary labeled 'your Mac'. A separate, optional, dotted path leads outside to an OpenAI cloud cleanup step.">
+          <div class="boundary">
+            <span class="boundary-label">your Mac</span>
+            <div class="flow">
+              <span class="node">🎙️ Mic</span>
+              <span class="arrow">&rarr;</span>
+              <span class="node">Transcribe</span>
+              <span class="arrow">&rarr;</span>
+              <span class="node">Typed text</span>
+            </div>
+          </div>
+          <div class="optional-path">
+            <span class="dotted-arrow">&#8627; optional, opt-in only</span>
+            <span class="node node-cloud">☁️ OpenAI cleanup</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OPEN SOURCE -->
+    <section id="source" class="source" aria-labelledby="source-title">
+      <div class="wrap source-inner">
+        <div class="source-copy">
+          <p class="eyebrow">Open source &middot; MIT</p>
+          <h2 id="source-title" class="section-title">Read it, build it, change it</h2>
+          <p>OpenWhisp is MIT-licensed and built from plain Swift scripts &mdash; no Xcode project required. Clone it, build whisper.cpp, and run:</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://github.com/initcore0/openwhisp" rel="noopener">Star on GitHub</a>
+            <a class="btn btn-ghost" href="https://github.com/initcore0/openwhisp/releases" rel="noopener">All releases</a>
+          </div>
+          <p class="source-note">The downloadable build is ad-hoc signed, so on first launch macOS will warn you. Right-click <strong>OpenWhisp.app&nbsp;&rarr;&nbsp;Open</strong> to confirm, or build it yourself.</p>
+        </div>
+        <pre class="terminal" aria-label="Build commands"><code><span class="cmt"># clone with the whisper.cpp submodule</span>
+git clone --recursive \
+  https://github.com/initcore0/openwhisp.git
+cd openwhisp
+
+<span class="cmt"># build the bundled whisper runtime</span>
+./scripts/build-whisper.sh
+
+<span class="cmt"># compile, package, run</span>
+./build.sh && ./package.sh
+open build/OpenWhisp.app</code></pre>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta" aria-labelledby="final-title">
+      <div class="wrap final-inner">
+        <h2 id="final-title">Try it on your next sentence</h2>
+        <p>Free, open source, and entirely yours.</p>
+        <div class="cta-row cta-center">
+          <a class="btn btn-primary" href="https://github.com/initcore0/openwhisp/releases/latest/download/OpenWhisp.dmg">Download for macOS</a>
+          <a class="btn btn-ghost" href="https://github.com/initcore0/openwhisp" rel="noopener">View on GitHub</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="wrap footer-inner">
+      <div class="footer-brand">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <g fill="currentColor">
+            <rect x="5"  y="17" width="3" height="6"  rx="1.5"/>
+            <rect x="11" y="13" width="3" height="14" rx="1.5"/>
+            <rect x="17" y="8"  width="3" height="24" rx="1.5"/>
+            <rect x="23" y="11" width="3" height="18" rx="1.5"/>
+            <rect x="29" y="15" width="3" height="10" rx="1.5"/>
+            <rect x="35" y="18" width="2.5" height="4" rx="1.25"/>
+          </g>
+        </svg>
+        <span>OpenWhisp</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/initcore0/openwhisp" rel="noopener">GitHub</a>
+        <a href="https://github.com/initcore0/openwhisp#readme" rel="noopener">Docs</a>
+        <a href="https://github.com/initcore0/openwhisp/releases" rel="noopener">Releases</a>
+        <a href="https://github.com/initcore0/openwhisp/blob/main/LICENSE" rel="noopener">License</a>
+      </nav>
+      <p class="footer-credit">Transcription by <a href="https://github.com/ggerganov/whisper.cpp" rel="noopener">whisper.cpp</a>. MIT licensed.</p>
+    </div>
+  </footer>
+
+  <script src="hero.js" defer></script>
+</body>
+</html>
