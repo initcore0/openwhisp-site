@@ -1,0 +1,489 @@
+import {
+  ShieldCheck,
+  CurrencyDollarSimple,
+  Wrench,
+  GithubLogo,
+  DownloadSimple,
+  CaretRight,
+  Microphone,
+  TextAa,
+  Brain,
+  Translate,
+  ClockCounterClockwise,
+  Globe,
+  Cpu,
+} from "@phosphor-icons/react";
+import { Waveform } from "./components/Waveform";
+import { Reveal } from "./components/Reveal";
+import { MagneticButton } from "./components/MagneticButton";
+import { EditDemo } from "./components/EditDemo";
+
+const REPO = "https://github.com/initcore0/openwhisp";
+const DMG = `${REPO}/releases/latest/download/OpenWhisp.dmg`;
+
+function Eyebrow({ children, accent = "speak" }: { children: React.ReactNode; accent?: "speak" | "refine" }) {
+  return (
+    <p
+      className="font-mono text-xs uppercase tracking-[0.18em] mb-5"
+      style={{ color: accent === "refine" ? "var(--color-refine)" : "var(--color-speak)" }}
+    >
+      {children}
+    </p>
+  );
+}
+
+export function App() {
+  return (
+    <>
+      {/* NAV */}
+      <header className="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-md backdrop-saturate-150">
+        <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-6">
+          <a href="#top" className="flex items-center gap-2.5 text-listen" aria-label="OpenWhisp home">
+            <BrandMark className="h-6 w-6 text-speak" />
+            <span className="font-display text-lg font-semibold tracking-tight">OpenWhisp</span>
+          </a>
+          <nav className="flex items-center gap-7 text-sm font-medium text-muted-d" aria-label="Primary">
+            <a className="hidden transition-colors hover:text-listen sm:inline" href="#features">Features</a>
+            <a className="transition-colors hover:text-listen" href="#refine">Voice editing</a>
+            <a className="hidden transition-colors hover:text-listen sm:inline" href="#privacy">Privacy</a>
+            <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
+          </nav>
+        </div>
+      </header>
+
+      <main id="top">
+        {/* HERO — split, left-aligned content / right-aligned asset (anti-center) */}
+        <section className="relative overflow-hidden">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(55% 50% at 16% 38%, color-mix(in srgb, var(--color-speak) 11%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto grid max-w-[1180px] items-center gap-14 px-6 py-20 md:grid-cols-[1.05fr_0.95fr] md:py-28">
+            <div className="cascade">
+              <Eyebrow>Local-first dictation for macOS</Eyebrow>
+              <h1 className="font-display text-[2.6rem] font-bold leading-[1.04] tracking-tight text-listen md:text-6xl">
+                Speak. It&rsquo;s typed.
+                <br />
+                <span className="text-speak">Nothing leaves your Mac.</span>
+              </h1>
+              <p className="mt-6 max-w-[44ch] text-lg leading-relaxed text-text-d">
+                Hold a key, talk, release. OpenWhisp transcribes your voice on-device and types it
+                straight into any app &mdash; then lets you{" "}
+                <a href="#refine" className="border-b border-refine/45 text-refine transition-colors hover:border-refine">
+                  edit text by voice
+                </a>{" "}
+                too. No account, no subscription, no audio sent to the cloud.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3.5">
+                <MagneticButton href={REPO} variant="primary">
+                  <GithubLogo weight="fill" className="h-5 w-5" /> Star on GitHub
+                </MagneticButton>
+                <MagneticButton href={DMG} variant="ghost">
+                  <DownloadSimple className="h-5 w-5" weight="bold" /> Download for macOS
+                </MagneticButton>
+              </div>
+              <p className="mt-5 font-mono text-[13px] text-muted-d">
+                Free &amp; open source &middot; macOS&nbsp;14+ &middot; Apple&nbsp;Silicon &middot; MIT
+              </p>
+            </div>
+
+            {/* the signature overlay */}
+            <figure
+              className="rise rounded-3xl border border-line p-6 pb-5 shadow-[0_30px_80px_-30px_#000]"
+              style={{ background: "color-mix(in srgb, var(--color-ink-2) 92%, var(--color-listen))", animationDelay: "120ms" }}
+              aria-label="OpenWhisp listening and transcribing speech into text"
+            >
+              <Waveform className="block h-24 w-full" />
+              <figcaption className="mt-3.5 min-h-[2.4em] text-[17px] text-listen">
+                Speak. It&rsquo;s typed. Nothing leaves your Mac.
+                <span className="caret-blink ml-0.5 inline-block h-[1.1em] w-0.5 translate-y-0.5 bg-speak align-text-bottom" />
+              </figcaption>
+              <p className="mt-4 font-mono text-xs text-muted-d">
+                <Kbd>hold</Kbd> to talk &middot; release to insert
+              </p>
+            </figure>
+          </div>
+        </section>
+
+        {/* PILLARS — 2-col zig (asymmetric), not 3 equal cards */}
+        <section aria-label="Why OpenWhisp" className="border-y border-line bg-ink-2">
+          <div className="mx-auto grid max-w-[1180px] gap-px overflow-hidden rounded-2xl px-6 py-16 md:grid-cols-3">
+            <Pillar icon={<ShieldCheck weight="duotone" className="h-7 w-7" />} title="Never phones home">
+              Transcription runs entirely on your machine and works offline. Your audio never leaves the Mac
+              unless you explicitly turn on a cloud model.
+            </Pillar>
+            <Pillar icon={<CurrencyDollarSimple weight="duotone" className="h-7 w-7" />} title="Free, and yours">
+              No price, no account, no subscription, no usage meter. It runs on hardware you already own, and the
+              source is yours to read and change.
+            </Pillar>
+            <Pillar icon={<Wrench weight="duotone" className="h-7 w-7" />} title="A power user&rsquo;s kit">
+              Swap the LLM backend, edit the prompts, set per-app modes, teach it your vocabulary. Sensible
+              defaults out of the box, hackable underneath.
+            </Pillar>
+          </div>
+        </section>
+
+        {/* HOW IT WORKS — a real 3-step sequence (order carries meaning) */}
+        <section id="how" className="mx-auto max-w-[1180px] px-6 py-20 md:py-24">
+          <Eyebrow>The whole interaction</Eyebrow>
+          <h2 className="max-w-[16ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+            Three moves, then it&rsquo;s in your document
+          </h2>
+          <ol className="mt-11 grid gap-6 md:grid-cols-3">
+            <Reveal as="li" delay={0}>
+              <Step n="01" title="Hold the key">
+                Press and hold your push-to-talk key &mdash; <Kbd>Fn</Kbd> or <Kbd>&#8963; Space</Kbd>. A quiet
+                overlay appears at the bottom of the screen.
+              </Step>
+            </Reveal>
+            <Reveal as="li" delay={90}>
+              <Step n="02" title="Speak naturally">
+                Say your sentence. Your words stream into the overlay as you talk, with filler words and stray
+                punctuation cleaned up on the fly.
+              </Step>
+            </Reveal>
+            <Reveal as="li" delay={180}>
+              <Step n="03" title="Release to insert">
+                Let go and the finished text is typed into the focused app. Changed your mind mid-sentence? Press{" "}
+                <Kbd>Esc</Kbd> to cancel.
+              </Step>
+            </Reveal>
+          </ol>
+        </section>
+
+        {/* FEATURES — light surface, 2-col asymmetric grid via divide lines */}
+        <section id="features" className="bg-paper py-20 text-ink md:py-24">
+          <div className="mx-auto max-w-[1180px] px-6">
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#0a7d84]">What you get</p>
+            <h2 className="mt-4 max-w-[20ch] font-display text-3xl font-semibold tracking-tight md:text-[2.5rem]">
+              Built for everyday dictation, tuned for control
+            </h2>
+            <div className="mt-11 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+              <Feature icon={<TextAa weight="duotone" />} title="Smart formatting">
+                Capitalization, punctuation, and filler removal are on by default. Say &ldquo;new line&rdquo; or
+                &ldquo;comma&rdquo; and it does the right thing.
+              </Feature>
+              <Feature icon={<TextAa weight="duotone" />} title="Custom vocabulary">
+                Teach it your names and jargon, and add &ldquo;heard &rarr; correct&rdquo; fixes so &ldquo;clod
+                code&rdquo; always lands as &ldquo;Claude Code.&rdquo;
+              </Feature>
+              <Feature icon={<Brain weight="duotone" />} title="Optional AI cleanup">
+                Run a final rewrite pass through your own local LLM (llama.cpp or Ollama) to stay private, or
+                point it at OpenAI if you prefer.
+              </Feature>
+              <Feature icon={<Microphone weight="duotone" />} title="Refine after you speak">
+                Dictated something and want it reworked? Double-tap and say &ldquo;make it a Telegram post&rdquo;
+                &mdash; the AI rewrites what you just said before it lands.
+              </Feature>
+              <Feature icon={<Cpu weight="duotone" />} title="WhisperKit, Apple-native">
+                The default engine runs Whisper on Apple&rsquo;s Neural Engine via CoreML for fast, real-time
+                streaming. Prefer whisper.cpp or Apple Speech? Switch in a click.
+              </Feature>
+              <Feature icon={<ClockCounterClockwise weight="duotone" />} title="Transcription history">
+                A local, searchable list of everything you&rsquo;ve dictated, ready to copy or reuse. Stored on
+                your machine, never uploaded.
+              </Feature>
+              <Feature icon={<Globe weight="duotone" />} title="Twelve languages">
+                Pick a language or let it auto-detect, with optional translate-to-English. Models range from
+                tiny to large-v3.
+              </Feature>
+              <Feature icon={<Translate weight="duotone" />} title="Per-app modes">
+                Set the language, output style, and cleanup per application, so your terminal and your email
+                client behave differently.
+              </Feature>
+            </div>
+          </div>
+        </section>
+
+        {/* SPOTLIGHT — voice editing */}
+        <section id="refine" className="relative overflow-hidden py-20 md:py-24">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(55% 60% at 80% 28%, color-mix(in srgb, var(--color-refine) 13%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto grid max-w-[1180px] items-center gap-14 px-6 md:grid-cols-2">
+            <div>
+              <Eyebrow accent="refine">New &middot; voice editing</Eyebrow>
+              <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+                Select text anywhere, then edit it by voice
+              </h2>
+              <p className="mt-5 max-w-[46ch] leading-relaxed text-text-d">
+                OpenWhisp isn&rsquo;t just for dictating new text. Highlight a sentence in any app, double-tap
+                your hotkey, and say what you want changed &mdash; it&rsquo;s rewritten in place. No retyping, no
+                copy-paste, no switching windows.
+              </p>
+              <ul className="mt-6 grid gap-3.5">
+                <Bullet>
+                  &ldquo;Make it more formal&rdquo; &middot; &ldquo;Translate to Russian&rdquo; &middot;
+                  &ldquo;Tighten this up&rdquo; &mdash; plain language, any language.
+                </Bullet>
+                <Bullet>
+                  Your selection is read through the Accessibility API, so your clipboard is left untouched.
+                  Secure and password fields are never read.
+                </Bullet>
+                <Bullet>The rewrite runs through your own local LLM if you want it fully private, or OpenAI if you prefer.</Bullet>
+              </ul>
+            </div>
+
+            {/* before -> gesture -> after, animated on a loop */}
+            <EditDemo />
+          </div>
+        </section>
+
+        {/* PRIVACY */}
+        <section id="privacy" className="mx-auto grid max-w-[1180px] items-center gap-14 px-6 py-20 md:grid-cols-2 md:py-24">
+          <div>
+            <Eyebrow>Privacy by construction</Eyebrow>
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+              The default is &ldquo;stays on this Mac&rdquo;
+            </h2>
+            <ul className="mt-6 grid gap-4">
+              <Bullet>Audio is recorded locally and the recording is deleted after each transcription.</Bullet>
+              <Bullet>
+                History, settings, and any API keys live on your machine &mdash; keys in the macOS Keychain, not
+                in plain text.
+              </Bullet>
+              <Bullet>
+                The <em className="not-italic font-semibold text-speak">only</em> time text leaves your machine
+                is if you turn on AI cleanup with the OpenAI provider. The local provider keeps everything on
+                your machine or LAN.
+              </Bullet>
+              <Bullet>Your transcript text is never written to the app&rsquo;s log files.</Bullet>
+            </ul>
+          </div>
+          <BoundaryDiagram />
+        </section>
+
+        {/* OPEN SOURCE */}
+        <section id="source" className="border-y border-line bg-ink-2 py-20 md:py-24">
+          <div className="mx-auto grid max-w-[1180px] items-center gap-12 px-6 md:grid-cols-[1fr_1.05fr]">
+            <div>
+              <Eyebrow>Open source &middot; MIT</Eyebrow>
+              <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+                Read it, build it, change it
+              </h2>
+              <p className="mt-4 max-w-[46ch] text-muted-d">
+                OpenWhisp is MIT-licensed and built from plain Swift scripts &mdash; no Xcode project required.
+                Clone it, build whisper.cpp, and run:
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3.5">
+                <Button href={REPO} variant="primary">
+                  <GithubLogo weight="fill" className="h-5 w-5" /> Star on GitHub
+                </Button>
+                <Button href={`${REPO}/releases`} variant="ghost">All releases</Button>
+              </div>
+              <p className="mt-6 font-mono text-[13px] text-muted-d">
+                The downloadable build is ad-hoc signed, so on first launch macOS will warn you. Right-click{" "}
+                <span className="text-text-d">OpenWhisp.app &rarr; Open</span> to confirm, or build it yourself.
+              </p>
+            </div>
+            <Terminal />
+          </div>
+        </section>
+
+        {/* FINAL CTA */}
+        <section className="relative overflow-hidden py-24 text-center">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(50% 80% at 50% 120%, color-mix(in srgb, var(--color-speak) 15%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-[1180px] px-6">
+            <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.75rem]">
+              Try it on your next sentence
+            </h2>
+            <p className="mt-3 text-muted-d">Free, open source, and entirely yours.</p>
+            <div className="mt-7 flex flex-wrap justify-center gap-3.5">
+              <Button href={REPO} variant="primary">
+                <GithubLogo weight="fill" className="h-5 w-5" /> Star on GitHub
+              </Button>
+              <Button href={DMG} variant="ghost">
+                <DownloadSimple weight="bold" className="h-5 w-5" /> Download for macOS
+              </Button>
+            </div>
+            <p className="mt-5 font-mono text-[13px] text-muted-d">
+              Ad-hoc signed &mdash; on first launch, right-click <span className="text-text-d">OpenWhisp.app &rarr; Open</span>.
+            </p>
+          </div>
+        </section>
+      </main>
+
+      {/* FOOTER */}
+      <footer className="border-t border-line py-10">
+        <div className="mx-auto flex max-w-[1180px] flex-wrap items-center gap-x-8 gap-y-4 px-6">
+          <div className="flex items-center gap-2.5 font-display font-semibold text-listen">
+            <BrandMark className="h-5 w-5 text-speak" />
+            OpenWhisp
+          </div>
+          <nav className="flex gap-6 text-sm text-muted-d" aria-label="Footer">
+            <a className="hover:text-listen" href={REPO} rel="noopener">GitHub</a>
+            <a className="hover:text-listen" href={`${REPO}#readme`} rel="noopener">Docs</a>
+            <a className="hover:text-listen" href={`${REPO}/releases`} rel="noopener">Releases</a>
+            <a className="hover:text-listen" href={`${REPO}/blob/main/LICENSE`} rel="noopener">License</a>
+          </nav>
+          <p className="ml-auto text-[13px] text-muted-d">
+            Transcription by{" "}
+            <a className="hover:text-speak" href="https://github.com/ggerganov/whisper.cpp" rel="noopener">
+              whisper.cpp
+            </a>
+            . MIT licensed.
+          </p>
+        </div>
+      </footer>
+    </>
+  );
+}
+
+/* ---------- small building blocks ---------- */
+
+function Button({
+  href,
+  variant,
+  children,
+}: {
+  href: string;
+  variant: "primary" | "ghost";
+  children: React.ReactNode;
+}) {
+  const base =
+    "inline-flex items-center justify-center gap-2 rounded-[10px] border px-6 py-3 font-display text-base font-semibold transition-all duration-150 active:translate-y-px";
+  const styles =
+    variant === "primary"
+      ? "border-transparent bg-speak text-[#04181a] hover:shadow-[0_0_24px_-2px_color-mix(in_srgb,var(--color-speak)_55%,transparent)]"
+      : "border-line bg-transparent text-text-d hover:border-muted-d hover:bg-ink-2";
+  return (
+    <a href={href} rel="noopener" className={`${base} ${styles}`}>
+      {children}
+    </a>
+  );
+}
+
+function Kbd({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return (
+    <kbd className={`rounded-md border border-b-2 border-line bg-ink px-2 py-0.5 font-mono text-[0.86em] text-text-d ${className}`}>
+      {children}
+    </kbd>
+  );
+}
+
+function Pillar({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <div className="bg-ink-2 p-8">
+      <div className="mb-4 text-speak">{icon}</div>
+      <h3 className="font-display text-xl font-semibold text-listen" dangerouslySetInnerHTML={{ __html: title }} />
+      <p className="mt-2.5 text-[15px] leading-relaxed text-muted-d">{children}</p>
+    </div>
+  );
+}
+
+function Step({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
+  return (
+    <div className="h-full rounded-2xl border border-line bg-ink-2 p-7">
+      <span className="font-mono text-sm font-medium text-speak">{n}</span>
+      <h3 className="mt-4 font-display text-xl font-semibold text-listen">{title}</h3>
+      <p className="mt-2 text-[15px] leading-relaxed text-muted-d">{children}</p>
+    </div>
+  );
+}
+
+function Feature({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
+  return (
+    <article className="border-t border-[#e2e7ef] pt-5">
+      <div className="mb-3 text-[#0a7d84] [&>svg]:h-6 [&>svg]:w-6">{icon}</div>
+      <h3 className="font-display text-lg font-semibold text-ink">{title}</h3>
+      <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{children}</p>
+    </article>
+  );
+}
+
+function Bullet({ children }: { children: React.ReactNode }) {
+  return (
+    <li className="relative pl-7 text-[15.5px] leading-relaxed text-text-d">
+      <span className="absolute left-0 top-[0.5em] h-2.5 w-2.5 rounded-[3px] bg-speak shadow-[0_0_10px_color-mix(in_srgb,var(--color-speak)_70%,transparent)]" />
+      {children}
+    </li>
+  );
+}
+
+function BoundaryDiagram() {
+  return (
+    <div
+      role="img"
+      aria-label="Microphone, transcription, and typed text all sit inside a boundary labeled 'your Mac'. A separate, optional, opt-in path leads outside to OpenAI cleanup."
+    >
+      <div
+        className="relative rounded-2xl border-2 border-dashed px-6 pb-7 pt-10"
+        style={{
+          borderColor: "color-mix(in srgb, var(--color-speak) 55%, var(--color-line))",
+          background: "color-mix(in srgb, var(--color-speak) 5%, var(--color-ink-2))",
+        }}
+      >
+        <span className="absolute -top-3 left-5 rounded-full border border-speak/40 bg-ink px-3 py-0.5 font-mono text-xs uppercase tracking-[0.12em] text-speak">
+          your Mac
+        </span>
+        <div className="flex flex-wrap items-center justify-center gap-2.5">
+          <Node>Mic</Node>
+          <CaretRight className="h-4 w-4 text-speak" />
+          <Node>Transcribe</Node>
+          <CaretRight className="h-4 w-4 text-speak" />
+          <Node>Typed text</Node>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-3 px-2 pt-4">
+        <span className="font-mono text-xs text-muted-d">&#8627; optional, opt-in only</span>
+        <Node dashed>OpenAI cleanup</Node>
+      </div>
+    </div>
+  );
+}
+
+function Node({ children, dashed }: { children: React.ReactNode; dashed?: boolean }) {
+  return (
+    <span
+      className={`rounded-[10px] border bg-ink px-3.5 py-2.5 font-mono text-[13.5px] ${
+        dashed ? "border-dashed border-line text-muted-d" : "border-line text-listen"
+      }`}
+    >
+      {children}
+    </span>
+  );
+}
+
+function Terminal() {
+  return (
+    <pre
+      className="overflow-x-auto rounded-2xl border border-line bg-[#06080c] p-6 font-mono text-[13.5px] leading-[1.85] text-text-d shadow-[0_24px_60px_-30px_#000]"
+      aria-label="Build commands"
+    >
+      <code>
+        <span className="text-muted"># clone with the whisper.cpp submodule</span>
+        {"\n"}git clone --recursive \{"\n"}  {REPO}.git{"\n"}cd openwhisp{"\n\n"}
+        <span className="text-muted"># build the bundled whisper runtime</span>
+        {"\n"}./scripts/build-whisper.sh{"\n\n"}
+        <span className="text-muted"># compile, package, run</span>
+        {"\n"}./build.sh &amp;&amp; ./package.sh{"\n"}open build/OpenWhisp.app
+      </code>
+    </pre>
+  );
+}
+
+function BrandMark({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 40 40" className={className} aria-hidden="true" fill="currentColor">
+      <rect x="5" y="17" width="3" height="6" rx="1.5" />
+      <rect x="11" y="13" width="3" height="14" rx="1.5" />
+      <rect x="17" y="8" width="3" height="24" rx="1.5" />
+      <rect x="23" y="11" width="3" height="18" rx="1.5" />
+      <rect x="29" y="15" width="3" height="10" rx="1.5" />
+      <rect x="35" y="18" width="2.5" height="4" rx="1.25" />
+    </svg>
+  );
+}
