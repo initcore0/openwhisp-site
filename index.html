@@ -82,7 +82,7 @@
       </a>
       <nav class="nav-links" aria-label="Primary">
         <a href="#features">Features</a>
-        <a href="#how">How it works</a>
+        <a href="#refine">Voice editing</a>
         <a href="#privacy">Privacy</a>
         <a href="https://github.com/initcore0/openwhisp" rel="noopener">GitHub</a>
       </nav>
@@ -98,7 +98,7 @@
         <div class="hero-copy">
           <p class="eyebrow">Local-first dictation for macOS</p>
           <h1 id="hero-title">Speak. It&rsquo;s typed.<br><span class="accent">Nothing leaves your Mac.</span></h1>
-          <p class="lede">Hold a key, talk, release. OpenWhisp transcribes your voice on-device and types it straight into whatever app you&rsquo;re using &mdash; no account, no subscription, no audio sent to the cloud.</p>
+          <p class="lede">Hold a key, talk, release. OpenWhisp transcribes your voice on-device and types it straight into any app &mdash; then lets you <a href="#refine" class="lede-link">edit text by voice</a> too. No account, no subscription, no audio sent to the cloud.</p>
           <div class="cta-row">
             <a class="btn btn-primary" href="https://github.com/initcore0/openwhisp" rel="noopener">
               Star on GitHub
@@ -201,10 +201,46 @@
             <p>Pick a language or let it auto-detect, with optional translate-to-English. Models range from tiny to large-v3.</p>
           </article>
           <article class="feature">
-            <h3>Your choice of engine</h3>
-            <p>whisper.cpp by default, with Apple&rsquo;s native speech recognizer available as an alternative streaming engine.</p>
+            <h3>WhisperKit, Apple-native</h3>
+            <p>The default engine runs Whisper on Apple&rsquo;s Neural Engine via CoreML for fast, real-time streaming. Prefer whisper.cpp or Apple Speech? Switch in a click.</p>
+          </article>
+          <article class="feature">
+            <h3>Refine after you speak</h3>
+            <p>Dictated something and want it reworked? Double-tap and say &ldquo;make it a Telegram post&rdquo; &mdash; the AI rewrites what you just said before it lands.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <!-- SPOTLIGHT: refine selected text -->
+    <section id="refine" class="spotlight" aria-labelledby="spotlight-title">
+      <div class="wrap spotlight-inner">
+        <div class="spotlight-copy">
+          <p class="eyebrow">New &middot; voice editing</p>
+          <h2 id="spotlight-title" class="section-title">Select text anywhere, then edit it by voice</h2>
+          <p class="spotlight-lede">OpenWhisp isn&rsquo;t just for dictating new text. Highlight a sentence in any app, double-tap your hotkey, and say what you want changed &mdash; it&rsquo;s rewritten in place. No retyping, no copy-paste, no switching windows.</p>
+          <ul class="spotlight-list">
+            <li>&ldquo;Make it more formal&rdquo; &middot; &ldquo;Translate to Russian&rdquo; &middot; &ldquo;Tighten this up&rdquo; &mdash; plain language, any language.</li>
+            <li>Your selection is read through the Accessibility API, so your clipboard is left untouched. Secure and password fields are never read.</li>
+            <li>The rewrite runs through your own local LLM if you want it fully private, or OpenAI if you prefer.</li>
+          </ul>
+        </div>
+
+        <figure class="edit-demo" aria-label="Demonstration: selected text is rewritten in place after a spoken instruction">
+          <div class="edit-step edit-before">
+            <span class="edit-tag">selected</span>
+            <p>hey so i can&rsquo;t make the 3pm thing, can we push it</p>
+          </div>
+          <div class="edit-gesture">
+            <span class="edit-gesture-key"><kbd>double-tap</kbd></span>
+            <span class="edit-gesture-say">&ldquo;make it polite and professional&rdquo;</span>
+            <span class="edit-gesture-state">Refining&hellip;</span>
+          </div>
+          <div class="edit-step edit-after">
+            <span class="edit-tag edit-tag-done">replaced in place</span>
+            <p>Hi &mdash; I&rsquo;m no longer able to make our 3:00 PM meeting. Could we reschedule?</p>
+          </div>
+        </figure>
       </div>
     </section>
 
