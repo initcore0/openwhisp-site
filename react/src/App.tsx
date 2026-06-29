@@ -12,6 +12,7 @@ import {
   ClockCounterClockwise,
   Globe,
   Cpu,
+  Heart,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -20,6 +21,7 @@ import { EditDemo } from "./components/EditDemo";
 
 const REPO = "https://github.com/initcore0/openwhisp";
 const DMG = `${REPO}/releases/latest/download/OpenWhisp.dmg`;
+const DONATE = "https://buymeacoffee.com/initcore0";
 
 function Eyebrow({ children, accent = "speak" }: { children: React.ReactNode; accent?: "speak" | "refine" }) {
   return (
@@ -282,6 +284,24 @@ export function App() {
                 The downloadable build is ad-hoc signed, so on first launch macOS will warn you. Right-click{" "}
                 <span className="text-text-d">OpenWhisp.app &rarr; Open</span> to confirm, or build it yourself.
               </p>
+
+              <div className="mt-6 rounded-2xl border border-refine/25 bg-refine/[0.06] p-5">
+                <p className="flex items-center gap-2 font-display text-[15px] font-semibold text-listen">
+                  <Heart weight="fill" className="h-4 w-4 text-refine" />
+                  I appreciate your support
+                </p>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-muted-d">
+                  The first <span className="font-mono text-text-d">$99</span> goes toward an Apple Developer ID,
+                  so future builds are notarized and macOS stops warning on first launch.
+                </p>
+                <a
+                  href={DONATE}
+                  rel="noopener"
+                  className="mt-3.5 inline-flex items-center gap-2 rounded-[10px] border border-refine/40 px-4 py-2 font-display text-sm font-semibold text-refine transition-all duration-150 hover:bg-refine/10 active:scale-[0.98]"
+                >
+                  <Heart weight="fill" className="h-4 w-4" /> Buy me a coffee
+                </a>
+              </div>
             </div>
             <Terminal />
           </div>
@@ -328,6 +348,7 @@ export function App() {
             <a className="hover:text-listen" href={`${REPO}#readme`} rel="noopener">Docs</a>
             <a className="hover:text-listen" href={`${REPO}/releases`} rel="noopener">Releases</a>
             <a className="hover:text-listen" href={`${REPO}/blob/main/LICENSE`} rel="noopener">License</a>
+            <a className="hover:text-refine" href={DONATE} rel="noopener">Support</a>
           </nav>
           <p className="ml-auto text-[13px] text-muted-d">
             Transcription by{" "}
