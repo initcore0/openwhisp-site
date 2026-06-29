@@ -49,6 +49,14 @@ export function App() {
             <a className="transition-colors hover:text-listen" href="#refine">Voice editing</a>
             <a className="hidden transition-colors hover:text-listen sm:inline" href="#privacy">Privacy</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
+            <a
+              className="group inline-flex items-center gap-1.5 text-refine/80 transition-colors hover:text-refine"
+              href={DONATE}
+              rel="noopener"
+            >
+              <Heart weight="fill" className="h-4 w-4 transition-transform group-hover:scale-110" />
+              Support
+            </a>
           </nav>
         </div>
       </header>
@@ -284,24 +292,6 @@ export function App() {
                 The downloadable build is ad-hoc signed, so on first launch macOS will warn you. Right-click{" "}
                 <span className="text-text-d">OpenWhisp.app &rarr; Open</span> to confirm, or build it yourself.
               </p>
-
-              <div className="mt-6 rounded-2xl border border-refine/25 bg-refine/[0.06] p-5">
-                <p className="flex items-center gap-2 font-display text-[15px] font-semibold text-listen">
-                  <Heart weight="fill" className="h-4 w-4 text-refine" />
-                  I appreciate your support
-                </p>
-                <p className="mt-1.5 text-[14px] leading-relaxed text-muted-d">
-                  The first <span className="font-mono text-text-d">$99</span> goes toward an Apple Developer ID,
-                  so future builds are notarized and macOS stops warning on first launch.
-                </p>
-                <a
-                  href={DONATE}
-                  rel="noopener"
-                  className="mt-3.5 inline-flex items-center gap-2 rounded-[10px] border border-refine/40 px-4 py-2 font-display text-sm font-semibold text-refine transition-all duration-150 hover:bg-refine/10 active:scale-[0.98]"
-                >
-                  <Heart weight="fill" className="h-4 w-4" /> Buy me a coffee
-                </a>
-              </div>
             </div>
             <Terminal />
           </div>
@@ -332,6 +322,27 @@ export function App() {
             <p className="mt-5 font-mono text-[13px] text-muted-d">
               Ad-hoc signed &mdash; on first launch, right-click <span className="text-text-d">OpenWhisp.app &rarr; Open</span>.
             </p>
+          </div>
+        </section>
+
+        {/* SUPPORT */}
+        <section id="support" className="border-t border-line py-16">
+          <div className="mx-auto max-w-[640px] rounded-2xl border border-refine/25 bg-refine/[0.06] p-7 text-center">
+            <p className="flex items-center justify-center gap-2 font-display text-lg font-semibold text-listen">
+              <Heart weight="fill" className="h-5 w-5 text-refine" />
+              I appreciate your support
+            </p>
+            <p className="mx-auto mt-2 max-w-[46ch] text-[15px] leading-relaxed text-muted-d">
+              The first <span className="font-mono text-text-d">$99</span> goes toward an Apple Developer ID,
+              so future builds are notarized and macOS stops warning on first launch.
+            </p>
+            <a
+              href={DONATE}
+              rel="noopener"
+              className="mt-5 inline-flex items-center gap-2 rounded-[10px] border border-refine/40 px-5 py-2.5 font-display text-sm font-semibold text-refine transition-all duration-150 hover:bg-refine/10 active:scale-[0.98]"
+            >
+              <Heart weight="fill" className="h-4 w-4" /> Buy me a coffee
+            </a>
           </div>
         </section>
       </main>
