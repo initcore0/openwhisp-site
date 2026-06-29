@@ -14,6 +14,7 @@
   --listen: #E8ECF2;   /* overlay "listening" white */
   --speak:  #3DD8E0;   /* cyan — the one bold accent */
   --final:  #8B7CF6;   /* violet — secondary accent */
+  --refine: #E879C9;   /* magenta — the app's "Refining…" voice-edit accent */
   --muted:  #5A6473;   /* captions/labels on paper */
   --muted-d:#8A93A6;   /* captions on dark */
   --text-d: #DCE2EC;   /* body text on dark */
@@ -118,6 +119,8 @@ a { color: inherit; }
 .hero-copy h1 .accent { color: var(--listen); }
 .hero-copy h1 .accent { background: linear-gradient(180deg, var(--listen), color-mix(in srgb, var(--speak) 55%, var(--listen))); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .lede { font-size: clamp(17px, 2vw, 19px); color: var(--text-d); max-width: 42ch; margin: 0; }
+.lede-link { color: var(--refine); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--refine) 45%, transparent); transition: border-color .15s; }
+.lede-link:hover { border-bottom-color: var(--refine); }
 .cta-note { font-family: var(--font-mono); font-size: 13px; color: var(--muted-d); margin-top: 18px; }
 
 /* hero demo: re-creation of the app's Quiet Glass overlay */
@@ -173,6 +176,51 @@ kbd {
 .feature:hover { transform: translateY(-3px); box-shadow: 0 16px 40px -22px rgba(11,14,20,.4); border-color: color-mix(in srgb, var(--speak) 45%, #E2E7EF); }
 .feature h3 { font-size: 17.5px; color: var(--ink); margin-bottom: 7px; }
 .feature p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+
+/* ---------- spotlight: voice editing ---------- */
+.spotlight { position: relative; padding-block: clamp(64px, 8vw, 104px); overflow: hidden; }
+.spotlight::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(55% 60% at 78% 30%, color-mix(in srgb, var(--refine) 14%, transparent), transparent 70%);
+  pointer-events: none;
+}
+.spotlight-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.spotlight .eyebrow { color: var(--refine); }
+.spotlight-lede { color: var(--text-d); font-size: 17px; margin: 0; max-width: 46ch; }
+.spotlight-list { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 14px; }
+.spotlight-list li { position: relative; padding-left: 28px; color: var(--muted-d); font-size: 15.5px; }
+.spotlight-list li::before {
+  content: ""; position: absolute; left: 0; top: 0.5em;
+  width: 9px; height: 9px; border-radius: 3px; background: var(--refine);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--refine) 70%, transparent);
+}
+
+/* before → gesture → after demo */
+.edit-demo { margin: 0; display: grid; gap: 12px; }
+.edit-step {
+  position: relative; background: var(--ink-2); border: 1px solid var(--ink-3);
+  border-radius: var(--radius); padding: 20px 22px 22px;
+}
+.edit-step p { margin: 8px 0 0; font-size: 16.5px; color: var(--listen); line-height: 1.5; }
+.edit-after { border-color: color-mix(in srgb, var(--refine) 40%, var(--ink-3)); box-shadow: 0 0 0 1px color-mix(in srgb, var(--refine) 18%, transparent), 0 20px 50px -28px #000; }
+.edit-tag {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--muted-d); background: var(--ink); border: 1px solid var(--ink-3);
+  border-radius: 20px; padding: 3px 10px;
+}
+.edit-tag-done { color: var(--refine); border-color: color-mix(in srgb, var(--refine) 40%, var(--ink-3)); }
+.edit-gesture { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-left: 4px; }
+.edit-gesture-key kbd { border-color: color-mix(in srgb, var(--refine) 45%, var(--ink-3)); }
+.edit-gesture-say { font-style: italic; color: var(--text-d); font-size: 15px; }
+.edit-gesture-state {
+  margin-left: auto; font-family: var(--font-mono); font-size: 12.5px; color: var(--refine);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.edit-gesture-state::before {
+  content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--refine);
+  box-shadow: 0 0 8px var(--refine); animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
 
 /* ---------- privacy ---------- */
 .privacy { padding-block: clamp(64px, 8vw, 104px); }
@@ -251,9 +299,10 @@ kbd {
 @media (max-width: 920px) {
   .hero-inner { grid-template-columns: 1fr; gap: 44px; }
   .hero-demo { order: 2; }
-  .privacy-inner, .source-inner { grid-template-columns: 1fr; gap: 36px; }
+  .privacy-inner, .source-inner, .spotlight-inner { grid-template-columns: 1fr; gap: 36px; }
   .feature-grid { grid-template-columns: repeat(2, 1fr); }
   .source-inner .source-copy { order: 1; }
+  .edit-gesture-state { margin-left: 0; }
 }
 @media (max-width: 720px) {
   .pillars-grid { grid-template-columns: 1fr; gap: 20px; }
@@ -276,7 +325,7 @@ kbd {
    Reduced motion & transparency fallbacks
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  .caret { animation: none; }
+  .caret, .edit-gesture-state::before { animation: none; }
   .btn:hover, .feature:hover { transform: none; }
   * { transition: none !important; }
 }
