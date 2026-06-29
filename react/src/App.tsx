@@ -14,6 +14,9 @@ import {
   Cpu,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
+import { Reveal } from "./components/Reveal";
+import { MagneticButton } from "./components/MagneticButton";
+import { EditDemo } from "./components/EditDemo";
 
 const REPO = "https://github.com/initcore0/openwhisp";
 const DMG = `${REPO}/releases/latest/download/OpenWhisp.dmg`;
@@ -59,7 +62,7 @@ export function App() {
             }}
           />
           <div className="relative mx-auto grid max-w-[1180px] items-center gap-14 px-6 py-20 md:grid-cols-[1.05fr_0.95fr] md:py-28">
-            <div className="rise">
+            <div className="cascade">
               <Eyebrow>Local-first dictation for macOS</Eyebrow>
               <h1 className="font-display text-[2.6rem] font-bold leading-[1.04] tracking-tight text-listen md:text-6xl">
                 Speak. It&rsquo;s typed.
@@ -75,12 +78,12 @@ export function App() {
                 too. No account, no subscription, no audio sent to the cloud.
               </p>
               <div className="mt-8 flex flex-wrap gap-3.5">
-                <Button href={REPO} variant="primary">
+                <MagneticButton href={REPO} variant="primary">
                   <GithubLogo weight="fill" className="h-5 w-5" /> Star on GitHub
-                </Button>
-                <Button href={DMG} variant="ghost">
+                </MagneticButton>
+                <MagneticButton href={DMG} variant="ghost">
                   <DownloadSimple className="h-5 w-5" weight="bold" /> Download for macOS
-                </Button>
+                </MagneticButton>
               </div>
               <p className="mt-5 font-mono text-[13px] text-muted-d">
                 Free &amp; open source &middot; macOS&nbsp;14+ &middot; Apple&nbsp;Silicon &middot; MIT
@@ -130,18 +133,24 @@ export function App() {
             Three moves, then it&rsquo;s in your document
           </h2>
           <ol className="mt-11 grid gap-6 md:grid-cols-3">
-            <Step n="01" title="Hold the key">
-              Press and hold your push-to-talk key &mdash; <Kbd>Fn</Kbd> or <Kbd>&#8963; Space</Kbd>. A quiet
-              overlay appears at the bottom of the screen.
-            </Step>
-            <Step n="02" title="Speak naturally">
-              Say your sentence. Your words stream into the overlay as you talk, with filler words and stray
-              punctuation cleaned up on the fly.
-            </Step>
-            <Step n="03" title="Release to insert">
-              Let go and the finished text is typed into the focused app. Changed your mind mid-sentence? Press{" "}
-              <Kbd>Esc</Kbd> to cancel.
-            </Step>
+            <Reveal as="li" delay={0}>
+              <Step n="01" title="Hold the key">
+                Press and hold your push-to-talk key &mdash; <Kbd>Fn</Kbd> or <Kbd>&#8963; Space</Kbd>. A quiet
+                overlay appears at the bottom of the screen.
+              </Step>
+            </Reveal>
+            <Reveal as="li" delay={90}>
+              <Step n="02" title="Speak naturally">
+                Say your sentence. Your words stream into the overlay as you talk, with filler words and stray
+                punctuation cleaned up on the fly.
+              </Step>
+            </Reveal>
+            <Reveal as="li" delay={180}>
+              <Step n="03" title="Release to insert">
+                Let go and the finished text is typed into the focused app. Changed your mind mid-sentence? Press{" "}
+                <Kbd>Esc</Kbd> to cancel.
+              </Step>
+            </Reveal>
           </ol>
         </section>
 
@@ -222,21 +231,8 @@ export function App() {
               </ul>
             </div>
 
-            {/* before -> gesture -> after */}
-            <figure className="grid gap-3" aria-label="Selected text rewritten in place after a spoken instruction">
-              <EditCard tag="selected">hey so i can&rsquo;t make the 3pm thing, can we push it</EditCard>
-              <div className="flex flex-wrap items-center gap-3 pl-1">
-                <Kbd className="border-refine/45">double-tap</Kbd>
-                <span className="text-[15px] italic text-text-d">&ldquo;make it polite and professional&rdquo;</span>
-                <span className="ml-auto flex items-center gap-2 font-mono text-xs text-refine">
-                  <span className="pulse-dot h-2 w-2 rounded-full bg-refine shadow-[0_0_8px_var(--color-refine)]" />
-                  Refining&hellip;
-                </span>
-              </div>
-              <EditCard tag="replaced in place" done>
-                Hi &mdash; I&rsquo;m no longer able to make our 3:00&nbsp;PM meeting. Could we reschedule?
-              </EditCard>
-            </figure>
+            {/* before -> gesture -> after, animated on a loop */}
+            <EditDemo />
           </div>
         </section>
 
@@ -390,11 +386,11 @@ function Pillar({ icon, title, children }: { icon: React.ReactNode; title: strin
 
 function Step({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
-    <li className="rounded-2xl border border-line bg-ink-2 p-7">
+    <div className="h-full rounded-2xl border border-line bg-ink-2 p-7">
       <span className="font-mono text-sm font-medium text-speak">{n}</span>
       <h3 className="mt-4 font-display text-xl font-semibold text-listen">{title}</h3>
       <p className="mt-2 text-[15px] leading-relaxed text-muted-d">{children}</p>
-    </li>
+    </div>
   );
 }
 
@@ -414,25 +410,6 @@ function Bullet({ children }: { children: React.ReactNode }) {
       <span className="absolute left-0 top-[0.5em] h-2.5 w-2.5 rounded-[3px] bg-speak shadow-[0_0_10px_color-mix(in_srgb,var(--color-speak)_70%,transparent)]" />
       {children}
     </li>
-  );
-}
-
-function EditCard({ tag, done, children }: { tag: string; done?: boolean; children: React.ReactNode }) {
-  return (
-    <div
-      className={`rounded-2xl border bg-ink-2 p-5 pt-5 ${
-        done ? "border-refine/40 shadow-[0_0_0_1px_color-mix(in_srgb,var(--color-refine)_18%,transparent)]" : "border-line"
-      }`}
-    >
-      <span
-        className={`rounded-full border px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-[0.12em] ${
-          done ? "border-refine/40 text-refine" : "border-line text-muted-d"
-        }`}
-      >
-        {tag}
-      </span>
-      <p className="mt-2 text-[16.5px] leading-relaxed text-listen">{children}</p>
-    </div>
   );
 }
 
