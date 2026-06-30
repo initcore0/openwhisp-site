@@ -1,5 +1,14 @@
 .DS_Store
 
+# Secrets — never commit env files or keys
+.env
+.env.*
+*.env
+!.env.example
+*.pem
+*.key
+secrets.json
+
 # Promo / social video project — not part of the website
 videos/
 
