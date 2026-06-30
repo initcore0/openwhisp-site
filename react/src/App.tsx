@@ -180,9 +180,9 @@ export function App() {
                 Teach it your names and jargon, and add &ldquo;heard &rarr; correct&rdquo; fixes so &ldquo;clod
                 code&rdquo; always lands as &ldquo;Claude Code.&rdquo;
               </Feature>
-              <Feature icon={<Brain weight="duotone" />} title="Optional AI cleanup">
-                Run a final rewrite pass through your own local LLM (llama.cpp or Ollama) to stay private, or
-                point it at OpenAI if you prefer.
+              <Feature icon={<Brain weight="duotone" />} title="Built-in offline AI">
+                Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
+                server, nothing leaves the machine. Or point it at your own server or OpenAI.
               </Feature>
               <Feature icon={<Microphone weight="duotone" />} title="Refine after you speak">
                 Dictated something and want it reworked? Double-tap and say &ldquo;make it a Telegram post&rdquo;
@@ -237,7 +237,7 @@ export function App() {
                   Your selection is read through the Accessibility API, so your clipboard is left untouched.
                   Secure and password fields are never read.
                 </Bullet>
-                <Bullet>The rewrite runs through your own local LLM if you want it fully private, or OpenAI if you prefer.</Bullet>
+                <Bullet>The rewrite can run on the built-in offline model or your own local server to stay fully private, or OpenAI if you prefer.</Bullet>
               </ul>
             </div>
 
@@ -260,9 +260,9 @@ export function App() {
                 in plain text.
               </Bullet>
               <Bullet>
-                The <em className="not-italic font-semibold text-speak">only</em> time text leaves your machine
-                is if you turn on AI cleanup with the OpenAI provider. The local provider keeps everything on
-                your machine or LAN.
+                AI cleanup can run fully on-device: the built-in offline model and your own local server both
+                keep everything on your Mac. The <em className="not-italic font-semibold text-speak">only</em>{" "}
+                time text leaves your machine is if you choose the OpenAI provider.
               </Bullet>
               <Bullet>Your transcript text is never written to the app&rsquo;s log files.</Bullet>
             </ul>
@@ -449,7 +449,7 @@ function BoundaryDiagram() {
   return (
     <div
       role="img"
-      aria-label="Microphone, transcription, and typed text all sit inside a boundary labeled 'your Mac'. A separate, optional, opt-in path leads outside to OpenAI cleanup."
+      aria-label="Microphone, transcription, on-device AI refinement, and typed text all sit inside a boundary labeled 'your Mac'. A separate, optional, opt-in path leads outside to OpenAI cleanup."
     >
       <div
         className="relative rounded-2xl border-2 border-dashed px-6 pb-7 pt-10"
@@ -466,11 +466,13 @@ function BoundaryDiagram() {
           <CaretRight className="h-4 w-4 text-speak" />
           <Node>Transcribe</Node>
           <CaretRight className="h-4 w-4 text-speak" />
+          <Node>Refine (AI)</Node>
+          <CaretRight className="h-4 w-4 text-speak" />
           <Node>Typed text</Node>
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-3 px-2 pt-4">
-        <span className="font-mono text-xs text-muted-d">&#8627; optional, opt-in only</span>
+        <span className="font-mono text-xs text-muted-d">&#8627; only if you pick OpenAI</span>
         <Node dashed>OpenAI cleanup</Node>
       </div>
     </div>
