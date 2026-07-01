@@ -13,6 +13,7 @@ import {
   Globe,
   Cpu,
   Heart,
+  HardDrives,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -22,6 +23,31 @@ import { EditDemo } from "./components/EditDemo";
 const REPO = "https://github.com/initcore0/openwhisp";
 const DMG = `${REPO}/releases/latest/download/OpenWhisp.dmg`;
 const DONATE = "https://buymeacoffee.com/initcore0";
+
+// The on-device refinement models OpenWhisp can download and run locally.
+const MODELS = [
+  {
+    name: "Qwen2.5 0.5B",
+    note: "Fastest, lowest memory. The default.",
+    size: "491 MB",
+    license: "Apache-2.0",
+    featured: true,
+  },
+  {
+    name: "Qwen2.5 1.5B",
+    note: "Higher quality, a little heavier.",
+    size: "1.12 GB",
+    license: "Apache-2.0",
+    featured: false,
+  },
+  {
+    name: "SmolLM2 360M",
+    note: "Smallest footprint, for tight RAM.",
+    size: "271 MB",
+    license: "Apache-2.0",
+    featured: false,
+  },
+] as const;
 
 function Eyebrow({ children, accent = "speak" }: { children: React.ReactNode; accent?: "speak" | "refine" }) {
   return (
@@ -47,6 +73,7 @@ export function App() {
           <nav className="flex items-center gap-7 text-sm font-medium text-muted-d" aria-label="Primary">
             <a className="hidden transition-colors hover:text-listen sm:inline" href="#features">Features</a>
             <a className="transition-colors hover:text-listen" href="#refine">Voice editing</a>
+            <a className="hidden transition-colors hover:text-listen md:inline" href="#models">Private AI</a>
             <a className="hidden transition-colors hover:text-listen sm:inline" href="#privacy">Privacy</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
@@ -180,9 +207,9 @@ export function App() {
                 Teach it your names and jargon, and add &ldquo;heard &rarr; correct&rdquo; fixes so &ldquo;clod
                 code&rdquo; always lands as &ldquo;Claude Code.&rdquo;
               </Feature>
-              <Feature icon={<Brain weight="duotone" />} title="Optional AI cleanup">
-                Run a final rewrite pass through your own local LLM (llama.cpp or Ollama) to stay private, or
-                point it at OpenAI if you prefer.
+              <Feature icon={<Brain weight="duotone" />} title="Built-in offline AI">
+                Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
+                server, nothing leaves the machine. Or point it at your own server or OpenAI.
               </Feature>
               <Feature icon={<Microphone weight="duotone" />} title="Refine after you speak">
                 Dictated something and want it reworked? Double-tap and say &ldquo;make it a Telegram post&rdquo;
@@ -237,7 +264,7 @@ export function App() {
                   Your selection is read through the Accessibility API, so your clipboard is left untouched.
                   Secure and password fields are never read.
                 </Bullet>
-                <Bullet>The rewrite runs through your own local LLM if you want it fully private, or OpenAI if you prefer.</Bullet>
+                <Bullet>The rewrite can run on the built-in offline model or your own local server to stay fully private, or OpenAI if you prefer.</Bullet>
               </ul>
             </div>
 
@@ -260,14 +287,74 @@ export function App() {
                 in plain text.
               </Bullet>
               <Bullet>
-                The <em className="not-italic font-semibold text-speak">only</em> time text leaves your machine
-                is if you turn on AI cleanup with the OpenAI provider. The local provider keeps everything on
-                your machine or LAN.
+                AI cleanup can run fully on-device: the built-in offline model and your own local server both
+                keep everything on your Mac. The <em className="not-italic font-semibold text-speak">only</em>{" "}
+                time text leaves your machine is if you choose the OpenAI provider.
               </Bullet>
               <Bullet>Your transcript text is never written to the app&rsquo;s log files.</Bullet>
             </ul>
           </div>
           <BoundaryDiagram />
+        </section>
+
+        {/* BUNDLED MODELS */}
+        <section id="models" className="relative overflow-hidden border-t border-line bg-ink-2 py-20 md:py-24">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(50% 55% at 22% 20%, color-mix(in srgb, var(--color-refine) 11%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-[1180px] px-6">
+            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-refine">
+              <HardDrives weight="duotone" className="h-4 w-4" />
+              Private AI &middot; runs on your hard drive
+            </p>
+            <h2 className="mt-5 max-w-[20ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+              The AI lives on your Mac, not in someone&rsquo;s cloud
+            </h2>
+            <p className="mt-4 max-w-[58ch] leading-relaxed text-text-d">
+              Turn on AI cleanup and OpenWhisp downloads a small open-weights model that runs entirely on your own
+              machine &mdash; no API key, no account, no server to spin up. The weights sit in a folder on your
+              disk, the model runs there, and your text never leaves the computer. Pick the one that fits your
+              speed-versus-quality taste:
+            </p>
+
+            <ul className="mt-9 grid gap-4 sm:grid-cols-3">
+              {MODELS.map((m) => (
+                <li
+                  key={m.name}
+                  className={`rounded-2xl border p-5 ${
+                    m.featured
+                      ? "border-refine/35 bg-refine/[0.06]"
+                      : "border-line bg-ink"
+                  }`}
+                >
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-display text-[17px] font-semibold text-listen">{m.name}</span>
+                    {m.featured && (
+                      <span className="rounded-full border border-refine/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-refine">
+                        Default
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 text-[13.5px] text-muted-d">{m.note}</p>
+                  <div className="mt-4 flex items-center gap-3 font-mono text-xs text-muted-d">
+                    <span className="text-text-d">{m.size}</span>
+                    <span className="text-line">|</span>
+                    <span>{m.license}</span>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <p className="mt-7 max-w-[60ch] font-mono text-[13px] leading-relaxed text-muted-d">
+              All three are <span className="text-text-d">Apache-2.0</span> licensed. The model downloads once,
+              like the speech models, then works offline. Default is off &mdash; you opt in. Prefer your own
+              setup? Point it at a local server instead, or at OpenAI.
+            </p>
+          </div>
         </section>
 
         {/* OPEN SOURCE */}
@@ -449,7 +536,7 @@ function BoundaryDiagram() {
   return (
     <div
       role="img"
-      aria-label="Microphone, transcription, and typed text all sit inside a boundary labeled 'your Mac'. A separate, optional, opt-in path leads outside to OpenAI cleanup."
+      aria-label="Microphone, transcription, on-device AI refinement, and typed text all sit inside a boundary labeled 'your Mac'. A separate, optional, opt-in path leads outside to OpenAI cleanup."
     >
       <div
         className="relative rounded-2xl border-2 border-dashed px-6 pb-7 pt-10"
@@ -466,11 +553,13 @@ function BoundaryDiagram() {
           <CaretRight className="h-4 w-4 text-speak" />
           <Node>Transcribe</Node>
           <CaretRight className="h-4 w-4 text-speak" />
+          <Node>Refine (AI)</Node>
+          <CaretRight className="h-4 w-4 text-speak" />
           <Node>Typed text</Node>
         </div>
       </div>
       <div className="flex flex-wrap items-center gap-3 px-2 pt-4">
-        <span className="font-mono text-xs text-muted-d">&#8627; optional, opt-in only</span>
+        <span className="font-mono text-xs text-muted-d">&#8627; only if you pick OpenAI</span>
         <Node dashed>OpenAI cleanup</Node>
       </div>
     </div>

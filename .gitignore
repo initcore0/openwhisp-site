@@ -1,1 +1,19 @@
 .DS_Store
+
+# Secrets — never commit env files or keys
+.env
+.env.*
+*.env
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# Promo / social video project — not part of the website
+videos/
+
+# Video-generation agent skills (not the design taste-skill, which is tracked)
+.agents/
+skills-lock.json
+.claude/skills/product-launch-video
+.claude/skills/website-to-video
