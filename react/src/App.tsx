@@ -84,6 +84,13 @@ export function App() {
               <Heart weight="fill" className="h-4 w-4 transition-transform group-hover:scale-110" />
               Support
             </a>
+            <a
+              href={DMG}
+              rel="noopener"
+              className="hidden items-center gap-1.5 rounded-lg bg-speak px-3.5 py-2 font-display text-[13px] font-semibold text-[#04181a] transition-shadow hover:shadow-[0_0_18px_-2px_color-mix(in_srgb,var(--color-speak)_60%,transparent)] sm:inline-flex"
+            >
+              <DownloadSimple weight="bold" className="h-4 w-4" /> Download
+            </a>
           </nav>
         </div>
       </header>
@@ -211,9 +218,9 @@ export function App() {
                 Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
                 server, nothing leaves the machine. Or point it at your own server or OpenAI.
               </Feature>
-              <Feature icon={<Microphone weight="duotone" />} title="Refine after you speak">
-                Dictated something and want it reworked? Double-tap and say &ldquo;make it a Telegram post&rdquo;
-                &mdash; the AI rewrites what you just said before it lands.
+              <Feature icon={<Microphone weight="duotone" />} title="Refine while you dictate">
+                Want what you&rsquo;re saying reworked? Keep holding, tap the Refine key, and say &ldquo;make it
+                a Telegram post&rdquo; &mdash; on release, the AI rewrites it before it lands.
               </Feature>
               <Feature icon={<Cpu weight="duotone" />} title="WhisperKit, Apple-native">
                 The default engine runs Whisper on Apple&rsquo;s Neural Engine via CoreML for fast, real-time
@@ -251,9 +258,10 @@ export function App() {
                 Select text anywhere, then edit it by voice
               </h2>
               <p className="mt-5 max-w-[46ch] leading-relaxed text-text-d">
-                OpenWhisp isn&rsquo;t just for dictating new text. Highlight a sentence in any app, double-tap
-                your hotkey, and say what you want changed &mdash; it&rsquo;s rewritten in place. No retyping, no
-                copy-paste, no switching windows.
+                OpenWhisp isn&rsquo;t just for dictating new text. Highlight a sentence in any app, hold your
+                dictation key, tap the Refine key &mdash; <Kbd className="text-[0.8em]">right &#8963;</Kbd> by
+                default &mdash; and say what you want changed. Release, and it&rsquo;s rewritten in place. No
+                retyping, no copy-paste, no switching windows.
               </p>
               <ul className="mt-6 grid gap-3.5">
                 <Bullet>
@@ -261,8 +269,9 @@ export function App() {
                   &ldquo;Tighten this up&rdquo; &mdash; plain language, any language.
                 </Bullet>
                 <Bullet>
-                  Your selection is read through the Accessibility API, so your clipboard is left untouched.
-                  Secure and password fields are never read.
+                  Your selection is read through the Accessibility API &mdash; and if an app doesn&rsquo;t
+                  expose it, your clipboard is restored after the fallback copy. Secure and password fields
+                  are never read.
                 </Bullet>
                 <Bullet>The rewrite can run on the built-in offline model or your own local server to stay fully private, or OpenAI if you prefer.</Bullet>
               </ul>
@@ -384,6 +393,37 @@ export function App() {
           </div>
         </section>
 
+        {/* FAQ — visible copy mirrors the FAQPage JSON-LD in index.html */}
+        <section id="faq" className="mx-auto max-w-[820px] px-6 py-20 md:py-24">
+          <Eyebrow>Questions, answered</Eyebrow>
+          <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+            Frequently asked questions
+          </h2>
+          <div className="mt-9 border-y border-line">
+            <Faq q="Does my audio ever leave my Mac?">
+              No. Transcription runs entirely on your Mac and works offline. Audio is never uploaded, and the
+              recording is deleted after each transcription. The only time any text leaves your machine is if
+              you explicitly choose the optional OpenAI provider for AI cleanup.
+            </Faq>
+            <Faq q="How much does OpenWhisp cost?">
+              Nothing. OpenWhisp is free and open source under the MIT license &mdash; no account, no
+              subscription, no usage meter.
+            </Faq>
+            <Faq q="What are the system requirements?">
+              An Apple Silicon Mac (M1 or newer) running macOS&nbsp;14 Sonoma or later.
+            </Faq>
+            <Faq q="How is it different from the built-in macOS dictation?">
+              OpenWhisp runs Whisper-class models for noticeably better accuracy, and adds things macOS
+              dictation doesn&rsquo;t have: voice editing of selected text, AI refinement that runs offline,
+              custom vocabulary, per-app modes, and a searchable local history.
+            </Faq>
+            <Faq q="Why does macOS warn me on first launch?">
+              The downloadable build is ad-hoc signed rather than notarized. Right-click OpenWhisp.app and
+              choose Open once to confirm &mdash; or build it yourself from source.
+            </Faq>
+          </div>
+        </section>
+
         {/* FINAL CTA */}
         <section className="relative overflow-hidden py-24 text-center">
           <div
@@ -441,19 +481,19 @@ export function App() {
             <BrandMark className="h-5 w-5 text-speak" />
             OpenWhisp
           </div>
-          <nav className="flex gap-6 text-sm text-muted-d" aria-label="Footer">
+          <nav className="flex flex-wrap gap-6 text-sm text-muted-d" aria-label="Footer">
             <a className="hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a className="hover:text-listen" href={`${REPO}#readme`} rel="noopener">Docs</a>
             <a className="hover:text-listen" href={`${REPO}/releases`} rel="noopener">Releases</a>
+            <a className="hover:text-listen" href="#faq">FAQ</a>
             <a className="hover:text-listen" href={`${REPO}/blob/main/LICENSE`} rel="noopener">License</a>
             <a className="hover:text-refine" href={DONATE} rel="noopener">Support</a>
           </nav>
           <p className="ml-auto text-[13px] text-muted-d">
-            Transcription by{" "}
+            &copy; {new Date().getFullYear()} OpenWhisp &middot; MIT licensed &middot; Transcription by{" "}
             <a className="hover:text-speak" href="https://github.com/ggerganov/whisper.cpp" rel="noopener">
               whisper.cpp
             </a>
-            . MIT licensed.
           </p>
         </div>
       </footer>
@@ -520,6 +560,21 @@ function Feature({ icon, title, children }: { icon: React.ReactNode; title: stri
       <h3 className="font-display text-lg font-semibold text-ink">{title}</h3>
       <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{children}</p>
     </article>
+  );
+}
+
+function Faq({ q, children }: { q: string; children: React.ReactNode }) {
+  return (
+    <details className="group border-b border-line last:border-b-0">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-[17px] font-semibold text-listen transition-colors hover:text-speak [&::-webkit-details-marker]:hidden">
+        {q}
+        <CaretRight
+          weight="bold"
+          className="h-4 w-4 shrink-0 text-muted-d transition-transform duration-200 group-open:rotate-90"
+        />
+      </summary>
+      <p className="max-w-[62ch] pb-6 text-[15.5px] leading-relaxed text-muted-d">{children}</p>
+    </details>
   );
 }
 
