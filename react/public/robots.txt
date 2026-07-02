@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://initcore0.github.io/openwhisp-site/sitemap.xml
+Sitemap: https://openwhisp.app/sitemap.xml
