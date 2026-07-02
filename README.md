@@ -64,7 +64,7 @@ with their canonical-import so the SEO credit stays here.
 
 ## Analytics
 
-`index.html` includes the Cloudflare Web Analytics beacon — cookieless, no
-consent banner, no cross-site tracking. It reports page-level views and Core
-Web Vitals in the Cloudflare dashboard (Analytics → Web Analytics). The token
-lives in the `data-cf-beacon` attribute.
+The domain is proxied through Cloudflare with Web Analytics in **Automatic**
+mode, so traffic is measured at the edge — no client-side script, no cookies,
+no consent banner. The site ships zero third-party scripts. View stats in the
+Cloudflare dashboard (Analytics → Web Analytics → openwhisp.app).
