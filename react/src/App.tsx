@@ -218,9 +218,9 @@ export function App() {
                 Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
                 server, nothing leaves the machine. Or point it at your own server or OpenAI.
               </Feature>
-              <Feature icon={<Microphone weight="duotone" />} title="Refine after you speak">
-                Dictated something and want it reworked? Double-tap and say &ldquo;make it a Telegram post&rdquo;
-                &mdash; the AI rewrites what you just said before it lands.
+              <Feature icon={<Microphone weight="duotone" />} title="Refine while you dictate">
+                Want what you&rsquo;re saying reworked? Keep holding, tap the Refine key, and say &ldquo;make it
+                a Telegram post&rdquo; &mdash; on release, the AI rewrites it before it lands.
               </Feature>
               <Feature icon={<Cpu weight="duotone" />} title="WhisperKit, Apple-native">
                 The default engine runs Whisper on Apple&rsquo;s Neural Engine via CoreML for fast, real-time
@@ -258,9 +258,10 @@ export function App() {
                 Select text anywhere, then edit it by voice
               </h2>
               <p className="mt-5 max-w-[46ch] leading-relaxed text-text-d">
-                OpenWhisp isn&rsquo;t just for dictating new text. Highlight a sentence in any app, double-tap
-                your hotkey, and say what you want changed &mdash; it&rsquo;s rewritten in place. No retyping, no
-                copy-paste, no switching windows.
+                OpenWhisp isn&rsquo;t just for dictating new text. Highlight a sentence in any app, hold your
+                dictation key, tap the Refine key &mdash; <Kbd className="text-[0.8em]">right &#8963;</Kbd> by
+                default &mdash; and say what you want changed. Release, and it&rsquo;s rewritten in place. No
+                retyping, no copy-paste, no switching windows.
               </p>
               <ul className="mt-6 grid gap-3.5">
                 <Bullet>
@@ -268,8 +269,9 @@ export function App() {
                   &ldquo;Tighten this up&rdquo; &mdash; plain language, any language.
                 </Bullet>
                 <Bullet>
-                  Your selection is read through the Accessibility API, so your clipboard is left untouched.
-                  Secure and password fields are never read.
+                  Your selection is read through the Accessibility API &mdash; and if an app doesn&rsquo;t
+                  expose it, your clipboard is restored after the fallback copy. Secure and password fields
+                  are never read.
                 </Bullet>
                 <Bullet>The rewrite can run on the built-in offline model or your own local server to stay fully private, or OpenAI if you prefer.</Bullet>
               </ul>

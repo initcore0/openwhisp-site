@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 /**
  * The signature voice-editing moment, animated. On a loop (only while visible):
  *   1. the "before" selection sits highlighted
- *   2. the double-tap gesture fires, "Refining…" shimmers
+ *   2. the Refine-key tap fires, "Refining…" shimmers
  *   3. the "after" text types out and the card lights up
  * Reduced-motion renders the finished state, no loop.
  */
@@ -113,7 +113,7 @@ export function EditDemo() {
             transform: refining ? "scale(1.06)" : "scale(1)",
           }}
         >
-          double-tap
+          tap right &#8963;
         </kbd>
         <span className="text-[15px] italic text-text-d">&ldquo;make it polite and professional&rdquo;</span>
         <span className="ml-auto flex items-center gap-2 font-mono text-xs">
