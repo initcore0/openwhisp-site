@@ -8,11 +8,10 @@ declare const process: { env: Record<string, string | undefined> };
 
 // Static build → dist/ as plain HTML/CSS/JS.
 //
-// base: served from a GitHub Pages *project* path, so assets live under
-// /openwhisp-site/. Override with VITE_BASE for a custom domain (use "/") or
-// other host. Relative "./" also works for a single-page site, but an explicit
-// absolute base is unambiguous and keeps the canonical/OG URLs consistent.
-const base = process.env.VITE_BASE ?? "/openwhisp-site/";
+// base: served from the root of the custom domain (openwhisp.app), so assets
+// live at /. Override with VITE_BASE if hosting under a subpath again (e.g.
+// the GitHub Pages project path "/openwhisp-site/").
+const base = process.env.VITE_BASE ?? "/";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],

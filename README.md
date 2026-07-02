@@ -25,8 +25,10 @@ renders the App to static HTML and injects it into `dist/index.html`, so crawler
 full page content and the browser paints before JavaScript loads. The client bundle then
 hydrates the markup.
 
-The base path defaults to `/openwhisp-site/` (the GitHub Pages project path). Override it
-with `VITE_BASE` — e.g. `VITE_BASE=/ bun run build` for a custom domain at the root.
+The base path defaults to `/` (the site is served from the root of the custom domain
+**openwhisp.app**). Override it with `VITE_BASE` if hosting under a subpath again —
+e.g. `VITE_BASE=/openwhisp-site/ bun run build` for the GitHub Pages project path.
+The custom domain is set via `react/public/CNAME`.
 
 ## Deploy
 
