@@ -3,9 +3,15 @@
   "configurations": [
     {
       "name": "openwhisp-site",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4321"],
-      "port": 4321
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["run", "--cwd", "react", "dev"],
+      "port": 5173
+    },
+    {
+      "name": "openwhisp-site-built",
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["run", "--cwd", "react", "preview"],
+      "port": 4173
     }
   ]
 }

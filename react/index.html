@@ -12,6 +12,7 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="OpenWhisp" />
     <meta property="og:title" content="OpenWhisp — Local-first dictation for macOS" />
     <meta property="og:description" content="Hold a key, speak, release. Your words are transcribed on-device and typed into any app. No account, no subscription, open source." />
@@ -26,30 +27,111 @@
     <meta name="twitter:title" content="OpenWhisp — Local-first dictation for macOS" />
     <meta name="twitter:description" content="Hold a key, speak, release. On-device transcription, typed into any app. No account, no subscription, open source." />
     <meta name="twitter:image" content="https://initcore0.github.io/openwhisp-site/og-image.png" />
+    <meta name="twitter:image:alt" content="OpenWhisp — a glowing waveform over the words 'Speak. It's typed. Nothing leaves your Mac.'" />
 
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Self-hosted variable fonts: no third-party connections, no render-blocking
+         stylesheet. Declared inline (relative to the page URL) so they resolve under
+         any base path, and preloaded so text paints in the right face immediately. -->
+    <link rel="preload" href="fonts/space-grotesk-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="fonts/jetbrains-mono-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        font-style: normal;
+        font-weight: 300 700;
+        font-display: swap;
+        src: url("fonts/space-grotesk-latin.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 100 800;
+        font-display: swap;
+        src: url("fonts/jetbrains-mono-latin.woff2") format("woff2");
+        unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+    </style>
 
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "SoftwareApplication",
-      "name": "OpenWhisp",
-      "description": "Local-first dictation for macOS. Hold a key, speak, release — your words are transcribed on-device with whisper.cpp and typed into any app.",
-      "applicationCategory": "UtilitiesApplication",
-      "operatingSystem": "macOS 14.0 or later, Apple Silicon",
-      "url": "https://initcore0.github.io/openwhisp-site/",
-      "downloadUrl": "https://github.com/initcore0/openwhisp/releases/latest",
-      "softwareVersion": "1.0.0",
-      "license": "https://github.com/initcore0/openwhisp/blob/main/LICENSE",
-      "sameAs": "https://github.com/initcore0/openwhisp",
-      "isAccessibleForFree": true,
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      "@graph": [
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://initcore0.github.io/openwhisp-site/#app",
+          "name": "OpenWhisp",
+          "description": "Local-first dictation for macOS. Hold a key, speak, release — your words are transcribed on-device and typed into any app.",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "macOS 14.0 or later, Apple Silicon",
+          "url": "https://initcore0.github.io/openwhisp-site/",
+          "downloadUrl": "https://github.com/initcore0/openwhisp/releases/latest",
+          "softwareVersion": "1.0.0",
+          "license": "https://github.com/initcore0/openwhisp/blob/main/LICENSE",
+          "sameAs": "https://github.com/initcore0/openwhisp",
+          "isAccessibleForFree": true,
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+          "image": "https://initcore0.github.io/openwhisp-site/og-image.png",
+          "featureList": [
+            "On-device speech-to-text with Whisper models",
+            "Voice editing of selected text in any app",
+            "Built-in offline AI refinement",
+            "Custom vocabulary and per-app modes",
+            "Searchable local transcription history",
+            "Twelve languages with auto-detection"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://initcore0.github.io/openwhisp-site/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Does my audio ever leave my Mac?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Transcription runs entirely on your Mac and works offline. Audio is never uploaded, and the recording is deleted after each transcription. The only time any text leaves your machine is if you explicitly choose the optional OpenAI provider for AI cleanup."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How much does OpenWhisp cost?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Nothing. OpenWhisp is free and open source under the MIT license — no account, no subscription, no usage meter."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What are the system requirements?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "An Apple Silicon Mac (M1 or newer) running macOS 14 Sonoma or later."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is it different from the built-in macOS dictation?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "OpenWhisp runs Whisper-class models for noticeably better accuracy, and adds things macOS dictation doesn't have: voice editing of selected text, AI refinement that runs offline, custom vocabulary, per-app modes, and a searchable local history."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why does macOS warn me on first launch?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The downloadable build is ad-hoc signed rather than notarized. Right-click OpenWhisp.app and choose Open once to confirm — or build it yourself from source."
+              }
+            }
+          ]
+        }
+      ]
     }
     </script>
   </head>

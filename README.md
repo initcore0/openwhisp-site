@@ -20,6 +20,11 @@ bun run build    # static output → react/dist/
 bun run preview  # serve the built output locally
 ```
 
+The build prerenders the page: after the client bundle is built, `scripts/prerender.mjs`
+renders the App to static HTML and injects it into `dist/index.html`, so crawlers get the
+full page content and the browser paints before JavaScript loads. The client bundle then
+hydrates the markup.
+
 The base path defaults to `/openwhisp-site/` (the GitHub Pages project path). Override it
 with `VITE_BASE` — e.g. `VITE_BASE=/ bun run build` for a custom domain at the root.
 
@@ -33,11 +38,13 @@ Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds `react/` a
 
 ```
 react/
-├── index.html              # document head: title, meta, Open Graph, JSON-LD
+├── index.html              # document head: title, meta, Open Graph, JSON-LD, @font-face
+├── scripts/prerender.mjs   # build step: bake the rendered App into dist/index.html
 ├── src/
 │   ├── App.tsx             # the page, section by section
+│   ├── prerender.tsx       # SSR entry used by scripts/prerender.mjs
 │   ├── index.css           # Tailwind v4 theme tokens + animations
 │   └── components/         # Waveform, EditDemo, Reveal, MagneticButton
-└── public/                 # favicons, og-image, robots.txt, sitemap.xml, .nojekyll
+└── public/                 # favicons, og-image, self-hosted fonts, robots.txt, sitemap.xml
 .github/workflows/deploy.yml
 ```

@@ -84,6 +84,13 @@ export function App() {
               <Heart weight="fill" className="h-4 w-4 transition-transform group-hover:scale-110" />
               Support
             </a>
+            <a
+              href={DMG}
+              rel="noopener"
+              className="hidden items-center gap-1.5 rounded-lg bg-speak px-3.5 py-2 font-display text-[13px] font-semibold text-[#04181a] transition-shadow hover:shadow-[0_0_18px_-2px_color-mix(in_srgb,var(--color-speak)_60%,transparent)] sm:inline-flex"
+            >
+              <DownloadSimple weight="bold" className="h-4 w-4" /> Download
+            </a>
           </nav>
         </div>
       </header>
@@ -384,6 +391,37 @@ export function App() {
           </div>
         </section>
 
+        {/* FAQ — visible copy mirrors the FAQPage JSON-LD in index.html */}
+        <section id="faq" className="mx-auto max-w-[820px] px-6 py-20 md:py-24">
+          <Eyebrow>Questions, answered</Eyebrow>
+          <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+            Frequently asked questions
+          </h2>
+          <div className="mt-9 border-y border-line">
+            <Faq q="Does my audio ever leave my Mac?">
+              No. Transcription runs entirely on your Mac and works offline. Audio is never uploaded, and the
+              recording is deleted after each transcription. The only time any text leaves your machine is if
+              you explicitly choose the optional OpenAI provider for AI cleanup.
+            </Faq>
+            <Faq q="How much does OpenWhisp cost?">
+              Nothing. OpenWhisp is free and open source under the MIT license &mdash; no account, no
+              subscription, no usage meter.
+            </Faq>
+            <Faq q="What are the system requirements?">
+              An Apple Silicon Mac (M1 or newer) running macOS&nbsp;14 Sonoma or later.
+            </Faq>
+            <Faq q="How is it different from the built-in macOS dictation?">
+              OpenWhisp runs Whisper-class models for noticeably better accuracy, and adds things macOS
+              dictation doesn&rsquo;t have: voice editing of selected text, AI refinement that runs offline,
+              custom vocabulary, per-app modes, and a searchable local history.
+            </Faq>
+            <Faq q="Why does macOS warn me on first launch?">
+              The downloadable build is ad-hoc signed rather than notarized. Right-click OpenWhisp.app and
+              choose Open once to confirm &mdash; or build it yourself from source.
+            </Faq>
+          </div>
+        </section>
+
         {/* FINAL CTA */}
         <section className="relative overflow-hidden py-24 text-center">
           <div
@@ -441,19 +479,19 @@ export function App() {
             <BrandMark className="h-5 w-5 text-speak" />
             OpenWhisp
           </div>
-          <nav className="flex gap-6 text-sm text-muted-d" aria-label="Footer">
+          <nav className="flex flex-wrap gap-6 text-sm text-muted-d" aria-label="Footer">
             <a className="hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a className="hover:text-listen" href={`${REPO}#readme`} rel="noopener">Docs</a>
             <a className="hover:text-listen" href={`${REPO}/releases`} rel="noopener">Releases</a>
+            <a className="hover:text-listen" href="#faq">FAQ</a>
             <a className="hover:text-listen" href={`${REPO}/blob/main/LICENSE`} rel="noopener">License</a>
             <a className="hover:text-refine" href={DONATE} rel="noopener">Support</a>
           </nav>
           <p className="ml-auto text-[13px] text-muted-d">
-            Transcription by{" "}
+            &copy; {new Date().getFullYear()} OpenWhisp &middot; MIT licensed &middot; Transcription by{" "}
             <a className="hover:text-speak" href="https://github.com/ggerganov/whisper.cpp" rel="noopener">
               whisper.cpp
             </a>
-            . MIT licensed.
           </p>
         </div>
       </footer>
@@ -520,6 +558,21 @@ function Feature({ icon, title, children }: { icon: React.ReactNode; title: stri
       <h3 className="font-display text-lg font-semibold text-ink">{title}</h3>
       <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{children}</p>
     </article>
+  );
+}
+
+function Faq({ q, children }: { q: string; children: React.ReactNode }) {
+  return (
+    <details className="group border-b border-line last:border-b-0">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-[17px] font-semibold text-listen transition-colors hover:text-speak [&::-webkit-details-marker]:hidden">
+        {q}
+        <CaretRight
+          weight="bold"
+          className="h-4 w-4 shrink-0 text-muted-d transition-transform duration-200 group-open:rotate-90"
+        />
+      </summary>
+      <p className="max-w-[62ch] pb-6 text-[15.5px] leading-relaxed text-muted-d">{children}</p>
+    </details>
   );
 }
 
