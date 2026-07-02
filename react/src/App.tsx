@@ -75,6 +75,7 @@ export function App() {
             <a className="transition-colors hover:text-listen" href="#refine">Voice editing</a>
             <a className="hidden transition-colors hover:text-listen md:inline" href="#models">Private AI</a>
             <a className="hidden transition-colors hover:text-listen sm:inline" href="#privacy">Privacy</a>
+            <a className="hidden transition-colors hover:text-listen sm:inline" href="/blog/">Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
               className="group inline-flex items-center gap-1.5 text-refine/80 transition-colors hover:text-refine"

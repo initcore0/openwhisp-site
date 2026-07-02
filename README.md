@@ -41,12 +41,29 @@ Pushes to `main` trigger `.github/workflows/deploy.yml`, which builds `react/` a
 ```
 react/
 ├── index.html              # document head: title, meta, Open Graph, JSON-LD, @font-face
-├── scripts/prerender.mjs   # build step: bake the rendered App into dist/index.html
+├── scripts/prerender.mjs   # build step: bake each route to its own index.html + gen sitemap
 ├── src/
-│   ├── App.tsx             # the page, section by section
+│   ├── App.tsx             # the home page, section by section
+│   ├── routes.tsx          # path -> page component (home, /blog/, /blog/<slug>/)
 │   ├── prerender.tsx       # SSR entry used by scripts/prerender.mjs
 │   ├── index.css           # Tailwind v4 theme tokens + animations
-│   └── components/         # Waveform, EditDemo, Reveal, MagneticButton
-└── public/                 # favicons, og-image, self-hosted fonts, robots.txt, sitemap.xml
+│   ├── components/         # Waveform, EditDemo, Reveal, MagneticButton
+│   └── blog/               # posts.tsx (content), BlogIndex, BlogPost, BlogLayout
+└── public/                 # favicons, og-image, self-hosted fonts, robots.txt, CNAME
 .github/workflows/deploy.yml
 ```
+
+## Adding a blog post
+
+Add an entry to `react/src/blog/posts.tsx` (slug, title, description, keyword,
+dates, an answer-first lead, the body, FAQ, and related slugs). The build
+prerenders it to `/blog/<slug>/index.html` with per-page title/canonical/OG and
+BlogPosting + BreadcrumbList + FAQPage JSON-LD, and adds it to `sitemap.xml`
+automatically. Posts live on this domain (canonical); syndicate to Medium/Dev.to
+with their canonical-import so the SEO credit stays here.
+
+## Analytics
+
+`index.html` includes a Cloudflare Web Analytics beacon (cookieless, no consent
+banner). Replace `CF_ANALYTICS_TOKEN` with the token from
+dash.cloudflare.com → Analytics → Web Analytics to activate it.

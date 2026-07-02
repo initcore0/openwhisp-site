@@ -138,5 +138,15 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <!-- Cloudflare Web Analytics — privacy-first, cookieless, no consent banner.
+         Create a site at dash.cloudflare.com → Analytics → Web Analytics, then
+         replace CF_ANALYTICS_TOKEN below with the token it gives you. Until then
+         this beacon is inert. -->
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token": "CF_ANALYTICS_TOKEN"}'
+    ></script>
   </body>
 </html>
