@@ -64,9 +64,7 @@ with their canonical-import so the SEO credit stays here.
 
 ## Analytics
 
-The domain is proxied through Cloudflare, so traffic is measured at the edge
-(Cloudflare dashboard → Analytics & Logs) — no client-side script, no cookies,
-no consent banner. The site ships with zero third-party scripts. If richer
-page-level metrics are ever needed, enable Cloudflare **Web Analytics** for
-`openwhisp.app` (automatic mode requires no snippet since the domain is
-proxied).
+`index.html` includes the Cloudflare Web Analytics beacon — cookieless, no
+consent banner, no cross-site tracking. It reports page-level views and Core
+Web Vitals in the Cloudflare dashboard (Analytics → Web Analytics). The token
+lives in the `data-cf-beacon` attribute.
