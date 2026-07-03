@@ -386,8 +386,8 @@ export function App() {
                 <Button href={`${REPO}/releases`} variant="ghost">All releases</Button>
               </div>
               <p className="mt-6 font-mono text-[13px] text-muted-d">
-                The downloadable build is ad-hoc signed, so on first launch macOS will warn you. Right-click{" "}
-                <span className="text-text-d">OpenWhisp.app &rarr; Open</span> to confirm, or build it yourself.
+                The download is signed and notarized by Apple, so it opens with a double-click &mdash; no Gatekeeper
+                warnings. Prefer to build it yourself? The full source is right here.
               </p>
             </div>
             <Terminal />
@@ -418,9 +418,10 @@ export function App() {
               dictation doesn&rsquo;t have: voice editing of selected text, AI refinement that runs offline,
               custom vocabulary, per-app modes, and a searchable local history.
             </Faq>
-            <Faq q="Why does macOS warn me on first launch?">
-              The downloadable build is ad-hoc signed rather than notarized. Right-click OpenWhisp.app and
-              choose Open once to confirm &mdash; or build it yourself from source.
+            <Faq q="How do I install OpenWhisp?">
+              Download the DMG, drag OpenWhisp to your Applications folder, and open it. The build is signed and
+              notarized by Apple, so it launches with a double-click &mdash; no Gatekeeper prompts. You can also
+              build it yourself from source.
             </Faq>
           </div>
         </section>
@@ -448,7 +449,7 @@ export function App() {
               </Button>
             </div>
             <p className="mt-5 font-mono text-[13px] text-muted-d">
-              Ad-hoc signed &mdash; on first launch, right-click <span className="text-text-d">OpenWhisp.app &rarr; Open</span>.
+              Signed &amp; notarized by Apple &middot; macOS&nbsp;14+ &middot; Apple&nbsp;Silicon
             </p>
           </div>
         </section>
@@ -461,8 +462,8 @@ export function App() {
               I appreciate your support
             </p>
             <p className="mx-auto mt-2 max-w-[46ch] text-[15px] leading-relaxed text-muted-d">
-              The first <span className="font-mono text-text-d">$99</span> goes toward an Apple Developer ID,
-              so future builds are notarized and macOS stops warning on first launch.
+              OpenWhisp is free and open source. If it saves you some typing, a coffee helps cover the Apple
+              Developer membership and keeps development moving.
             </p>
             <a
               href={DONATE}
