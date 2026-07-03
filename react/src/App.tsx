@@ -141,7 +141,7 @@ export function App() {
               style={{ background: "color-mix(in srgb, var(--color-ink-2) 92%, var(--color-listen))", animationDelay: "120ms" }}
               aria-label="OpenWhisp listening and transcribing speech into text"
             >
-              <Waveform className="block h-24 w-full" />
+              <Waveform className="block h-24 w-full [filter:drop-shadow(0_0_6px_color-mix(in_srgb,var(--color-speak)_45%,transparent))]" />
               <figcaption className="mt-3.5 min-h-[2.4em] text-[17px] text-listen">
                 Speak. It&rsquo;s typed. Nothing leaves your Mac.
                 <span className="caret-blink ml-0.5 inline-block h-[1.1em] w-0.5 translate-y-0.5 bg-speak align-text-bottom" />
