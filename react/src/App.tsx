@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ShieldCheck,
   CurrencyDollarSimple,
@@ -14,6 +15,8 @@ import {
   Cpu,
   Heart,
   HardDrives,
+  List,
+  X,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -61,6 +64,7 @@ function Eyebrow({ children, accent = "speak" }: { children: React.ReactNode; ac
 }
 
 export function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
       {/* NAV */}
@@ -70,12 +74,12 @@ export function App() {
             <BrandMark className="h-6 w-6 text-speak" />
             <span className="font-display text-lg font-semibold tracking-tight">OpenWhisp</span>
           </a>
-          <nav className="flex items-center gap-7 text-sm font-medium text-muted-d" aria-label="Primary">
-            <a className="hidden transition-colors hover:text-listen sm:inline" href="#features">Features</a>
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-7 text-sm font-medium text-muted-d md:flex" aria-label="Primary">
+            <a className="transition-colors hover:text-listen" href="#features">Features</a>
             <a className="transition-colors hover:text-listen" href="#refine">Voice editing</a>
-            <a className="hidden transition-colors hover:text-listen md:inline" href="#models">Private AI</a>
-            <a className="hidden transition-colors hover:text-listen sm:inline" href="#privacy">Privacy</a>
-            <a className="hidden transition-colors hover:text-listen sm:inline" href="/blog/">Blog</a>
+            <a className="transition-colors hover:text-listen" href="#privacy">Privacy</a>
+            <a className="transition-colors hover:text-listen" href="/blog/">Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
               className="group inline-flex items-center gap-1.5 text-refine/80 transition-colors hover:text-refine"
@@ -88,10 +92,67 @@ export function App() {
             <a
               href={DMG}
               rel="noopener"
-              className="hidden items-center gap-1.5 rounded-lg bg-speak px-3.5 py-2 font-display text-[13px] font-semibold text-[#04181a] transition-shadow hover:shadow-[0_0_18px_-2px_color-mix(in_srgb,var(--color-speak)_60%,transparent)] sm:inline-flex"
+              className="inline-flex items-center gap-1.5 rounded-lg bg-speak px-3.5 py-2 font-display text-[13px] font-semibold text-[#04181a] transition-shadow hover:shadow-[0_0_18px_-2px_color-mix(in_srgb,var(--color-speak)_60%,transparent)]"
             >
               <DownloadSimple weight="bold" className="h-4 w-4" /> Download
             </a>
+          </nav>
+
+          {/* Mobile: hamburger toggle */}
+          <button
+            type="button"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-menu"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            className="-mr-1 inline-flex h-10 w-10 items-center justify-center rounded-lg text-listen transition-colors hover:bg-ink-2 md:hidden"
+          >
+            {menuOpen ? <X weight="bold" className="h-5 w-5" /> : <List weight="bold" className="h-5 w-5" />}
+          </button>
+        </div>
+
+        {/* Mobile menu panel */}
+        <div
+          id="mobile-menu"
+          className={`overflow-hidden border-t border-line md:hidden ${menuOpen ? "block" : "hidden"}`}
+        >
+          <nav className="mx-auto flex max-w-[1180px] flex-col gap-1 px-4 py-4" aria-label="Mobile">
+            {[
+              { href: "#features", label: "Features" },
+              { href: "#refine", label: "Voice editing" },
+              { href: "#models", label: "Private AI" },
+              { href: "#privacy", label: "Privacy" },
+              { href: "/blog/", label: "Blog" },
+              { href: REPO, label: "GitHub", external: true },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                rel={item.external ? "noopener" : undefined}
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-3 py-3 font-display text-[15px] font-medium text-text-d transition-colors hover:bg-ink-2 hover:text-listen"
+              >
+                {item.label}
+              </a>
+            ))}
+            <div className="mt-2 grid gap-2.5 border-t border-line pt-4">
+              <a
+                href={DMG}
+                rel="noopener"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center justify-center gap-2 rounded-lg bg-speak px-4 py-3 font-display text-[15px] font-semibold text-[#04181a]"
+              >
+                <DownloadSimple weight="bold" className="h-4 w-4" /> Download for macOS
+              </a>
+              <a
+                href={DONATE}
+                rel="noopener"
+                onClick={() => setMenuOpen(false)}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border border-refine/40 px-4 py-3 font-display text-[15px] font-semibold text-refine transition-colors hover:bg-refine/10"
+              >
+                <Heart weight="fill" className="h-4 w-4" /> Support
+              </a>
+            </div>
           </nav>
         </div>
       </header>
