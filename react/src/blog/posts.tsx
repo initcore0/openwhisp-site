@@ -111,7 +111,7 @@ export const POSTS: Post[] = [
         a: "OpenWhisp is Mac and Apple-Silicon only, so there's no Windows, iPhone, or Android version. It also has fewer cross-platform and sync features than a paid cloud app like Wispr Flow.",
       },
     ],
-    related: ["edit-text-by-voice-mac"],
+    related: ["superwhisper-alternative", "best-mac-dictation-apps"],
   },
 
   {
@@ -178,7 +178,295 @@ export const POSTS: Post[] = [
         a: "No. The selection is read via the macOS Accessibility API, so your clipboard is left untouched, and secure or password fields are never read.",
       },
     ],
-    related: ["wispr-flow-alternative"],
+    related: ["private-on-device-ai-dictation", "best-mac-dictation-apps"],
+  },
+
+  {
+    slug: "best-mac-dictation-apps",
+    title: "The best local & private dictation apps for Mac (2026)",
+    description:
+      "A practical guide to Mac dictation apps in 2026 — local vs cloud, free vs paid, and which to pick if privacy or price matters most.",
+    keyword: "mac dictation app",
+    datePublished: "2026-07-03",
+    dateModified: "2026-07-03",
+    readingTime: "7 min read",
+    answer:
+      "The best Mac dictation app depends on what you value. For privacy and price, a local-first, open-source tool like OpenWhisp is the strongest pick — it transcribes on-device and is free. For a polished cross-platform cloud app, Wispr Flow leads; for a paid local app with a lifetime license, Superwhisper is the standout.",
+    body: (
+      <>
+        <P>
+          Dictation on the Mac has come a long way from &ldquo;computer, comma, new paragraph.&rdquo; Modern apps let
+          you hold a key, talk, and drop clean text into any app. But they split along two lines that matter more than
+          any feature list: <strong>local vs cloud</strong>, and <strong>free vs paid</strong>. This guide maps the
+          landscape so you can pick fast.
+        </P>
+
+        <H2>The two questions that decide it</H2>
+        <UL>
+          <li>
+            <strong>Does your audio leave the Mac?</strong> Cloud apps send your speech to a server; local apps keep it
+            on-device. If you dictate anything sensitive &mdash; legal, medical, financial &mdash; local wins by default.
+          </li>
+          <li>
+            <strong>Subscription or one-time?</strong> Cloud apps almost always charge monthly. Local apps can be a
+            one-time purchase, or free, because the compute is your own hardware.
+          </li>
+        </UL>
+
+        <H2>The main options in 2026</H2>
+        <P>
+          <strong>OpenWhisp</strong> &mdash; free, open source, and 100% on-device. Hold-to-talk into any app, plus{" "}
+          <A href="/blog/edit-text-by-voice-mac/">voice editing of selected text</A> and offline AI cleanup. Mac and
+          Apple Silicon only. Best if you want privacy and no subscription. See the full{" "}
+          <A href="/blog/wispr-flow-alternative/">OpenWhisp vs Wispr Flow</A> and{" "}
+          <A href="/blog/superwhisper-alternative/">OpenWhisp vs Superwhisper</A> comparisons.
+        </P>
+        <P>
+          <strong>Wispr Flow</strong> &mdash; cloud-based, polished, cross-platform (Mac, Windows, iPhone), ~$15/month.
+          Best if you want one synced tool everywhere and don&rsquo;t mind the subscription or the cloud.
+        </P>
+        <P>
+          <strong>Superwhisper</strong> &mdash; local-first with a lifetime-license option (~$249) or ~$8.49/month.
+          Wide model choice and custom modes. Best if you want a powerful local app and prefer paying once. Closed source.
+        </P>
+        <P>
+          <strong>MacWhisper</strong> &mdash; excellent for transcribing <em>files</em> (podcasts, meetings) at a
+          one-time price; dictation is secondary. <strong>Apple Dictation</strong> &mdash; free, native, private, but
+          minimal: no AI cleanup, custom vocabulary, or per-app behavior.
+        </P>
+
+        <H2>How to choose</H2>
+        <UL>
+          <li><strong>Privacy first, no subscription:</strong> OpenWhisp (free, local, open source).</li>
+          <li><strong>One polished app across devices:</strong> Wispr Flow.</li>
+          <li><strong>Powerful local app, pay once:</strong> Superwhisper.</li>
+          <li><strong>Mostly transcribing recordings:</strong> MacWhisper.</li>
+          <li><strong>Occasional, zero-setup dictation:</strong> Apple Dictation.</li>
+        </UL>
+
+        <P>
+          If privacy is the deciding factor, it&rsquo;s worth understanding what &ldquo;local&rdquo; really means &mdash;
+          see <A href="/blog/dictate-on-mac-offline/">how to dictate on a Mac completely offline</A> and{" "}
+          <A href="/blog/private-on-device-ai-dictation/">private, on-device AI dictation with no cloud</A>.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "What is the best dictation app for Mac in 2026?",
+        a: "It depends on your priorities. For privacy and price, OpenWhisp (free, open source, on-device) is the strongest pick. For a polished cross-platform cloud app, Wispr Flow leads. For a paid local app with a lifetime license, Superwhisper is the standout.",
+      },
+      {
+        q: "Is there a free dictation app for Mac?",
+        a: "Yes. OpenWhisp is free and open source, and Apple's built-in Dictation is free but minimal. Some paid apps also offer limited free tiers.",
+      },
+      {
+        q: "Which Mac dictation apps work fully offline?",
+        a: "Local-first apps like OpenWhisp and Superwhisper can transcribe on-device with no internet. Apple Dictation also runs on-device. Cloud apps like Wispr Flow require a connection.",
+      },
+    ],
+    related: ["wispr-flow-alternative", "superwhisper-alternative", "dictate-on-mac-offline"],
+  },
+
+  {
+    slug: "superwhisper-alternative",
+    title: "OpenWhisp vs Superwhisper: a free, open-source alternative",
+    description:
+      "Comparing OpenWhisp and Superwhisper for Mac dictation — free and open source vs paid and closed, both fully on-device. An honest look.",
+    keyword: "superwhisper alternative",
+    datePublished: "2026-07-03",
+    dateModified: "2026-07-03",
+    readingTime: "5 min read",
+    answer:
+      "OpenWhisp is a free, open-source alternative to Superwhisper. Both run Whisper-class models on-device on a Mac, so both keep your audio private. The difference is cost and openness: OpenWhisp is free and MIT-licensed, while Superwhisper is a paid app (about $8.49/month or a $249 lifetime license) that's closed source.",
+    body: (
+      <>
+        <P>
+          Superwhisper is a well-built local dictation app, and it&rsquo;s a fair benchmark. Both it and OpenWhisp
+          transcribe on your Mac rather than in the cloud, so on the core privacy question they&rsquo;re similar. Where
+          they differ is <strong>price</strong> and <strong>openness</strong>.
+        </P>
+
+        <H2>OpenWhisp vs Superwhisper at a glance</H2>
+        <UL>
+          <li><strong>Price:</strong> OpenWhisp is free. Superwhisper is ~$8.49/month or ~$249 lifetime.</li>
+          <li><strong>Source:</strong> OpenWhisp is open source (MIT) &mdash; you can read and change it. Superwhisper is closed.</li>
+          <li><strong>On-device:</strong> Both transcribe locally, so both keep audio on your machine.</li>
+          <li><strong>Voice editing:</strong> OpenWhisp can <A href="/blog/edit-text-by-voice-mac/">rewrite selected text by voice</A> in place.</li>
+          <li><strong>Offline AI cleanup:</strong> OpenWhisp bundles a small on-device model for refinement with no server to run.</li>
+        </UL>
+
+        <H2>Where Superwhisper is the better pick</H2>
+        <P>
+          To be fair: Superwhisper is mature, has a wide model selection and a polished modes system, and offers a
+          lifetime license if you dislike subscriptions but are happy to pay once. If you want a commercially supported
+          product with lots of built-in configuration, it&rsquo;s a strong choice.
+        </P>
+
+        <H2>Where OpenWhisp wins</H2>
+        <P>
+          OpenWhisp is free and open source, so there&rsquo;s no price and no black box &mdash; you can inspect exactly
+          what it does with your audio. It adds voice editing of existing text, and an offline AI cleanup model that
+          runs with zero setup. If &ldquo;free, private, and hackable&rdquo; matters more than a commercial feature
+          catalog, OpenWhisp is the pick. It&rsquo;s Mac and Apple Silicon only.
+        </P>
+
+        <P>
+          New to the category? Start with the overview of{" "}
+          <A href="/blog/best-mac-dictation-apps/">the best Mac dictation apps</A>.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Is there a free alternative to Superwhisper?",
+        a: "Yes. OpenWhisp is a free, open-source Mac dictation app that, like Superwhisper, transcribes on-device — but it has no subscription and no purchase price.",
+      },
+      {
+        q: "Is OpenWhisp as private as Superwhisper?",
+        a: "Both transcribe locally on your Mac, so audio stays on your machine in both cases. OpenWhisp is additionally open source, so you can verify its behavior directly.",
+      },
+      {
+        q: "Does OpenWhisp have a lifetime license like Superwhisper?",
+        a: "OpenWhisp is free and MIT-licensed, so there's nothing to buy — no subscription and no one-time fee.",
+      },
+    ],
+    related: ["wispr-flow-alternative", "best-mac-dictation-apps"],
+  },
+
+  {
+    slug: "dictate-on-mac-offline",
+    title: "How to dictate on a Mac completely offline",
+    description:
+      "You can dictate on a Mac with no internet at all. Here's how on-device transcription works and how to set up fully offline voice typing.",
+    keyword: "offline dictation mac",
+    datePublished: "2026-07-03",
+    dateModified: "2026-07-03",
+    readingTime: "4 min read",
+    answer:
+      "To dictate on a Mac completely offline, use an app that transcribes on-device instead of in the cloud. Install OpenWhisp, let it download a Whisper model once, and after that you can hold-to-talk and have your speech typed into any app with no internet connection — your audio never leaves the Mac.",
+    body: (
+      <>
+        <P>
+          Most dictation apps need a connection because they send your audio to a server to transcribe it. That means no
+          signal, no dictation &mdash; and your voice leaving your machine. On-device apps flip that: the speech model
+          runs locally, so dictation works on a plane, in a basement, or with Wi-Fi off entirely.
+        </P>
+
+        <H2>How offline dictation works</H2>
+        <P>
+          Apps like OpenWhisp run <A href="https://github.com/argmaxinc/WhisperKit">WhisperKit</A> (Whisper on Apple&rsquo;s
+          Neural Engine) directly on your Mac. The model file lives on your disk. Once it&rsquo;s downloaded, transcription
+          happens entirely on the device &mdash; no round trip to a server, and nothing to upload.
+        </P>
+
+        <H2>Set it up in three steps</H2>
+        <UL>
+          <li>Download and open OpenWhisp (Apple Silicon Mac, macOS 14+).</li>
+          <li>Let it download a speech model on first use &mdash; this one step needs the internet, like installing any app.</li>
+          <li>After that, turn Wi-Fi off if you like. Hold your push-to-talk key, speak, release, and the text lands in the focused app.</li>
+        </UL>
+
+        <H2>Why bother going offline</H2>
+        <UL>
+          <li><strong>Privacy:</strong> your audio never leaves the Mac, so there&rsquo;s nothing to intercept or store.</li>
+          <li><strong>Reliability:</strong> it works anywhere, with no dependency on a service being up.</li>
+          <li><strong>No subscription:</strong> local compute is yours, so tools like OpenWhisp can be free.</li>
+        </UL>
+
+        <P>
+          Want the AI cleanup pass to be offline too? See{" "}
+          <A href="/blog/private-on-device-ai-dictation/">private, on-device AI dictation with no cloud</A>. Comparing
+          tools? Here&rsquo;s <A href="/blog/best-mac-dictation-apps/">the best Mac dictation apps</A>.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can you dictate on a Mac without internet?",
+        a: "Yes. With an on-device app like OpenWhisp, the speech model runs locally, so after a one-time model download you can dictate with no internet connection at all.",
+      },
+      {
+        q: "Does offline dictation send my voice anywhere?",
+        a: "No. On-device transcription processes your audio locally on the Mac; nothing is uploaded, and the recording is deleted after each transcription.",
+      },
+      {
+        q: "Do I need the internet at all for offline dictation?",
+        a: "Only once, to download the speech model the first time — the same as installing any app. After that it works fully offline.",
+      },
+    ],
+    related: ["private-on-device-ai-dictation", "best-mac-dictation-apps"],
+  },
+
+  {
+    slug: "private-on-device-ai-dictation",
+    title: "Private, on-device AI dictation with no cloud",
+    description:
+      "Dictate and refine text with AI that runs entirely on your Mac. No account, no server, no audio or text sent to the cloud — here's how.",
+    keyword: "private dictation",
+    datePublished: "2026-07-03",
+    dateModified: "2026-07-03",
+    readingTime: "5 min read",
+    answer:
+      "Private, on-device AI dictation means both the speech-to-text and the optional AI cleanup run on your own Mac, so nothing is uploaded. OpenWhisp does this: it transcribes with WhisperKit locally and can refine your text with a small AI model that lives on your disk — no account, no server, no cloud.",
+    body: (
+      <>
+        <P>
+          &ldquo;AI dictation&rdquo; usually means your voice, and often your text, goes to someone else&rsquo;s
+          servers. For anyone handling sensitive material, that&rsquo;s a non-starter. The alternative is dictation where
+          <em> every</em> step runs on your own machine &mdash; and in 2026 that&rsquo;s fully practical on a Mac.
+        </P>
+
+        <H2>What &ldquo;on-device&rdquo; actually covers</H2>
+        <UL>
+          <li>
+            <strong>Transcription:</strong> the speech-to-text model runs locally (OpenWhisp uses{" "}
+            <A href="https://github.com/argmaxinc/WhisperKit">WhisperKit</A> on the Apple Neural Engine), so your audio
+            never leaves the Mac.
+          </li>
+          <li>
+            <strong>AI cleanup:</strong> the optional rewrite pass runs on a small open-weights model that OpenWhisp{" "}
+            <A href="https://openwhisp.app/#models">downloads to your disk</A> &mdash; no API key, no server, nothing
+            uploaded.
+          </li>
+        </UL>
+
+        <H2>How OpenWhisp keeps it private</H2>
+        <UL>
+          <li>Audio is recorded locally and the recording is deleted after each transcription.</li>
+          <li>The default AI cleanup runs on the built-in on-device model &mdash; text stays on your Mac.</li>
+          <li>The only time anything leaves your machine is if you deliberately choose the OpenAI provider instead.</li>
+          <li>Selected-text editing reads via the Accessibility API and never touches secure or password fields.</li>
+        </UL>
+
+        <H2>Who this is for</H2>
+        <P>
+          If you work in law, medicine, finance, or just prefer your words to stay yours, on-device AI dictation removes
+          the cloud from the equation entirely. It&rsquo;s also free and open source in OpenWhisp&rsquo;s case, so you
+          can verify the privacy claims in the code rather than taking them on faith.
+        </P>
+
+        <P>
+          Related: <A href="/blog/dictate-on-mac-offline/">dictate on a Mac completely offline</A> and{" "}
+          <A href="/blog/edit-text-by-voice-mac/">edit text by voice</A>.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can AI dictation run entirely on my Mac?",
+        a: "Yes. OpenWhisp transcribes with WhisperKit on-device and can run its AI cleanup on a small model stored on your disk, so both steps happen locally with nothing sent to the cloud.",
+      },
+      {
+        q: "Does private dictation need an account or API key?",
+        a: "No. OpenWhisp works with no account and no API key. The optional cloud provider (OpenAI) is the only thing that would need a key, and it's off by default.",
+      },
+      {
+        q: "How do I know my dictation is actually private?",
+        a: "OpenWhisp is open source, so you can read exactly how it handles audio and text. Audio is deleted after each transcription and transcripts are never written to log files.",
+      },
+    ],
+    related: ["dictate-on-mac-offline", "edit-text-by-voice-mac", "best-mac-dictation-apps"],
   },
 ];
 
