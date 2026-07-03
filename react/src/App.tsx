@@ -223,9 +223,9 @@ export function App() {
                 Want what you&rsquo;re saying reworked? Keep holding, tap the Refine key, and say &ldquo;make it
                 a Telegram post&rdquo; &mdash; on release, the AI rewrites it before it lands.
               </Feature>
-              <Feature icon={<Cpu weight="duotone" />} title="WhisperKit, Apple-native">
-                The default engine runs Whisper on Apple&rsquo;s Neural Engine via CoreML for fast, real-time
-                streaming. Prefer whisper.cpp or Apple Speech? Switch in a click.
+              <Feature icon={<Cpu weight="duotone" />} title="WhisperKit by default">
+                Transcription runs on WhisperKit &mdash; Whisper on Apple&rsquo;s Neural Engine via CoreML &mdash; for
+                fast, real-time streaming. whisper.cpp and Apple Speech stay available as fallbacks, one click away.
               </Feature>
               <Feature icon={<ClockCounterClockwise weight="duotone" />} title="Transcription history">
                 A local, searchable list of everything you&rsquo;ve dictated, ready to copy or reuse. Stored on
@@ -377,7 +377,7 @@ export function App() {
               </h2>
               <p className="mt-4 max-w-[46ch] text-muted-d">
                 OpenWhisp is MIT-licensed and built from plain Swift scripts &mdash; no Xcode project required.
-                Clone it, build whisper.cpp, and run:
+                Clone it, build the bundled runtimes, and run:
               </p>
               <div className="mt-7 flex flex-wrap gap-3.5">
                 <Button href={REPO} variant="primary">
@@ -492,7 +492,11 @@ export function App() {
             <a className="hover:text-refine" href={DONATE} rel="noopener">Support</a>
           </nav>
           <p className="ml-auto text-[13px] text-muted-d">
-            &copy; {new Date().getFullYear()} OpenWhisp &middot; MIT licensed &middot; Transcription by{" "}
+            &copy; {new Date().getFullYear()} OpenWhisp &middot; MIT licensed &middot; Powered by{" "}
+            <a className="hover:text-speak" href="https://github.com/argmaxinc/WhisperKit" rel="noopener">
+              WhisperKit
+            </a>{" "}
+            &amp;{" "}
             <a className="hover:text-speak" href="https://github.com/ggerganov/whisper.cpp" rel="noopener">
               whisper.cpp
             </a>
