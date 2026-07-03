@@ -93,8 +93,7 @@ export const POSTS: Post[] = [
         <P>
           OpenWhisp needs an Apple Silicon Mac on macOS 14 or later. Download it from the{" "}
           <A href="https://openwhisp.app/">OpenWhisp site</A> or grab the source on{" "}
-          <A href={REPO}>GitHub</A>. The build is currently ad-hoc signed, so on first launch you&rsquo;ll right-click the
-          app and choose Open once.
+          <A href={REPO}>GitHub</A>. The download is signed and notarized by Apple, so it opens with a double-click.
         </P>
       </>
     ),
@@ -109,7 +108,7 @@ export const POSTS: Post[] = [
       },
       {
         q: "What's the catch with a free Wispr Flow alternative?",
-        a: "OpenWhisp is Mac and Apple-Silicon only, and the downloadable build is ad-hoc signed so macOS warns on first launch. It has fewer cross-platform features than a paid cloud app.",
+        a: "OpenWhisp is Mac and Apple-Silicon only, so there's no Windows, iPhone, or Android version. It also has fewer cross-platform and sync features than a paid cloud app like Wispr Flow.",
       },
     ],
     related: ["edit-text-by-voice-mac"],
