@@ -66,7 +66,7 @@ export const POSTS: Post[] = [
         <H2>OpenWhisp vs Wispr Flow at a glance</H2>
         <UL>
           <li><strong>Price:</strong> OpenWhisp is free and open source (MIT). Wispr Flow is $15/month.</li>
-          <li><strong>Where it runs:</strong> OpenWhisp transcribes on-device with Whisper models; Wispr Flow is cloud-based.</li>
+          <li><strong>Where it runs:</strong> OpenWhisp transcribes on-device with WhisperKit on Apple&rsquo;s Neural Engine; Wispr Flow is cloud-based.</li>
           <li><strong>Privacy:</strong> With OpenWhisp your audio never leaves the Mac (unless you opt into a cloud model). Wispr Flow sends audio to its servers.</li>
           <li><strong>Platforms:</strong> Wispr Flow is cross-platform. OpenWhisp is Mac and Apple Silicon only.</li>
           <li><strong>Extras:</strong> OpenWhisp adds voice editing of selected text, offline AI cleanup, custom vocabulary, and per-app modes.</li>
@@ -104,7 +104,7 @@ export const POSTS: Post[] = [
       },
       {
         q: "Does OpenWhisp work offline like a local alternative?",
-        a: "Yes. Transcription runs on-device with Whisper models, so OpenWhisp works with no internet connection and your audio never leaves your Mac.",
+        a: "Yes. Transcription runs on-device with WhisperKit on Apple's Neural Engine (whisper.cpp is available as a fallback), so OpenWhisp works with no internet connection and your audio never leaves your Mac.",
       },
       {
         q: "What's the catch with a free Wispr Flow alternative?",
