@@ -41,6 +41,13 @@ function A({ href, children }: { href: string; children: ReactNode }) {
 function UL({ children }: { children: ReactNode }) {
   return <ul className="mt-5 grid list-disc gap-2 pl-5 leading-relaxed text-text-d marker:text-speak">{children}</ul>;
 }
+function Pre({ children }: { children: ReactNode }) {
+  return (
+    <pre className="mt-5 overflow-x-auto rounded-2xl border border-line bg-[#06080c] p-5 font-mono text-[13px] leading-[1.8] text-text-d">
+      <code>{children}</code>
+    </pre>
+  );
+}
 
 export const POSTS: Post[] = [
   {
@@ -467,6 +474,171 @@ export const POSTS: Post[] = [
       },
     ],
     related: ["dictate-on-mac-offline", "edit-text-by-voice-mac", "best-mac-dictation-apps"],
+  },
+
+  {
+    slug: "talk-to-claude-code-by-voice",
+    title: "Talk to Claude Code by voice: OpenWhisp is now an MCP server",
+    description:
+      "OpenWhisp's Agent Bridge turns it into a local MCP server: Claude Code, Cursor, and other coding agents can ask you questions by voice — fully on-device.",
+    keyword: "claude code voice input",
+    datePublished: "2026-07-04",
+    dateModified: "2026-07-04",
+    readingTime: "6 min read",
+    answer:
+      "To talk to Claude Code by voice, enable OpenWhisp's Agent Bridge and register it with one command: claude mcp add openwhisp. From then on your agent can ask questions out loud through the openwhisp_dictate tool — the voice overlay opens, you answer by speaking, and the transcript goes straight back to the agent. Everything runs on your Mac; no cloud, no API key.",
+    body: (
+      <>
+        <P>
+          If you use a coding agent, you know the rhythm: it works for a while, then stops to ask a question —
+          &ldquo;deploy to staging or production?&rdquo;, &ldquo;which of these three approaches do you
+          prefer?&rdquo; — and you type a paragraph back into a chat box. OpenWhisp&rsquo;s new{" "}
+          <strong>Agent Bridge</strong> closes that loop with your voice: the agent asks out loud, you answer
+          out loud, and it keeps working. No other dictation app ships this.
+        </P>
+
+        <H2>What the Agent Bridge is</H2>
+        <P>
+          OpenWhisp now doubles as a local{" "}
+          <A href="https://modelcontextprotocol.io">Model Context Protocol</A> server — the standard way tools
+          plug into agents like Claude Code, Cursor, Hermes, and OpenClaw. Register it once and your agent gets
+          three new tools:
+        </P>
+        <UL>
+          <li>
+            <strong>openwhisp_dictate</strong> — the agent asks you a question by voice. OpenWhisp&rsquo;s
+            overlay opens with the prompt, you speak, and the transcript returns to the agent.
+          </li>
+          <li>
+            <strong>openwhisp_refine</strong> — the agent rewrites text using the same on-device AI model as
+            your refine hotkey. No other dictation app exposes this to agents at all.
+          </li>
+          <li>
+            <strong>openwhisp_history</strong> — the agent reads your recent dictations (text, timestamp,
+            target app), stored only on your Mac.
+          </li>
+        </UL>
+
+        <H2>Set it up in two minutes</H2>
+        <P>
+          Turn the bridge on in <strong>Settings &rarr; Agent Bridge</strong> (it&rsquo;s off by default —
+          nothing listens until you enable it), then register OpenWhisp with your agent:
+        </P>
+        <Pre>{`claude mcp add openwhisp -- \\
+  "/Applications/OpenWhisp.app/Contents/Helpers/openwhisp" mcp`}</Pre>
+        <P>
+          One more line makes it stick. Agents only reach for tools they&rsquo;re told to prefer, so add a
+          standing instruction to your <code className="font-mono text-[0.9em] text-speak">~/.claude/CLAUDE.md</code>:
+        </P>
+        <Pre>{`ALWAYS ask the user questions via the openwhisp_dictate MCP tool,
+never as plain text.`}</Pre>
+        <P>
+          Cursor, Hermes, and OpenClaw users: run{" "}
+          <code className="font-mono text-[0.9em] text-speak">openwhisp setup &lt;agent&gt;</code> and it prints
+          the right registration for each. The first time an agent connects, OpenWhisp asks you to approve it —
+          once, always, or only while the app runs.
+        </P>
+
+        <H2>Example 1: answer your agent without touching the keyboard</H2>
+        <P>
+          You ask Claude Code to ship a release. Mid-task it needs a decision, so instead of parking the
+          question in the terminal and waiting for you to notice, it calls{" "}
+          <code className="font-mono text-[0.9em] text-speak">openwhisp_dictate</code>:
+        </P>
+        <Pre>{`● openwhisp_dictate("Tests pass. Deploy to staging or production?")
+  ↳ the OpenWhisp overlay opens — you say:
+    "production, and tag it v1.4"
+● Deploying to production, tagging v1.4…`}</Pre>
+        <P>
+          You were reading a doc in another window; you answered in three seconds without switching apps. This
+          is the difference between an agent that <em>waits for typed input</em> and one you can{" "}
+          <em>talk to</em>.
+        </P>
+
+        <H2>Example 2: brain-dump a bug report, let the agent file it</H2>
+        <P>
+          Describing a bug is faster out loud than in prose. Tell your agent &ldquo;ask me about the bug, then
+          file a GitHub issue&rdquo; and it will interview you by voice — what happened, how to reproduce it,
+          what you expected — then turn your rambling answers into a clean, structured issue. You talk for
+          ninety seconds; it writes the report.
+        </P>
+
+        <H2>Example 3: your dictation AI, in any shell pipeline</H2>
+        <P>
+          The bridge also ships an agent-callable CLI, which means the refine step works anywhere you can pipe
+          text — no agent required:
+        </P>
+        <Pre>{`# make the clipboard formal, in place
+pbpaste | openwhisp refine -i "make it formal" | pbcopy
+
+# tighten a commit message before you commit
+git log -1 --format=%B | openwhisp refine -i "tighten this up"`}</Pre>
+        <P>
+          The rewrite runs on the same on-device model as OpenWhisp&rsquo;s refine hotkey — your prompts, your
+          machine, <A href="/blog/private-on-device-ai-dictation/">nothing sent anywhere</A>.
+        </P>
+
+        <H2>Example 4: turn your dictation history into a standup</H2>
+        <P>
+          Everything you dictate is already in OpenWhisp&rsquo;s local, searchable history. With{" "}
+          <code className="font-mono text-[0.9em] text-speak">openwhisp_history</code>, your agent can use it:
+          &ldquo;read my dictations from this morning and draft a standup update&rdquo; — and the notes you
+          spoke into tickets, commit messages, and chats all day become a summary you didn&rsquo;t have to
+          write.
+        </P>
+
+        <H2>Built so agents can&rsquo;t go rogue</H2>
+        <P>
+          Handing agents a microphone and an AI model deserves paranoia, so the bridge is engineered around
+          consent:
+        </P>
+        <UL>
+          <li>
+            <strong>Off by default.</strong> No socket exists until you enable the bridge in Settings.
+          </li>
+          <li>
+            <strong>You approve every client.</strong> Each agent is approved the first time it connects, and
+            you can revoke any of them in Settings.
+          </li>
+          <li>
+            <strong>Local, signed connections only.</strong> The transport is a private UNIX socket on your
+            Mac — not a TCP port — and by default only OpenWhisp&rsquo;s own code-signed CLI may connect, so
+            browser pages and random processes can&rsquo;t reach it.
+          </li>
+          <li>
+            <strong>The cloud gate.</strong> If your AI provider is OpenAI, agent-initiated refinement is
+            blocked unless you explicitly allow it — a prompt-injected agent can&rsquo;t exfiltrate text
+            through your API key. Local models are unaffected.
+          </li>
+          <li>
+            <strong>The human always wins the mic.</strong> Pressing your dictation hotkey during an agent
+            session cancels it — the agent gets nothing — and starts your own. Agent microphone use always
+            shows the overlay, and password fields are never dictated into.
+          </li>
+        </UL>
+
+        <P>
+          The full design is documented in{" "}
+          <A href={`${REPO}/blob/main/docs/AGENT_BRIDGE.md`}>docs/AGENT_BRIDGE.md</A> — and because OpenWhisp
+          is open source, you can read the implementation rather than take the security story on faith.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Does voice input work with Cursor and other agents, not just Claude Code?",
+        a: "Yes. Any MCP-capable agent can use the bridge — run `openwhisp setup <agent>` for Cursor, Hermes, or OpenClaw registration. One note: Cursor caps tool calls near 60 seconds, so keep dictated answers short there.",
+      },
+      {
+        q: "Is my voice sent to the cloud when an agent asks me a question?",
+        a: "No. The agent's question and your spoken answer are handled entirely on your Mac — transcription runs on-device, and the bridge itself is a local UNIX socket, not a network service. Cloud AI is only involved if you explicitly allow agents to use a cloud provider for refinement.",
+      },
+      {
+        q: "Can any process on my Mac connect to the Agent Bridge?",
+        a: "No. The bridge is off by default, the socket is only readable by your user account, and by default only OpenWhisp's own code-signed CLI may connect. On top of that, every agent must be approved by you the first time it connects.",
+      },
+    ],
+    related: ["private-on-device-ai-dictation", "edit-text-by-voice-mac"],
   },
 ];
 
