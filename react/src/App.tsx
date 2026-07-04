@@ -64,7 +64,7 @@ const AGENT_TOOLS = [
   {
     name: "openwhisp_dictate",
     badge: undefined as string | undefined,
-    desc: "Your agent pauses and asks you a question by voice. The overlay opens, you speak, and the transcript goes straight back to the agent — no typing paragraphs into a chat box.",
+    desc: "Your agent pauses and asks you a question by voice. The overlay opens, you speak, and the moment you go quiet the transcript returns to the agent — no typing paragraphs into a chat box.",
   },
   {
     name: "openwhisp_refine",
@@ -943,14 +943,13 @@ function AgentBridgeDemo() {
       aria-label="Agent Bridge example: one-time setup, an agent asking a question by voice, and refining text from a shell pipeline"
     >
       <code>
-        <span className="text-muted"># one-time setup</span>
-        {"\n"}claude mcp add openwhisp -- \{"\n"}
-        {"  "}&quot;/Applications/OpenWhisp.app/Contents/Helpers/openwhisp&quot; mcp{"\n\n"}
+        <span className="text-muted"># one-time setup — registers the server + agent instructions</span>
+        {"\n"}openwhisp setup claude-code{"\n\n"}
         <span className="text-muted"># later, mid-task, your agent asks out loud:</span>
         {"\n"}
         <span className="text-refine">&#9679;</span> openwhisp_dictate(&quot;Deploy to staging or production?&quot;)
         {"\n"}
-        <span className="text-muted">  &#8627; overlay opens &middot; you speak</span>
+        <span className="text-muted">  &#8627; overlay opens &middot; you speak &middot; silence sends it</span>
         {"\n"}
         <span className="text-speak">&#9679;</span> &quot;production, and tag it v1.4&quot;{"\n\n"}
         <span className="text-muted"># the CLI composes in pipelines, too</span>

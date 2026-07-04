@@ -486,7 +486,7 @@ export const POSTS: Post[] = [
     dateModified: "2026-07-04",
     readingTime: "6 min read",
     answer:
-      "To talk to Claude Code by voice, enable OpenWhisp's Agent Bridge and register it with one command: claude mcp add openwhisp. From then on your agent can ask questions out loud through the openwhisp_dictate tool — the voice overlay opens, you answer by speaking, and the transcript goes straight back to the agent. Everything runs on your Mac; no cloud, no API key.",
+      "To talk to Claude Code by voice, enable OpenWhisp's Agent Bridge and run one command: openwhisp setup claude-code. It registers OpenWhisp as an MCP server and adds the agent instruction for you. From then on your agent asks questions out loud — the voice overlay opens, you speak, and when you go quiet the transcript returns to the agent. Everything runs on your Mac; no cloud, no API key.",
     body: (
       <>
         <P>
@@ -519,24 +519,28 @@ export const POSTS: Post[] = [
           </li>
         </UL>
 
-        <H2>Set it up in two minutes</H2>
+        <H2>Set it up in one command</H2>
         <P>
           Turn the bridge on in <strong>Settings &rarr; Agent Bridge</strong> (it&rsquo;s off by default —
-          nothing listens until you enable it), then register OpenWhisp with your agent:
+          nothing listens until you enable it), then let OpenWhisp wire itself up:
         </P>
-        <Pre>{`claude mcp add openwhisp -- \\
-  "/Applications/OpenWhisp.app/Contents/Helpers/openwhisp" mcp`}</Pre>
+        <Pre>{`openwhisp setup claude-code`}</Pre>
         <P>
-          One more line makes it stick. Agents only reach for tools they&rsquo;re told to prefer, so add a
-          standing instruction to your <code className="font-mono text-[0.9em] text-speak">~/.claude/CLAUDE.md</code>:
+          That does two things: registers OpenWhisp as an MCP server (via{" "}
+          <code className="font-mono text-[0.9em] text-speak">claude mcp add</code>), and appends a standing
+          instruction to your <code className="font-mono text-[0.9em] text-speak">~/.claude/CLAUDE.md</code>{" "}
+          telling the agent to ask questions through{" "}
+          <code className="font-mono text-[0.9em] text-speak">openwhisp_dictate</code> instead of plain text.
+          The instruction line matters — agents only reach for tools they&rsquo;re told to prefer. Both steps
+          are idempotent, so re-running is safe, and{" "}
+          <code className="font-mono text-[0.9em] text-speak">--print</code> previews the changes without
+          writing anything.
         </P>
-        <Pre>{`ALWAYS ask the user questions via the openwhisp_dictate MCP tool,
-never as plain text.`}</Pre>
         <P>
-          Cursor, Hermes, and OpenClaw users: run{" "}
-          <code className="font-mono text-[0.9em] text-speak">openwhisp setup &lt;agent&gt;</code> and it prints
-          the right registration for each. The first time an agent connects, OpenWhisp asks you to approve it —
-          once, always, or only while the app runs.
+          <code className="font-mono text-[0.9em] text-speak">openwhisp setup cursor</code> merges the server
+          into your project&rsquo;s <code className="font-mono text-[0.9em] text-speak">.cursor/mcp.json</code>{" "}
+          without disturbing other servers you have; Hermes and OpenClaw get printed instructions. The first
+          time an agent connects, OpenWhisp asks you to approve it — once, always, or only while the app runs.
         </P>
 
         <H2>Example 1: answer your agent without touching the keyboard</H2>
@@ -548,11 +552,16 @@ never as plain text.`}</Pre>
         <Pre>{`● openwhisp_dictate("Tests pass. Deploy to staging or production?")
   ↳ the OpenWhisp overlay opens — you say:
     "production, and tag it v1.4"
+  ↳ you go quiet — the answer is sent on its own
 ● Deploying to production, tagging v1.4…`}</Pre>
         <P>
-          You were reading a doc in another window; you answered in three seconds without switching apps. This
-          is the difference between an agent that <em>waits for typed input</em> and one you can{" "}
-          <em>talk to</em>.
+          You were reading a doc in another window; you answered in three seconds without switching apps or
+          pressing a single key — when you stop talking, OpenWhisp detects the silence and ends the turn for
+          you (a natural pause between words won&rsquo;t cut you off; toggleable in Settings). Prefer an
+          explicit finish? <code className="font-mono text-[0.9em] text-speak">openwhisp dictate --stop</code>{" "}
+          from any shell sends what was captured, and{" "}
+          <code className="font-mono text-[0.9em] text-speak">--cancel</code> discards it. This is the
+          difference between an agent that <em>waits for typed input</em> and one you can <em>talk to</em>.
         </P>
 
         <H2>Example 2: brain-dump a bug report, let the agent file it</H2>
@@ -627,7 +636,7 @@ git log -1 --format=%B | openwhisp refine -i "tighten this up"`}</Pre>
     faq: [
       {
         q: "Does voice input work with Cursor and other agents, not just Claude Code?",
-        a: "Yes. Any MCP-capable agent can use the bridge — run `openwhisp setup <agent>` for Cursor, Hermes, or OpenClaw registration. One note: Cursor caps tool calls near 60 seconds, so keep dictated answers short there.",
+        a: "Yes. Any MCP-capable agent can use the bridge — run `openwhisp setup <agent>` for Cursor, Hermes, or OpenClaw. Short tool-call timeouts aren't a problem either: while a dictation waits for you, OpenWhisp streams MCP progress notifications so agents like Cursor (which caps tool calls near 60 seconds) don't give up mid-answer.",
       },
       {
         q: "Is my voice sent to the cloud when an agent asks me a question?",
