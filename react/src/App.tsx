@@ -19,6 +19,7 @@ import {
   X,
   PaperPlaneTilt,
   CheckCircle,
+  PlugsConnected,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -58,6 +59,25 @@ const MODELS = [
   },
 ] as const;
 
+// The three tools the Agent Bridge exposes over MCP (docs/AGENT_BRIDGE.md in the app repo).
+const AGENT_TOOLS = [
+  {
+    name: "openwhisp_dictate",
+    badge: undefined as string | undefined,
+    desc: "Your agent pauses and asks you a question by voice. The overlay opens, you speak, and the transcript goes straight back to the agent — no typing paragraphs into a chat box.",
+  },
+  {
+    name: "openwhisp_refine",
+    badge: "only in OpenWhisp",
+    desc: "Agents rewrite text with the same on-device model as your refine hotkey — your prompts, your machine, nothing sent anywhere.",
+  },
+  {
+    name: "openwhisp_history",
+    badge: undefined,
+    desc: "Recent dictations — text, timestamp, target app — readable by the agent, stored only on your Mac.",
+  },
+] as const;
+
 function Eyebrow({ children, accent = "speak" }: { children: React.ReactNode; accent?: "speak" | "refine" }) {
   return (
     <p
@@ -83,7 +103,7 @@ export function App() {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-7 text-sm font-medium text-muted-d md:flex" aria-label="Primary">
             <a className="transition-colors hover:text-listen" href="#features">Features</a>
-            <a className="transition-colors hover:text-listen" href="#refine">Voice editing</a>
+            <a className="transition-colors hover:text-listen" href="#mcp">MCP</a>
             <a className="transition-colors hover:text-listen" href="#privacy">Privacy</a>
             <a className="transition-colors hover:text-listen" href="/blog/">Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
@@ -125,7 +145,7 @@ export function App() {
           <nav className="mx-auto flex max-w-[1180px] flex-col gap-1 px-4 py-4" aria-label="Mobile">
             {[
               { href: "#features", label: "Features" },
-              { href: "#refine", label: "Voice editing" },
+              { href: "#mcp", label: "MCP" },
               { href: "#models", label: "Private AI" },
               { href: "#privacy", label: "Privacy" },
               { href: "/blog/", label: "Blog" },
@@ -348,6 +368,66 @@ export function App() {
 
             {/* before -> gesture -> after, animated on a loop */}
             <EditDemo />
+          </div>
+        </section>
+
+        {/* AGENT BRIDGE — MCP server + CLI for coding agents */}
+        <section id="mcp" className="relative overflow-hidden border-y border-line bg-ink-2 py-20 md:py-24">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(55% 60% at 15% 25%, color-mix(in srgb, var(--color-speak) 10%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-[1180px] px-6">
+            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-speak">
+              <PlugsConnected weight="duotone" className="h-4 w-4" />
+              Agent Bridge &middot; built-in MCP server
+            </p>
+            <h2 className="mt-5 max-w-[22ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+              Give your coding agent a voice &mdash; yours
+            </h2>
+            <p className="mt-4 max-w-[62ch] leading-relaxed text-text-d">
+              OpenWhisp doubles as a local{" "}
+              <a
+                href="https://modelcontextprotocol.io"
+                rel="noopener"
+                className="border-b border-speak/45 text-speak transition-colors hover:border-speak"
+              >
+                MCP
+              </a>{" "}
+              server and command-line tool for Claude Code, Cursor, Hermes, and OpenClaw. Instead of
+              stopping mid-task to wait for typed input, your agent asks you out loud &mdash; you answer by
+              voice and it keeps working. No other dictation app ships this.
+            </p>
+
+            <div className="mt-11 grid items-start gap-10 md:grid-cols-[1fr_1.05fr]">
+              <ul className="grid gap-4">
+                {AGENT_TOOLS.map((t) => (
+                  <li key={t.name} className="rounded-2xl border border-line bg-ink p-5">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <span className="font-mono text-[13.5px] font-medium text-speak">{t.name}</span>
+                      {t.badge && (
+                        <span className="rounded-full border border-refine/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-refine">
+                          {t.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1.5 text-[15px] leading-relaxed text-muted-d">{t.desc}</p>
+                  </li>
+                ))}
+              </ul>
+              <AgentBridgeDemo />
+            </div>
+
+            <p className="mt-9 max-w-[74ch] font-mono text-[13px] leading-relaxed text-muted-d">
+              <span className="text-speak">Off by default.</span> Nothing listens until you enable it in
+              Settings, and you approve each agent the first time it connects. The bridge is a private
+              socket on your Mac &mdash; no open port, no cloud, only signed clients &mdash; agents
+              can&rsquo;t touch cloud AI unless you allow it, and pressing your dictation hotkey always
+              takes the mic back from an agent.
+            </p>
           </div>
         </section>
 
@@ -851,6 +931,30 @@ function Terminal() {
         {"\n"}./scripts/build-whisper.sh{"\n\n"}
         <span className="text-muted"># compile, package, run</span>
         {"\n"}./build.sh &amp;&amp; ./package.sh{"\n"}open build/OpenWhisp.app
+      </code>
+    </pre>
+  );
+}
+
+function AgentBridgeDemo() {
+  return (
+    <pre
+      className="overflow-x-auto rounded-2xl border border-line bg-[#06080c] p-6 font-mono text-[13.5px] leading-[1.85] text-text-d shadow-[0_24px_60px_-30px_#000]"
+      aria-label="Agent Bridge example: one-time setup, an agent asking a question by voice, and refining text from a shell pipeline"
+    >
+      <code>
+        <span className="text-muted"># one-time setup</span>
+        {"\n"}claude mcp add openwhisp -- \{"\n"}
+        {"  "}&quot;/Applications/OpenWhisp.app/Contents/Helpers/openwhisp&quot; mcp{"\n\n"}
+        <span className="text-muted"># later, mid-task, your agent asks out loud:</span>
+        {"\n"}
+        <span className="text-refine">&#9679;</span> openwhisp_dictate(&quot;Deploy to staging or production?&quot;)
+        {"\n"}
+        <span className="text-muted">  &#8627; overlay opens &middot; you speak</span>
+        {"\n"}
+        <span className="text-speak">&#9679;</span> &quot;production, and tag it v1.4&quot;{"\n\n"}
+        <span className="text-muted"># the CLI composes in pipelines, too</span>
+        {"\n"}pbpaste | openwhisp refine -i &quot;make it formal&quot; | pbcopy
       </code>
     </pre>
   );
