@@ -17,6 +17,8 @@ import {
   HardDrives,
   List,
   X,
+  PaperPlaneTilt,
+  CheckCircle,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -26,6 +28,10 @@ import { EditDemo } from "./components/EditDemo";
 const REPO = "https://github.com/initcore0/openwhisp";
 const DMG = `${REPO}/releases/latest/download/OpenWhisp.dmg`;
 const DONATE = "https://buymeacoffee.com/initcore0";
+// Assembled at runtime so the address never appears verbatim in the prerendered
+// HTML or the bundle — keeps it off the cheap email-scraper radar.
+const CONTACT_EMAIL = ["maksym", ".", "naboka", "@", "gmail", ".", "com"].join("");
+const CONTACT_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
 
 // The on-device refinement models OpenWhisp can download and run locally.
 const MODELS = [
@@ -123,6 +129,7 @@ export function App() {
               { href: "#models", label: "Private AI" },
               { href: "#privacy", label: "Privacy" },
               { href: "/blog/", label: "Blog" },
+              { href: "#contact", label: "Contact" },
               { href: REPO, label: "GitHub", external: true },
             ].map((item) => (
               <a
@@ -535,6 +542,31 @@ export function App() {
             </a>
           </div>
         </section>
+
+        {/* CONTACT */}
+        <section id="contact" className="border-t border-line py-20 md:py-24">
+          <div className="mx-auto grid max-w-[1180px] gap-12 px-6 md:grid-cols-[1fr_1.1fr]">
+            <div>
+              <Eyebrow>Say hello</Eyebrow>
+              <h2 className="font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+                Questions, ideas, kind words
+              </h2>
+              <p className="mt-4 max-w-[44ch] leading-relaxed text-muted-d">
+                Found a bug or want a feature? The best place is a{" "}
+                <a
+                  href={`${REPO}/issues`}
+                  rel="noopener"
+                  className="border-b border-speak/45 text-speak transition-colors hover:border-speak"
+                >
+                  GitHub issue
+                </a>
+                . For everything else &mdash; feedback, questions, or just to say the app saved you some
+                typing &mdash; drop a note here and it lands straight in my inbox.
+              </p>
+            </div>
+            <ContactForm />
+          </div>
+        </section>
       </main>
 
       {/* FOOTER */}
@@ -549,6 +581,7 @@ export function App() {
             <a className="hover:text-listen" href={`${REPO}#readme`} rel="noopener">Docs</a>
             <a className="hover:text-listen" href={`${REPO}/releases`} rel="noopener">Releases</a>
             <a className="hover:text-listen" href="#faq">FAQ</a>
+            <a className="hover:text-listen" href="#contact">Contact</a>
             <a className="hover:text-listen" href={`${REPO}/blob/main/LICENSE`} rel="noopener">License</a>
             <a className="hover:text-refine" href={DONATE} rel="noopener">Support</a>
           </nav>
@@ -569,6 +602,111 @@ export function App() {
 }
 
 /* ---------- small building blocks ---------- */
+
+function ContactForm() {
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
+    // FormSubmit's honeypot: bots fill it, humans never see it.
+    if (data._honey) return;
+    setStatus("sending");
+    try {
+      const res = await fetch(CONTACT_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          ...data,
+          _subject: "OpenWhisp contact form",
+          _template: "table",
+          _captcha: "false",
+        }),
+      });
+      if (!res.ok) throw new Error(`${res.status}`);
+      // FormSubmit returns 200 with success:"false" (e.g. before the form is
+      // activated) — treat that as a failure so the sender gets the fallback.
+      const body = await res.json().catch(() => null);
+      if (body && String(body.success) === "false") throw new Error("rejected");
+      form.reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  if (status === "sent") {
+    return (
+      <div className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border border-speak/30 bg-speak/[0.06] p-8 text-center">
+        <CheckCircle weight="duotone" className="h-10 w-10 text-speak" />
+        <p className="mt-4 font-display text-xl font-semibold text-listen">Message sent</p>
+        <p className="mt-2 max-w-[36ch] text-[15px] leading-relaxed text-muted-d">
+          Thanks for writing &mdash; it&rsquo;s on its way to my inbox. If you left an email,
+          I&rsquo;ll get back to you.
+        </p>
+      </div>
+    );
+  }
+
+  const field =
+    "w-full rounded-[10px] border border-line bg-ink-2 px-4 py-3 text-[15px] text-listen outline-none transition-colors placeholder:text-muted-d/60 focus:border-speak/60";
+
+  return (
+    <form onSubmit={handleSubmit} className="grid gap-4" aria-label="Contact form">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="grid gap-1.5">
+          <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted-d">Name</span>
+          <input name="name" type="text" autoComplete="name" placeholder="Ada Lovelace" className={field} />
+        </label>
+        <label className="grid gap-1.5">
+          <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted-d">
+            Email <span className="normal-case tracking-normal">(if you&rsquo;d like a reply)</span>
+          </span>
+          <input name="email" type="email" autoComplete="email" placeholder="you@example.com" className={field} />
+        </label>
+      </div>
+      <label className="grid gap-1.5">
+        <span className="font-mono text-xs uppercase tracking-[0.12em] text-muted-d">Message</span>
+        <textarea
+          name="message"
+          required
+          rows={5}
+          placeholder="What's on your mind?"
+          className={`${field} resize-y`}
+        />
+      </label>
+      {/* honeypot — visually hidden, tabbed past by humans */}
+      <input
+        type="text"
+        name="_honey"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        className="absolute -left-[9999px] h-0 w-0 opacity-0"
+      />
+      <div className="flex flex-wrap items-center gap-4">
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="inline-flex items-center justify-center gap-2 rounded-[10px] border border-transparent bg-speak px-6 py-3 font-display text-base font-semibold text-[#04181a] transition-all duration-150 hover:shadow-[0_0_24px_-2px_color-mix(in_srgb,var(--color-speak)_55%,transparent)] active:translate-y-px disabled:cursor-default disabled:opacity-60 disabled:hover:shadow-none"
+        >
+          <PaperPlaneTilt weight="bold" className="h-5 w-5" />
+          {status === "sending" ? "Sending…" : "Send message"}
+        </button>
+        {status === "error" && (
+          <p className="text-sm text-refine">
+            Hmm, that didn&rsquo;t go through &mdash; mind emailing me directly at{" "}
+            <a className="border-b border-refine/45 hover:border-refine" href={`mailto:${CONTACT_EMAIL}`}>
+              {CONTACT_EMAIL}
+            </a>
+            ?
+          </p>
+        )}
+      </div>
+    </form>
+  );
+}
 
 function Button({
   href,
