@@ -52,3 +52,41 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Censorship-resistant mirror: the same site rebuilt under the
+  # /openwhisp-mirror/ base and pushed to the separate initcore0/openwhisp-mirror
+  # repo, whose Pages URL (initcore0.github.io/openwhisp-mirror) is served from
+  # GitHub's own IPs — reachable where the Cloudflare-proxied openwhisp.app is
+  # blocked. Independent of the primary deploy above.
+  deploy-mirror:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: react
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build mirror variant
+        run: bun run build
+        env:
+          # Must equal the mirror repo name so project-Pages asset/link paths
+          # resolve under initcore0.github.io/openwhisp-mirror/.
+          VITE_BASE: /openwhisp-mirror/
+
+      - name: Publish to openwhisp-mirror Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          external_repository: initcore0/openwhisp-mirror
+          publish_branch: gh-pages
+          publish_dir: react/dist
+          # The mirror is a project Pages site with no custom domain, so it
+          # keeps GitHub's default *.github.io host (do not add a CNAME here).
+          commit_message: "Publish mirror from ${{ github.sha }}"

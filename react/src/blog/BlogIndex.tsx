@@ -1,5 +1,6 @@
 import { BlogLayout } from "./BlogLayout";
 import { POSTS } from "./posts";
+import { withBase } from "../base";
 import { ArrowRight } from "@phosphor-icons/react";
 
 /** The /blog index: lists every post, newest first. */
@@ -21,7 +22,7 @@ export function BlogIndex() {
           {posts.map((p) => (
             <li key={p.slug}>
               <a
-                href={`/blog/${p.slug}/`}
+                href={withBase(`/blog/${p.slug}/`)}
                 className="group block rounded-2xl border border-line bg-ink-2 p-6 transition-colors hover:border-muted-d"
               >
                 <div className="flex items-center gap-3 font-mono text-xs text-muted-d">

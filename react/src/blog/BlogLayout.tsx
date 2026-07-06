@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { GithubLogo, Heart, List, X, DownloadSimple } from "@phosphor-icons/react";
+import { withBase } from "../base";
 
 const REPO = "https://github.com/initcore0/openwhisp";
 const DONATE = "https://buymeacoffee.com/initcore0";
@@ -25,14 +26,14 @@ export function BlogLayout({ children }: { children: ReactNode }) {
     <>
       <header className="sticky top-0 z-50 border-b border-line bg-ink/80 backdrop-blur-md backdrop-saturate-150">
         <div className="mx-auto flex h-16 max-w-[1180px] items-center justify-between px-6">
-          <a href="/" className="flex items-center gap-2.5 text-listen" aria-label="OpenWhisp home">
+          <a href={withBase("/")} className="flex items-center gap-2.5 text-listen" aria-label="OpenWhisp home">
             <BrandMark className="h-6 w-6 text-speak" />
             <span className="font-display text-lg font-semibold tracking-tight">OpenWhisp</span>
           </a>
           {/* Desktop nav */}
           <nav className="hidden items-center gap-7 text-sm font-medium text-muted-d md:flex" aria-label="Primary">
-            <a className="transition-colors hover:text-listen" href="/#features">Features</a>
-            <a className="transition-colors hover:text-listen" href="/blog/">Blog</a>
+            <a className="transition-colors hover:text-listen" href={withBase("/#features")}>Features</a>
+            <a className="transition-colors hover:text-listen" href={withBase("/blog/")}>Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
               className="group inline-flex items-center gap-1.5 text-refine/80 transition-colors hover:text-refine"
@@ -65,7 +66,7 @@ export function BlogLayout({ children }: { children: ReactNode }) {
             ].map((item) => (
               <a
                 key={item.label}
-                href={item.href}
+                href={item.external ? item.href : withBase(item.href)}
                 rel={item.external ? "noopener" : undefined}
                 onClick={() => setMenuOpen(false)}
                 className="rounded-lg px-3 py-3 font-display text-[15px] font-medium text-text-d transition-colors hover:bg-ink-2 hover:text-listen"
@@ -104,8 +105,8 @@ export function BlogLayout({ children }: { children: ReactNode }) {
             OpenWhisp
           </div>
           <nav className="flex gap-6 text-sm text-muted-d" aria-label="Footer">
-            <a className="hover:text-listen" href="/">Home</a>
-            <a className="hover:text-listen" href="/blog/">Blog</a>
+            <a className="hover:text-listen" href={withBase("/")}>Home</a>
+            <a className="hover:text-listen" href={withBase("/blog/")}>Blog</a>
             <a className="hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a className="inline-flex items-center gap-1.5 hover:text-refine" href={DONATE} rel="noopener">
               <GithubLogo className="hidden" />Support
