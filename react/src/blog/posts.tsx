@@ -31,6 +31,18 @@ function P({ children }: { children: ReactNode }) {
 function H2({ children }: { children: ReactNode }) {
   return <h2 className="mt-12 font-display text-2xl font-semibold tracking-tight text-listen md:text-3xl">{children}</h2>;
 }
+function H3({ children }: { children: ReactNode }) {
+  return <h3 className="mt-8 font-display text-xl font-semibold tracking-tight text-listen">{children}</h3>;
+}
+// A visually-set-apart callout — used to flag forward-looking/vision content
+// so it can't be mistaken for a shipped feature.
+function Note({ children }: { children: ReactNode }) {
+  return (
+    <div className="mt-8 rounded-2xl border border-refine/30 bg-refine/[0.06] p-5 text-[15px] leading-relaxed text-text-d">
+      {children}
+    </div>
+  );
+}
 function A({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a href={href} rel="noopener" className="border-b border-speak/40 text-speak transition-colors hover:border-speak">
@@ -647,7 +659,176 @@ git log -1 --format=%B | openwhisp refine -i "tighten this up"`}</Pre>
         a: "No. The bridge is off by default, the socket is only readable by your user account, and by default only OpenWhisp's own code-signed CLI may connect. On top of that, every agent must be approved by you the first time it connects.",
       },
     ],
-    related: ["private-on-device-ai-dictation", "edit-text-by-voice-mac"],
+    related: ["human-in-the-loop-for-a-swarm-of-agents", "private-on-device-ai-dictation", "edit-text-by-voice-mac"],
+  },
+
+  {
+    slug: "human-in-the-loop-for-a-swarm-of-agents",
+    title: "The human in the loop for a swarm of agents",
+    description:
+      "As people run many coding agents at once, the bottleneck becomes human attention. Here's why OpenWhisp could become the place a swarm of agents reaches you — a thesis, not a shipped feature.",
+    keyword: "human in the loop multi-agent",
+    datePublished: "2026-07-05",
+    dateModified: "2026-07-05",
+    readingTime: "7 min read",
+    answer:
+      "As you run more coding agents in parallel, the bottleneck stops being any agent's speed and becomes your attention — you're the thing they all wait on. This is a thesis about where OpenWhisp could go, not a feature we've shipped: because it already owns the microphone, the overlay, and a private per-agent channel on your Mac, OpenWhisp is well-placed to become the endpoint where a swarm of agents reaches the human — the star at the center, not the wire the agents talk to each other on.",
+    body: (
+      <>
+        <Note>
+          <strong>This is a vision piece, not a changelog.</strong> Everything below describes where we think
+          OpenWhisp <em>could</em> go and why the architecture fits — it is <em>not</em> a description of
+          features that exist today. What ships today is the{" "}
+          <A href="/blog/talk-to-claude-code-by-voice/">Agent Bridge</A>: a single agent can ask you a
+          question by voice. The multi-agent ideas here are unbuilt. We&rsquo;re writing it down to think in
+          public and to invite disagreement.
+        </Note>
+
+        <P>
+          Something changes when you stop running one coding agent and start running several. One Claude Code
+          in a terminal, a second refactoring a different package, a background reviewer, a Cursor window on a
+          third thing. Each is fast. The system is not — because the moment any of them needs a decision, it
+          waits for the same scarce resource: <strong>you</strong>, noticing, context-switching, and
+          answering.
+        </P>
+        <P>
+          Add more agents and you don&rsquo;t get more throughput. You get a longer queue at a single
+          checkout lane. The bottleneck has moved off the machines and onto the one human they all depend on.
+          That is the real unsolved problem of multi-agent work, and it is an <em>attention</em> problem
+          before it is a coordination problem.
+        </P>
+
+        <H2>The tempting wrong answer: &ldquo;build a bus&rdquo;</H2>
+        <P>
+          The obvious reframing is: if there are many agents and a human, they need a shared channel to talk —
+          a message bus — and the human plugs into it. And since OpenWhisp already sits between agents and the
+          person, maybe OpenWhisp <em>is</em> that bus.
+        </P>
+        <P>
+          We want to argue against that, out loud, because it&rsquo;s the version of this idea we find
+          seductive and think is a trap.
+        </P>
+        <UL>
+          <li>
+            <strong>A bus and a consent gate are opposites.</strong> Everything that makes a local agent
+            bridge trustworthy is about <em>isolation</em>: a private per-connection channel, signed clients
+            only, per-scope consent, no way for one agent to reach another through the trusted process. A bus
+            does the reverse — its whole job is to route messages between parties. The instant OpenWhisp
+            relays Agent A&rsquo;s message to Agent B, a prompt-injected agent can reach other agents through a
+            process that holds microphone and accessibility permissions. You&rsquo;d be dismantling the
+            isolation to add the routing.
+          </li>
+          <li>
+            <strong>A bus is a commodity; a voice endpoint is not.</strong> If agents just need pub/sub to
+            talk to each other, that problem is crowded and unspecial — a queue, a shared file, an
+            orchestrator, an agent-to-agent protocol. None of it needs a microphone or on-device
+            transcription. Competing there means fighting on plumbing where OpenWhisp has no advantage.
+          </li>
+          <li>
+            <strong>It quietly turns you into a different product.</strong> A bus is always-on, stateful, and
+            long-lived. Bolt that onto a dictation app and you either lose the &ldquo;costs nothing when
+            it&rsquo;s off&rdquo; property that your main audience relies on, or you grow a second product
+            wearing the first one&rsquo;s clothes.
+          </li>
+        </UL>
+
+        <H2>The better frame: be the node, not the wire</H2>
+        <P>
+          Here&rsquo;s the thing OpenWhisp can be that almost nothing else can. It already owns the
+          highest-bandwidth human input channel on the Mac: the microphone, the on-device transcription, the
+          overlay, and the hard-won system permissions behind them. When an agent needs a person,{" "}
+          <em>&ldquo;ask by voice, the human answers by voice, keep working&rdquo;</em> is simply a better
+          interaction than a typed question rotting in a terminal nobody is looking at.
+        </P>
+        <P>
+          So the role isn&rsquo;t <em>the bus</em>. It&rsquo;s <strong>the endpoint where a swarm of agents
+          reaches the human</strong> — the star at the center of the diagram, not the mesh between the points.
+          Whatever coordination layer wins between agents, they all still need one thing OpenWhisp is uniquely
+          placed to provide: a fast, private, voice-first way to reach the person. Stay an endpoint. Let
+          someone else build middleware.
+        </P>
+
+        <H2>What this could look like</H2>
+        <P>
+          Three directions follow from &ldquo;be the node.&rdquo; None of these exist yet; they&rsquo;re where
+          the thesis points.
+        </P>
+
+        <H3>1. A star, not a mesh</H3>
+        <P>
+          Every agent gets its own private, isolated, human-mediated channel to <em>you</em>. Many agents can
+          each independently ask you things; none of them can reach each other through OpenWhisp. This is most
+          of the value of &ldquo;human in the loop for a swarm&rdquo; — and it doesn&rsquo;t require breaking
+          any of the isolation the bridge is built on.
+        </P>
+        <P>
+          The genuinely new problem is <em>multiplexing</em>: five agents wanting your attention at once. But
+          that&rsquo;s a UI problem, not a message-routing one — a small queue of pending questions in the
+          overlay, each tagged with the agent that asked, that you clear by voice one at a time:
+        </P>
+        <Pre>{`┌─ agents waiting on you ───────────────┐
+│ ● claude-code (api)  deploy target?   │  ← you answer
+│ ○ reviewer           ok to force-push?│
+│ ○ cursor             which schema?     │
+└───────────────────────────────────────┘
+   speak your answer · it routes to the one asking`}</Pre>
+
+        <H3>2. Let the orchestrator route; you voice the human step</H3>
+        <P>
+          In real multi-agent setups there is already a coordinator — a lead agent, a workflow runner,
+          something that spawned the others. <em>That</em> is the bus. OpenWhisp&rsquo;s job is to be the tool
+          that coordinator calls at the one step in its plan that needs a person. You never route between
+          agents; the orchestrator does, and it reaches for a voice channel at the human-decision node. This
+          keeps OpenWhisp a leaf and lets it ride whatever orchestration layer wins, instead of betting on
+          one.
+        </P>
+
+        <H3>3. If ever more than a leaf, be the audit surface — not the transport</H3>
+        <P>
+          The one &ldquo;bus-like&rdquo; thing that actually fits is <em>observability of the human moments</em>:
+          a local, private, searchable record of every decision a person made across all their agents —
+          what you approved, when, and which agent asked. Those interactions happen on <em>your</em> machine,
+          which makes it something a cloud orchestrator structurally can&rsquo;t own. That&rsquo;s still an
+          endpoint feature, not a transport feature.
+        </P>
+
+        <H2>Why we&rsquo;re confident about the shape, if not the timeline</H2>
+        <P>
+          OpenWhisp is <A href={REPO}>open source</A> and local-first by construction. The current{" "}
+          <A href="/blog/talk-to-claude-code-by-voice/">Agent Bridge</A> is already a private, signed,
+          consent-gated, per-agent channel on your Mac — which happens to be exactly the primitive a star
+          topology is made of. Getting from &ldquo;one agent can ask you a question&rdquo; to &ldquo;a swarm
+          of agents queues for your attention, one calm voice channel&rdquo; is additive. It doesn&rsquo;t
+          ask you to trust a new network service or hand a cloud a log of your decisions.
+        </P>
+        <P>
+          The one-sentence version: being the place agents reach the human is a moat we mostly already have;
+          being the wire agents reach each other on is a commodity we&rsquo;d have to demolish that moat to
+          build. So the plan is to build the star, let someone else build the mesh, and be the node they all
+          have to route through.
+        </P>
+        <Note>
+          Think we&rsquo;ve got this wrong? That&rsquo;s the point of writing it down. Open an issue or a
+          discussion on <A href={REPO}>GitHub</A> — this is a direction, not a decision, and it&rsquo;s better
+          argued in the open.
+        </Note>
+      </>
+    ),
+    faq: [
+      {
+        q: "Is OpenWhisp a message bus for AI agents?",
+        a: "No — and this post argues it shouldn't be. A bus routes messages between agents, which would break the per-agent isolation that makes a local agent bridge trustworthy. The thesis is the opposite: OpenWhisp should be the endpoint where agents reach the human (a star topology), not the wire agents use to reach each other.",
+      },
+      {
+        q: "Does OpenWhisp support multiple agents at once today?",
+        a: "This post is a vision piece, not a feature announcement. What ships today is the Agent Bridge, where a single coding agent can ask you a question by voice. The multi-agent 'swarm queues for your attention' ideas described here are unbuilt directions, not current features.",
+      },
+      {
+        q: "Why is human attention the bottleneck in multi-agent work?",
+        a: "Each agent runs fast on its own, but every one of them stops and waits for you whenever it needs a decision. Adding more agents doesn't add throughput — it adds to the queue at a single checkout lane: you. So the limiting resource becomes human attention, which is an attention problem before it's a coordination problem.",
+      },
+    ],
+    related: ["talk-to-claude-code-by-voice", "private-on-device-ai-dictation"],
   },
 ];
 
