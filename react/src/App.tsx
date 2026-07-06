@@ -25,6 +25,7 @@ import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
 import { MagneticButton } from "./components/MagneticButton";
 import { EditDemo } from "./components/EditDemo";
+import { withBase } from "./base";
 
 const REPO = "https://github.com/initcore0/openwhisp";
 const DMG = `${REPO}/releases/latest/download/OpenWhisp.dmg`;
@@ -105,7 +106,7 @@ export function App() {
             <a className="transition-colors hover:text-listen" href="#features">Features</a>
             <a className="transition-colors hover:text-listen" href="#mcp">MCP</a>
             <a className="transition-colors hover:text-listen" href="#privacy">Privacy</a>
-            <a className="transition-colors hover:text-listen" href="/blog/">Blog</a>
+            <a className="transition-colors hover:text-listen" href={withBase("/blog/")}>Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
               className="group inline-flex items-center gap-1.5 text-refine/80 transition-colors hover:text-refine"
@@ -154,7 +155,7 @@ export function App() {
             ].map((item) => (
               <a
                 key={item.label}
-                href={item.href}
+                href={item.external ? item.href : withBase(item.href)}
                 rel={item.external ? "noopener" : undefined}
                 onClick={() => setMenuOpen(false)}
                 className="rounded-lg px-3 py-3 font-display text-[15px] font-medium text-text-d transition-colors hover:bg-ink-2 hover:text-listen"

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { withBase } from "../base";
 
 /**
  * Blog content model. Each post is authored as structured React content so it
@@ -45,7 +46,7 @@ function Note({ children }: { children: ReactNode }) {
 }
 function A({ href, children }: { href: string; children: ReactNode }) {
   return (
-    <a href={href} rel="noopener" className="border-b border-speak/40 text-speak transition-colors hover:border-speak">
+    <a href={withBase(href)} rel="noopener" className="border-b border-speak/40 text-speak transition-colors hover:border-speak">
       {children}
     </a>
   );

@@ -1,6 +1,7 @@
 import { BlogLayout } from "./BlogLayout";
 import { formatDate } from "./BlogIndex";
 import { getPost, POSTS, type Post } from "./posts";
+import { withBase } from "../base";
 import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
 
 export function BlogPost({ slug }: { slug: string }) {
@@ -11,7 +12,7 @@ export function BlogPost({ slug }: { slug: string }) {
   return (
     <BlogLayout>
       <article className="mx-auto max-w-[720px] px-6 py-14 md:py-20">
-        <a href="/blog/" className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-d hover:text-listen">
+        <a href={withBase("/blog/")} className="inline-flex items-center gap-1.5 font-mono text-xs text-muted-d hover:text-listen">
           <ArrowLeft weight="bold" className="h-3.5 w-3.5" /> All posts
         </a>
 
@@ -58,7 +59,7 @@ export function BlogPost({ slug }: { slug: string }) {
               Download for macOS
             </a>
             <a
-              href="/"
+              href={withBase("/")}
               className="inline-flex items-center justify-center rounded-[10px] border border-line px-5 py-2.5 font-display text-sm font-semibold text-text-d transition-all hover:border-muted-d hover:bg-ink-2"
             >
               See all features
@@ -74,7 +75,7 @@ export function BlogPost({ slug }: { slug: string }) {
               {related.map((r) => (
                 <li key={r.slug}>
                   <a
-                    href={`/blog/${r.slug}/`}
+                    href={withBase(`/blog/${r.slug}/`)}
                     className="group flex items-center justify-between gap-3 rounded-xl border border-line bg-ink-2 p-4 transition-colors hover:border-muted-d"
                   >
                     <span className="font-display text-[15px] font-semibold text-listen">{r.title}</span>
