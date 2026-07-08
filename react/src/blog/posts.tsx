@@ -486,7 +486,7 @@ export const POSTS: Post[] = [
         a: "OpenWhisp is open source, so you can read exactly how it handles audio and text. Audio is deleted after each transcription and transcripts are never written to log files.",
       },
     ],
-    related: ["dictate-on-mac-offline", "edit-text-by-voice-mac", "best-mac-dictation-apps"],
+    related: ["local-ai-is-enough-for-dictation", "dictate-on-mac-offline", "edit-text-by-voice-mac"],
   },
 
   {
@@ -830,6 +830,147 @@ git log -1 --format=%B | openwhisp refine -i "tighten this up"`}</Pre>
       },
     ],
     related: ["talk-to-claude-code-by-voice", "private-on-device-ai-dictation"],
+  },
+
+  {
+    slug: "local-ai-is-enough-for-dictation",
+    title: "You don't need a giant AI model for dictation — your Mac is enough",
+    description:
+      "Dictation cleanup is a small, well-scoped task, so a tiny local model handles it fine. And because OpenWhisp is open source with a bundled llama.cpp, you can point it at a self-hosted Qwen3 32B if you want more.",
+    keyword: "local ai dictation model",
+    datePublished: "2026-07-06",
+    dateModified: "2026-07-06",
+    readingTime: "6 min read",
+    answer:
+      "Cleaning up dictated text — fixing punctuation, removing filler, tightening a sentence — is a small, well-scoped job that a tiny AI model does well. OpenWhisp ships with a 0.5B model that runs entirely on your Mac, and thanks to Apple Silicon's unified memory (every Mac from the M1 onward), it's fast and battery-friendly. Because the app is open source and bundles llama.cpp, you can also point it at a self-hosted model as large as your hardware allows — a Qwen3 32B, say — with no code changes.",
+    body: (
+      <>
+        <P>
+          There&rsquo;s a reflex, when a product involves &ldquo;AI,&rdquo; to assume it needs the biggest,
+          smartest model available — GPT-class, in the cloud, behind an API key. For a dictation app,
+          that&rsquo;s the wrong instinct. The job an AI model does here is small and well-defined, and a
+          model small enough to live on your own machine handles it comfortably.
+        </P>
+
+        <H2>Dictation cleanup is a small job</H2>
+        <P>
+          Think about what the model is actually asked to do after your speech is transcribed:
+        </P>
+        <UL>
+          <li>Fix capitalization and punctuation.</li>
+          <li>Drop filler words &mdash; &ldquo;um,&rdquo; &ldquo;uh,&rdquo; &ldquo;you know.&rdquo;</li>
+          <li>Tighten a rambling sentence, or reshape a note into a message.</li>
+          <li>Follow a short instruction like &ldquo;make it more formal&rdquo; or &ldquo;translate to Russian.&rdquo;</li>
+        </UL>
+        <P>
+          None of that needs frontier reasoning. It needs a model that writes clean, grammatical text and
+          follows a simple instruction — which even sub-1B models do well now. Reach for a 70B cloud model
+          here and you&rsquo;re paying (in latency, money, and privacy) for capability the task never uses.
+          Worse, a round-trip to the cloud adds noticeable lag to something that should feel instant, and
+          it sends your words off your machine.
+        </P>
+
+        <H2>Apple Silicon is quietly great at this</H2>
+        <P>
+          The reason a local model is not just tolerable but genuinely good on a Mac comes down to hardware.
+          Every Apple Silicon Mac since the <strong>M1</strong> uses <strong>unified memory</strong>: the CPU,
+          GPU, and Neural Engine all share one fast pool of RAM. On a typical machine a model has to be
+          shuffled across the (slow) boundary between system memory and a separate GPU&rsquo;s VRAM. On a Mac
+          there is no boundary — the model weights sit in memory the GPU can read directly.
+        </P>
+        <P>
+          That has two happy consequences for local AI. First, models load and run fast without a discrete
+          GPU. Second, the amount of model you can run is bounded by your <em>total</em> RAM, not by a
+          separate, much smaller pool of video memory — so a 32&nbsp;GB or 64&nbsp;GB Mac can hold models
+          that would need an expensive dedicated GPU on a PC. Apple didn&rsquo;t set out to build an AI
+          workstation, but the unified-memory design turned every modern Mac into a capable one.
+        </P>
+        <Note>
+          <strong>The short version:</strong> the smallest model OpenWhisp ships (Qwen2.5&nbsp;0.5B,
+          ~491&nbsp;MB) is plenty for everyday dictation cleanup, runs on any M-series Mac, and never touches
+          the network. You can stop reading here and just use it. The rest of this post is for people who
+          want to push further.
+        </Note>
+
+        <H2>What OpenWhisp ships by default</H2>
+        <P>
+          Turn on AI cleanup and OpenWhisp downloads a small open-weights model that runs on your Mac through
+          a bundled <A href="https://github.com/ggml-org/llama.cpp">llama.cpp</A> runtime — no Ollama, no
+          server to start, no account. Three sizes are one click apart in Settings:
+        </P>
+        <UL>
+          <li><strong>Qwen2.5 0.5B</strong> (~491&nbsp;MB) — the default. Fastest, lowest memory, and fine for cleanup.</li>
+          <li><strong>Qwen2.5 1.5B</strong> (~1.1&nbsp;GB) — a step up in quality for a little more memory.</li>
+          <li><strong>SmolLM2 360M</strong> (~271&nbsp;MB) — the smallest, for tight RAM.</li>
+        </UL>
+        <P>
+          All three are Apache-2.0, download once, and then work fully offline. For most people this is the
+          whole story: it&rsquo;s good, it&rsquo;s private, and it costs nothing.{" "}
+          <A href="/blog/private-on-device-ai-dictation/">More on the private, on-device setup here.</A>
+        </P>
+
+        <H2>Hackers: bring your own, as big as your Mac allows</H2>
+        <P>
+          Here&rsquo;s where being open source and built on llama.cpp pays off. The built-in model is just a
+          default, not a ceiling. OpenWhisp&rsquo;s AI cleanup can point at any{" "}
+          <strong>OpenAI-compatible server</strong>, which means you can run a far larger model yourself and
+          have dictation use it — no code changes, just a URL in Settings.
+        </P>
+        <P>
+          Say you have a Mac with plenty of unified memory (or a Linux box with a real GPU) and you want your
+          voice edits handled by something much stronger — a{" "}
+          <strong>Qwen3 32B</strong> (or the 30B-A3B mixture-of-experts variant, which is lighter to run for
+          its quality). Start it behind an OpenAI-compatible endpoint:
+        </P>
+        <Pre>{`# Option A — llama.cpp (the same engine OpenWhisp bundles)
+llama-server -m qwen3-32b-Q4_K_M.gguf --host 0.0.0.0 --port 8080
+
+# Option B — Ollama, which serves an OpenAI-compatible API
+ollama serve            # listens on http://localhost:11434
+ollama run qwen3:32b`}</Pre>
+        <P>
+          Then in OpenWhisp choose the <strong>Local (private)</strong> AI provider and point it at your
+          server:
+        </P>
+        <UL>
+          <li>llama.cpp default: <code className="font-mono text-[0.9em] text-speak">http://localhost:8080/v1</code></li>
+          <li>Ollama: <code className="font-mono text-[0.9em] text-speak">http://localhost:11434/v1</code></li>
+        </UL>
+        <P>
+          That&rsquo;s it. Your dictation now gets rewritten by a 32B model that never leaves your network.
+          Because OpenWhisp bundles the same llama.cpp under the hood, a self-hosted llama.cpp server behaves
+          exactly like the built-in one, just bigger — the ceiling is your hardware, not the app.
+        </P>
+
+        <H2>The point</H2>
+        <P>
+          Good local AI isn&rsquo;t about cramming the largest possible model onto your laptop. It&rsquo;s
+          about matching the model to the task. Dictation cleanup is a small task, so a small model on your
+          Mac is the right, private, zero-cost default — and Apple Silicon makes it genuinely fast. And if
+          you want more, the door is open: it&rsquo;s open source, it speaks the standard API, and it&rsquo;ll
+          talk to whatever you can host.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Do I need a powerful AI model for dictation?",
+        a: "No. Cleaning up dictated text — punctuation, filler removal, light rewriting, following a short instruction — is a small, well-scoped task that a tiny model handles well. OpenWhisp's default is a 0.5B model (~491 MB) that runs entirely on your Mac.",
+      },
+      {
+        q: "Why is a Mac good for running local AI models?",
+        a: "Apple Silicon (every Mac since the M1) uses unified memory: the CPU, GPU, and Neural Engine share one fast pool of RAM. There's no slow copy to a separate GPU's VRAM, so models load and run fast, and how large a model you can run is bounded by total RAM rather than a small dedicated video-memory pool.",
+      },
+      {
+        q: "Can I use my own larger model with OpenWhisp?",
+        a: "Yes. OpenWhisp's AI cleanup can point at any OpenAI-compatible server, so you can self-host a much larger model — for example a Qwen3 32B via llama.cpp or Ollama — and select the Local (private) provider with your server's URL. No code changes; the built-in model is a default, not a ceiling.",
+      },
+      {
+        q: "Does using a local AI model keep my dictation private?",
+        a: "Yes. Both the built-in on-device model and a local server you host yourself keep everything on your machine or network — nothing is sent to the cloud. The only exception is if you explicitly choose the OpenAI cloud provider.",
+      },
+    ],
+    related: ["private-on-device-ai-dictation", "dictate-on-mac-offline", "talk-to-claude-code-by-voice"],
   },
 ];
 
