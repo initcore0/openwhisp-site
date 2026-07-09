@@ -5,12 +5,29 @@ import raw from "./data/changelog.json";
 
 export type ChangelogCategory = "feature" | "fix" | "improvement";
 
+// Whether the feature is usable in the shipping app TODAY. This is a truth
+// contract, not a marketing label (see the app repo's changelog README): most
+// core-first features ship their tested engine as "coming-soon" before the
+// Settings/UI wiring lands, and the `note` says what's still pending.
+export type Availability = "live" | "coming-soon";
+
+// Optional per-feature how-to guide: teaches the feature (steps / spoken
+// phrases), not just announces it. Revealed on click in the UI.
+export type HowTo = {
+  availability: Availability;
+  summary: string; // one line: how you use it
+  steps?: string[]; // ordered how-to
+  say?: string[]; // spoken phrases, if any
+  note?: string; // caveat — e.g. what's still landing / a manual workaround
+};
+
 export type ChangelogEntry = {
   category: ChangelogCategory;
   headline: string;
   body: string;
   tickets?: string[]; // Linear IDs, e.g. "MAK-35"
   prs?: number[]; // merged GitHub PR numbers
+  howTo?: HowTo; // usually only on features
 };
 
 export type ChangelogRelease = {
@@ -47,3 +64,9 @@ export const SECTIONS: { key: ChangelogCategory; heading: string }[] = [
   { key: "fix", heading: "Fixes" },
   { key: "improvement", heading: "Improvements" },
 ];
+
+// Human label for the availability pill (matches the reference render's wording).
+export const AVAILABILITY_LABEL: Record<Availability, string> = {
+  live: "Available now",
+  "coming-soon": "Landing next",
+};
