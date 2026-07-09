@@ -106,6 +106,7 @@ export function App() {
             <a className="transition-colors hover:text-listen" href="#features">Features</a>
             <a className="transition-colors hover:text-listen" href="#mcp">MCP</a>
             <a className="transition-colors hover:text-listen" href="#privacy">Privacy</a>
+            <a className="transition-colors hover:text-listen" href={withBase("/changelog/")}>Changelog</a>
             <a className="transition-colors hover:text-listen" href={withBase("/blog/")}>Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
@@ -149,6 +150,7 @@ export function App() {
               { href: "#mcp", label: "MCP" },
               { href: "#models", label: "Private AI" },
               { href: "#privacy", label: "Privacy" },
+              { href: "/changelog/", label: "Changelog" },
               { href: "/blog/", label: "Blog" },
               { href: "#contact", label: "Contact" },
               { href: REPO, label: "GitHub", external: true },
@@ -661,6 +663,7 @@ export function App() {
             <a className="hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a className="hover:text-listen" href={`${REPO}#readme`} rel="noopener">Docs</a>
             <a className="hover:text-listen" href={`${REPO}/releases`} rel="noopener">Releases</a>
+            <a className="hover:text-listen" href={withBase("/changelog/")}>Changelog</a>
             <a className="hover:text-listen" href="#faq">FAQ</a>
             <a className="hover:text-listen" href="#contact">Contact</a>
             <a className="hover:text-listen" href={`${REPO}/blob/main/LICENSE`} rel="noopener">License</a>

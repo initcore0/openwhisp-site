@@ -12,7 +12,7 @@ import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
-const { render, POSTS } = await import(new URL("../dist-ssr/prerender.js", import.meta.url));
+const { render, POSTS, CHANGELOG } = await import(new URL("../dist-ssr/prerender.js", import.meta.url));
 
 const SITE = "https://openwhisp.app";
 const OG = `${SITE}/og-image.png`;
@@ -61,6 +61,34 @@ writePage(
   }).replace(marker, `<div id="root">${render("/blog/")}</div>`),
 );
 console.log("prerender: /blog/");
+
+// Changelog — rendered from the vendored changelog.json (single source).
+{
+  const latest = CHANGELOG.releases[0];
+  const canonical = `${SITE}/changelog/`;
+  const jsonld = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${canonical}#changelog`,
+    name: "OpenWhisp changelog",
+    description: "What's shipped in OpenWhisp — new features, fixes, and improvements, newest first.",
+    url: canonical,
+    dateModified: CHANGELOG.generated,
+    isPartOf: { "@type": "WebSite", name: "OpenWhisp", url: `${SITE}/` },
+  };
+  writePage(
+    "/changelog/",
+    headFor({
+      title: "OpenWhisp changelog — what's shipped",
+      description: latest
+        ? `${latest.title}: ${latest.summary}`
+        : "What's shipped in OpenWhisp — new features, fixes, and improvements, newest first.",
+      canonical,
+      jsonld,
+    }).replace(marker, `<div id="root">${render("/changelog/")}</div>`),
+  );
+  console.log("prerender: /changelog/");
+}
 
 // Posts.
 for (const p of POSTS) {
@@ -111,7 +139,7 @@ for (const p of POSTS) {
 }
 
 // Regenerate sitemap.xml from the real route list (home + blog + every post).
-const routes = ["/", "/blog/", ...POSTS.map((p) => `/blog/${p.slug}/`)];
+const routes = ["/", "/changelog/", "/blog/", ...POSTS.map((p) => `/blog/${p.slug}/`)];
 const urls = routes
   .map((r) => `  <url>\n    <loc>${SITE}${r}</loc>\n    <changefreq>monthly</changefreq>\n  </url>`)
   .join("\n");

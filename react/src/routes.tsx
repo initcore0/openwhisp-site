@@ -3,6 +3,7 @@ import { App } from "./App";
 import { BlogIndex } from "./blog/BlogIndex";
 import { BlogPost } from "./blog/BlogPost";
 import { POSTS } from "./blog/posts";
+import { ChangelogPage } from "./ChangelogPage";
 
 /**
  * Path → page component. Used by both the client entry (main.tsx) and the
@@ -12,6 +13,7 @@ import { POSTS } from "./blog/posts";
 export function renderRoute(pathname: string): ReactNode {
   const path = normalize(pathname);
   if (path === "/") return <App />;
+  if (path === "/changelog") return <ChangelogPage />;
   if (path === "/blog") return <BlogIndex />;
   const m = path.match(/^\/blog\/([a-z0-9-]+)$/);
   if (m) return <BlogPost slug={m[1]} />;
@@ -25,5 +27,5 @@ function normalize(pathname: string): string {
 
 /** Every URL the site prerenders (used by the prerender loop and sitemap). */
 export function allRoutes(): string[] {
-  return ["/", "/blog/", ...POSTS.map((p) => `/blog/${p.slug}/`)];
+  return ["/", "/changelog/", "/blog/", ...POSTS.map((p) => `/blog/${p.slug}/`)];
 }

@@ -5,6 +5,7 @@ import { renderRoute } from "./routes.tsx";
 // Re-export post metadata so the prerender build step can read titles,
 // descriptions, dates, and FAQ from the same SSR bundle.
 export { POSTS } from "./blog/posts.tsx";
+export { CHANGELOG } from "./changelog.ts";
 
 /**
  * SSR entry: built separately (`vite build --ssr src/prerender.tsx`) and run
