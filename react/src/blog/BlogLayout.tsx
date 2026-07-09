@@ -33,6 +33,7 @@ export function BlogLayout({ children }: { children: ReactNode }) {
           {/* Desktop nav */}
           <nav className="hidden items-center gap-7 text-sm font-medium text-muted-d md:flex" aria-label="Primary">
             <a className="transition-colors hover:text-listen" href={withBase("/#features")}>Features</a>
+            <a className="transition-colors hover:text-listen" href={withBase("/changelog/")}>Changelog</a>
             <a className="transition-colors hover:text-listen" href={withBase("/blog/")}>Blog</a>
             <a className="transition-colors hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a
@@ -61,6 +62,7 @@ export function BlogLayout({ children }: { children: ReactNode }) {
           <nav className="mx-auto flex max-w-[1180px] flex-col gap-1 px-4 py-4" aria-label="Mobile">
             {[
               { href: "/#features", label: "Features" },
+              { href: "/changelog/", label: "Changelog" },
               { href: "/blog/", label: "Blog" },
               { href: REPO, label: "GitHub", external: true },
             ].map((item) => (
@@ -106,6 +108,7 @@ export function BlogLayout({ children }: { children: ReactNode }) {
           </div>
           <nav className="flex gap-6 text-sm text-muted-d" aria-label="Footer">
             <a className="hover:text-listen" href={withBase("/")}>Home</a>
+            <a className="hover:text-listen" href={withBase("/changelog/")}>Changelog</a>
             <a className="hover:text-listen" href={withBase("/blog/")}>Blog</a>
             <a className="hover:text-listen" href={REPO} rel="noopener">GitHub</a>
             <a className="inline-flex items-center gap-1.5 hover:text-refine" href={DONATE} rel="noopener">

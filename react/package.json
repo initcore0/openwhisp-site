@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "fetch:changelog": "bun scripts/fetch-changelog.mjs",
+    "prebuild": "bun scripts/fetch-changelog.mjs",
     "build": "tsc -b && vite build && vite build --ssr src/prerender.tsx --outDir dist-ssr && bun scripts/prerender.mjs",
     "preview": "vite preview"
   },
