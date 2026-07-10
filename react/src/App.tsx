@@ -9,7 +9,6 @@ import {
   Microphone,
   TextAa,
   Brain,
-  Translate,
   ClockCounterClockwise,
   Globe,
   Cpu,
@@ -20,6 +19,13 @@ import {
   PaperPlaneTilt,
   CheckCircle,
   PlugsConnected,
+  NotePencil,
+  HandTap,
+  SlidersHorizontal,
+  FilmSlate,
+  Lightning,
+  ChartLineUp,
+  Command,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -290,6 +296,41 @@ export function App() {
           </ol>
         </section>
 
+        {/* NEW THIS RELEASE — a concise spotlight on the flagship additions */}
+        <section className="border-y border-line bg-ink-2 py-16 md:py-20">
+          <div className="mx-auto max-w-[1180px] px-6">
+            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+              <div>
+                <Eyebrow>New this release</Eyebrow>
+                <h2 className="max-w-[22ch] font-display text-2xl font-semibold tracking-tight text-listen md:text-[2rem]">
+                  22 new features shipped &mdash; here are the ones worth the headline
+                </h2>
+              </div>
+              <a
+                href={withBase("/changelog/")}
+                className="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-speak transition-colors hover:text-listen"
+              >
+                See the full changelog
+                <CaretRight weight="bold" className="h-4 w-4" />
+              </a>
+            </div>
+            <ul className="mt-9 grid gap-4 md:grid-cols-3">
+              <Highlight icon={<NotePencil weight="duotone" />} title="Floating Scratchpad">
+                An always-on-top note panel to dictate into when nothing else has focus &mdash; a quick,
+                fully-local capture surface.
+              </Highlight>
+              <Highlight icon={<HandTap weight="duotone" />} title="Hands-free dictation">
+                Tap to lock the mic open and speak with your hands free; tap again or hit <Kbd>Esc</Kbd> to
+                stop. Holding still works too.
+              </Highlight>
+              <Highlight icon={<FilmSlate weight="duotone" />} title="Transcribe audio &amp; video files">
+                Drop in an MP3 or MP4 &mdash; or a watch folder &mdash; and export plain text, SRT, or VTT
+                subtitles, all on-device.
+              </Highlight>
+            </ul>
+          </div>
+        </section>
+
         {/* FEATURES — light surface, 2-col asymmetric grid via divide lines */}
         <section id="features" className="bg-paper py-20 text-ink md:py-24">
           <div className="mx-auto max-w-[1180px] px-6">
@@ -310,25 +351,38 @@ export function App() {
                 Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
                 server, nothing leaves the machine. Or point it at your own server or OpenAI.
               </Feature>
-              <Feature icon={<Microphone weight="duotone" />} title="Refine while you dictate">
-                Want what you&rsquo;re saying reworked? Keep holding, tap the Refine key, and say &ldquo;make it
-                a Telegram post&rdquo; &mdash; on release, the AI rewrites it before it lands.
+              <Feature icon={<SlidersHorizontal weight="duotone" />} title="Adjustable AI cleanup">
+                Dial the AI from a light touch to a full polish &mdash; None, Low, Medium, High &mdash; and
+                revert to your exact words in one click, always.
+              </Feature>
+              <Feature icon={<Microphone weight="duotone" />} title="Voice editing">
+                Say &ldquo;scratch that,&rdquo; &ldquo;delete last sentence,&rdquo; or &ldquo;undo&rdquo;
+                mid-dictation. A deterministic, offline command layer &mdash; no AI required.
+              </Feature>
+              <Feature icon={<Lightning weight="duotone" />} title="Rules &amp; output targets">
+                When a dictation finishes, run a Shortcut, hit a webhook, append to a file, or open a URL &mdash;
+                or route it out of the focused app entirely. Fails open: your words always land.
+              </Feature>
+              <Feature icon={<Command weight="duotone" />} title="Modes, on demand">
+                Save a tone, instruction, and model as a named Mode &mdash; bind it to an app or invoke it from
+                a launcher. The <code className="font-mono text-[0.85em]">openwhisp://</code> URL scheme drives
+                dictation from Raycast or Alfred.
+              </Feature>
+              <Feature icon={<ChartLineUp weight="duotone" />} title="Usage Insights">
+                Words dictated, speaking speed, time saved, streaks, and which apps you use it in &mdash;
+                computed on-device from metadata only, never your transcripts.
               </Feature>
               <Feature icon={<Cpu weight="duotone" />} title="WhisperKit by default">
                 Transcription runs on WhisperKit &mdash; Whisper on Apple&rsquo;s Neural Engine via CoreML &mdash; for
                 fast, real-time streaming. whisper.cpp and Apple Speech stay available as fallbacks, one click away.
               </Feature>
-              <Feature icon={<ClockCounterClockwise weight="duotone" />} title="Transcription history">
-                A local, searchable list of everything you&rsquo;ve dictated, ready to copy or reuse. Stored on
-                your machine, never uploaded.
+              <Feature icon={<ClockCounterClockwise weight="duotone" />} title="History, re-transcribable">
+                A local, searchable list of everything you&rsquo;ve dictated. Opt in to keep the audio on-device
+                and re-run any entry through a newer model &mdash; nothing uploaded.
               </Feature>
               <Feature icon={<Globe weight="duotone" />} title="Twelve languages">
                 Pick a language or let it auto-detect, with optional translate-to-English. Models range from
                 tiny to large-v3.
-              </Feature>
-              <Feature icon={<Translate weight="duotone" />} title="Per-app modes">
-                Set the language, output style, and cleanup per application, so your terminal and your email
-                client behave differently.
               </Feature>
             </div>
           </div>
@@ -849,6 +903,17 @@ function Feature({ icon, title, children }: { icon: React.ReactNode; title: stri
       <h3 className="font-display text-lg font-semibold text-ink">{title}</h3>
       <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{children}</p>
     </article>
+  );
+}
+
+// Dark-surface card for the "New this release" spotlight band.
+function Highlight({ icon, title, children }: { icon: React.ReactNode; title: React.ReactNode; children: React.ReactNode }) {
+  return (
+    <li className="rounded-2xl border border-line bg-ink p-5">
+      <div className="mb-3 text-speak [&>svg]:h-6 [&>svg]:w-6">{icon}</div>
+      <h3 className="font-display text-[17px] font-semibold text-listen">{title}</h3>
+      <p className="mt-1.5 text-[14.5px] leading-relaxed text-muted-d">{children}</p>
+    </li>
   );
 }
 
