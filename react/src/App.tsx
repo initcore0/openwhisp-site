@@ -26,6 +26,7 @@ import {
   Lightning,
   ChartLineUp,
   Command,
+  UsersThree,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -302,8 +303,8 @@ export function App() {
             <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
               <div>
                 <Eyebrow>New this release</Eyebrow>
-                <h2 className="max-w-[22ch] font-display text-2xl font-semibold tracking-tight text-listen md:text-[2rem]">
-                  22 new features shipped &mdash; here are the ones worth the headline
+                <h2 className="max-w-[24ch] font-display text-2xl font-semibold tracking-tight text-listen md:text-[2rem]">
+                  25 new features shipped &mdash; led by on-device meeting transcription
                 </h2>
               </div>
               <a
@@ -315,17 +316,17 @@ export function App() {
               </a>
             </div>
             <ul className="mt-9 grid gap-4 md:grid-cols-3">
-              <Highlight icon={<NotePencil weight="duotone" />} title="Floating Scratchpad">
-                An always-on-top note panel to dictate into when nothing else has focus &mdash; a quick,
-                fully-local capture surface.
+              <Highlight icon={<UsersThree weight="duotone" />} title="Meeting transcription &amp; summary">
+                Record a call &mdash; system audio and your mic &mdash; then transcribe it, label who spoke
+                (Me vs. Them), and get a Markdown summary, all on your Mac.
               </Highlight>
               <Highlight icon={<HandTap weight="duotone" />} title="Hands-free dictation">
                 Tap to lock the mic open and speak with your hands free; tap again or hit <Kbd>Esc</Kbd> to
                 stop. Holding still works too.
               </Highlight>
-              <Highlight icon={<FilmSlate weight="duotone" />} title="Transcribe audio &amp; video files">
-                Drop in an MP3 or MP4 &mdash; or a watch folder &mdash; and export plain text, SRT, or VTT
-                subtitles, all on-device.
+              <Highlight icon={<NotePencil weight="duotone" />} title="Floating Scratchpad">
+                An always-on-top note panel to dictate into when nothing else has focus &mdash; a quick,
+                fully-local capture surface.
               </Highlight>
             </ul>
           </div>
@@ -350,6 +351,14 @@ export function App() {
               <Feature icon={<Brain weight="duotone" />} title="Built-in offline AI">
                 Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
                 server, nothing leaves the machine. Or point it at your own server or OpenAI.
+              </Feature>
+              <Feature icon={<UsersThree weight="duotone" />} title="Meeting mode">
+                Record a call &mdash; system audio + mic &mdash; transcribe it, label who spoke (Me / Them),
+                and get a local Markdown summary. On your Mac, unless you pick a cloud model to summarize.
+              </Feature>
+              <Feature icon={<FilmSlate weight="duotone" />} title="File transcription">
+                Drop in an audio or video file (or a watch folder) and export plain text or SRT/VTT subtitles
+                with timestamps &mdash; batch-queued and fully on-device.
               </Feature>
               <Feature icon={<SlidersHorizontal weight="duotone" />} title="Adjustable AI cleanup">
                 Dial the AI from a light touch to a full polish &mdash; None, Low, Medium, High &mdash; and
