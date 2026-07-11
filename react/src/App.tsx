@@ -19,7 +19,6 @@ import {
   PaperPlaneTilt,
   CheckCircle,
   PlugsConnected,
-  NotePencil,
   HandTap,
   SlidersHorizontal,
   FilmSlate,
@@ -27,6 +26,7 @@ import {
   ChartLineUp,
   Command,
   UsersThree,
+  WaveSine,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { Reveal } from "./components/Reveal";
@@ -304,7 +304,7 @@ export function App() {
               <div>
                 <Eyebrow>New this release</Eyebrow>
                 <h2 className="max-w-[24ch] font-display text-2xl font-semibold tracking-tight text-listen md:text-[2rem]">
-                  25 new features shipped &mdash; led by on-device meeting transcription
+                  27 new features shipped &mdash; led by the new realtime streaming engine
                 </h2>
               </div>
               <a
@@ -316,6 +316,11 @@ export function App() {
               </a>
             </div>
             <ul className="mt-9 grid gap-4 md:grid-cols-3">
+              <Highlight icon={<WaveSine weight="duotone" />} title="Meet Parakeet Realtime">
+                A new on-device engine you can select that streams instead of batching: partials trail your
+                voice by about a third of a second &mdash; already punctuated and capitalized &mdash; and the
+                final text arrives ~50&nbsp;ms after you let go, with no end-of-dictation decode wait.
+              </Highlight>
               <Highlight icon={<UsersThree weight="duotone" />} title="Meeting transcription &amp; summary">
                 Record a call &mdash; system audio and your mic &mdash; then transcribe it, label who spoke
                 (Me vs. Them), and get a Markdown summary, all on your Mac.
@@ -323,10 +328,6 @@ export function App() {
               <Highlight icon={<HandTap weight="duotone" />} title="Hands-free dictation">
                 Tap to lock the mic open and speak with your hands free; tap again or hit <Kbd>Esc</Kbd> to
                 stop. Holding still works too.
-              </Highlight>
-              <Highlight icon={<NotePencil weight="duotone" />} title="Floating Scratchpad">
-                An always-on-top note panel to dictate into when nothing else has focus &mdash; a quick,
-                fully-local capture surface.
               </Highlight>
             </ul>
           </div>
@@ -381,9 +382,14 @@ export function App() {
                 Words dictated, speaking speed, time saved, streaks, and which apps you use it in &mdash;
                 computed on-device from metadata only, never your transcripts.
               </Feature>
-              <Feature icon={<Cpu weight="duotone" />} title="WhisperKit by default">
-                Transcription runs on WhisperKit &mdash; Whisper on Apple&rsquo;s Neural Engine via CoreML &mdash; for
-                fast, real-time streaming. whisper.cpp and Apple Speech stay available as fallbacks, one click away.
+              <Feature icon={<WaveSine weight="duotone" />} title="Realtime streaming engine">
+                Pick Parakeet in Settings for a true streaming engine &mdash; words appear about 0.3&nbsp;s behind
+                your voice with punctuation, and the final text lands ~50&nbsp;ms after you release the hotkey. Runs
+                fully on-device, with variants for English and ~40 auto-detected languages.
+              </Feature>
+              <Feature icon={<Cpu weight="duotone" />} title="Three more engines">
+                WhisperKit stays the default &mdash; Whisper on Apple&rsquo;s Neural Engine via CoreML &mdash; and
+                whisper.cpp and Apple Speech are one click away. Pick the engine that fits per app.
               </Feature>
               <Feature icon={<ClockCounterClockwise weight="duotone" />} title="History, re-transcribable">
                 A local, searchable list of everything you&rsquo;ve dictated. Opt in to keep the audio on-device

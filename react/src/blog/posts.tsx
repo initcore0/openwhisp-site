@@ -1273,6 +1273,123 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
     ],
     related: ["talk-to-claude-code-by-voice", "dictate-anywhere-mac-scratchpad", "wispr-flow-alternative"],
   },
+
+  {
+    slug: "parakeet-realtime-streaming-dictation-mac",
+    title: "Parakeet: real-time streaming dictation on a Mac (words ~0.3s behind your voice)",
+    description:
+      "OpenWhisp's new on-device Parakeet engine streams words to the screen about 0.3s behind your voice, with live punctuation — final text lands ~50ms after you release the key. Fully local, no cloud.",
+    keyword: "realtime streaming dictation mac",
+    datePublished: "2026-07-11",
+    dateModified: "2026-07-11",
+    readingTime: "6 min read",
+    answer:
+      "Parakeet is a new on-device dictation engine in OpenWhisp that streams words to the screen as you talk — partial text trails your voice by about 0.3 seconds, already punctuated and capitalized, and the final text lands roughly 50ms after you release the hotkey. It runs entirely on your Mac, and you pick it in Settings alongside WhisperKit; it isn't the default.",
+    body: (
+      <>
+        <P>
+          Most on-device dictation works in one shot: you hold a key, talk, release, and the app decodes the whole
+          clip at once. Parakeet is different by design. It&rsquo;s a <strong>streaming</strong> engine, so text
+          appears <em>while</em> you&rsquo;re still speaking &mdash; partials trail your voice by about a third of a
+          second, already carrying punctuation and capitalization &mdash; and the final result lands roughly
+          <strong> 50&nbsp;milliseconds</strong> after you let go of the hotkey. It&rsquo;s a new engine you can pick
+          in OpenWhisp&rsquo;s settings, and it runs entirely on your Mac.
+        </P>
+
+        <H2>Streaming vs. batch: why the latency feels different</H2>
+        <P>
+          A <strong>batch</strong> engine (like <A href="https://github.com/argmaxinc/WhisperKit">WhisperKit</A>, the
+          engine behind{" "}
+          <A href="/blog/dictate-on-mac-offline/">offline dictation on a Mac</A>) buffers your whole utterance and
+          transcribes it after you stop. That&rsquo;s accurate and fully local, but there&rsquo;s a decode pause on
+          release &mdash; the app has to think about the clip before the words appear.
+        </P>
+        <P>
+          A <strong>streaming</strong> engine is architecturally continuous: it&rsquo;s transcribing as the audio
+          arrives, so you watch the sentence build in real time. With Parakeet the partials trail your voice by about
+          0.3 seconds, and because it has already been keeping up, pressing stop doesn&rsquo;t trigger a fresh decode
+          of the whole clip &mdash; the final text settles in about 50&nbsp;milliseconds. There&rsquo;s no
+          end-of-dictation wait, which is the part that makes it feel immediate.
+        </P>
+
+        <H2>Four streaming model variants</H2>
+        <P>
+          Parakeet isn&rsquo;t one model but a small family, so you can trade speed for accuracy or coverage for size:
+        </P>
+        <UL>
+          <li><strong>Realtime English</strong> &mdash; the unified low-latency model tuned for live dictation.</li>
+          <li><strong>Best-accuracy English</strong> &mdash; when you want the cleanest English transcript.</li>
+          <li><strong>Ultra-light 120M</strong> &mdash; the smallest, lightest variant.</li>
+          <li><strong>Multilingual</strong> &mdash; roughly 40 languages, auto-detected (you can also give it a language hint).</li>
+        </UL>
+
+        <H2>It also powers files, meetings, and history</H2>
+        <P>
+          Parakeet isn&rsquo;t only for live dictation. A separate 25-language batch model backs the file-transcription
+          side too: the{" "}
+          <A href="/blog/transcribe-audio-video-files-mac/">batch file queue</A>, watch folders, meeting capture, and
+          re-transcribing anything already in your history all run on Parakeet when you choose it. So the engine you
+          dictate with is the same one that turns your recordings and meetings into text.
+        </P>
+
+        <H2>On-device and private, like the rest of OpenWhisp</H2>
+        <P>
+          Parakeet is built on the Apache-2.0 <A href="https://github.com/FluidInference/FluidAudio">FluidAudio</A>{" "}
+          SDK and runs NVIDIA Parakeet models through CoreML &mdash; entirely on your Mac. Nothing is uploaded, which
+          keeps it in line with{" "}
+          <A href="/blog/private-on-device-ai-dictation/">OpenWhisp&rsquo;s on-device, no-cloud approach</A>. It&rsquo;s
+          transcription only: there&rsquo;s no translation step, so your words come back in the language you spoke them.
+        </P>
+
+        <H2>It&rsquo;s an engine you pick, not the default</H2>
+        <P>
+          Parakeet is compiled into the default OpenWhisp builds, but it&rsquo;s a <em>choice</em>, not a replacement.
+          You select it in <strong>Settings &rsaquo; Models</strong>, and WhisperKit is still there &mdash; as are
+          whisper.cpp and Apple Speech. The FluidAudio model repositories show up in{" "}
+          <strong>Settings &rsaquo; Storage</strong> with their sizes and a one-click delete, so you only keep the
+          variants you actually use. If you&rsquo;re still deciding, the{" "}
+          <A href="/blog/best-mac-dictation-apps/">Mac dictation apps guide</A> and the{" "}
+          <A href="/blog/wispr-flow-alternative/">Wispr Flow alternative</A> writeup put the trade-offs in context.
+        </P>
+
+        <H2>Bonus: agents can stop the moment you finish speaking</H2>
+        <P>
+          Parakeet also ships an end-of-utterance model that emits a genuine &ldquo;the speaker finished&rdquo; signal.
+          When a coding agent hands you the mic, OpenWhisp can use that signal to end the session right after your
+          utterance settles, instead of waiting out a silence timer. This is{" "}
+          <strong>experimental and off by default</strong>, it applies only to agent-requested dictations, and it&rsquo;s
+          inert on every other engine &mdash; your own hotkey dictations are never auto-stopped. It pairs with{" "}
+          <A href="/blog/talk-to-claude-code-by-voice/">talking to coding agents by voice</A>.
+        </P>
+
+        <H2>Try it</H2>
+        <P>
+          Parakeet ships in OpenWhisp, a free, open-source dictation app for Apple Silicon Macs. Get it from the{" "}
+          <A href="https://openwhisp.app/">OpenWhisp site</A> or <A href={REPO}>GitHub</A>, then pick Parakeet in
+          Settings &rsaquo; Models.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "What is Parakeet in OpenWhisp?",
+        a: "Parakeet is a new on-device transcription engine for OpenWhisp built on NVIDIA Parakeet models via the Apache-2.0 FluidAudio SDK. Unlike the batch engines, it streams: text appears about 0.3 seconds behind your voice with punctuation, and the final result lands roughly 50ms after you release the hotkey.",
+      },
+      {
+        q: "Is Parakeet the default engine now?",
+        a: "No. Parakeet is compiled into default OpenWhisp builds, but it's a selectable engine you choose in Settings › Models. WhisperKit remains available, along with whisper.cpp and Apple Speech.",
+      },
+      {
+        q: "What languages does Parakeet support?",
+        a: "For live dictation there's an English realtime model, a best-accuracy English model, an ultra-light 120M model, and a multilingual model covering roughly 40 languages with auto-detect. File transcription, meetings, and history re-transcription use a separate 25-language batch model. Parakeet is transcription only — it does not translate.",
+      },
+      {
+        q: "Does Parakeet run in the cloud?",
+        a: "No. Parakeet runs entirely on your Mac through CoreML, so nothing is uploaded. Its model repositories appear in Settings › Storage with sizes and one-click delete.",
+      },
+    ],
+    related: ["dictate-on-mac-offline", "private-on-device-ai-dictation", "transcribe-audio-video-files-mac", "best-mac-dictation-apps"],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
