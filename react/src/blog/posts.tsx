@@ -61,6 +61,13 @@ function Pre({ children }: { children: ReactNode }) {
     </pre>
   );
 }
+function Kbd({ children }: { children: ReactNode }) {
+  return (
+    <kbd className="rounded-md border border-b-2 border-line bg-ink px-1.5 py-0.5 font-mono text-[0.85em] text-text-d">
+      {children}
+    </kbd>
+  );
+}
 
 export const POSTS: Post[] = [
   {
@@ -971,6 +978,300 @@ ollama run qwen3:32b`}</Pre>
       },
     ],
     related: ["private-on-device-ai-dictation", "dictate-on-mac-offline", "talk-to-claude-code-by-voice"],
+  },
+
+  {
+    slug: "dictate-anywhere-mac-scratchpad",
+    title: "Dictate anywhere on your Mac — even with no text field to type into",
+    description:
+      "Most dictation needs a focused text field. OpenWhisp's floating Scratchpad gives you an always-on-top note to talk into anytime — a quick, fully-local capture surface.",
+    keyword: "dictate anywhere mac",
+    datePublished: "2026-07-10",
+    dateModified: "2026-07-10",
+    readingTime: "4 min read",
+    answer:
+      "OpenWhisp's floating Scratchpad lets you dictate on a Mac even when no app has a text field focused. Open it from the menu bar (or the openwhisp://scratchpad URL), and an always-on-top panel appears to talk or type into. It holds a list of notes, saves them on-device, and never sends anything to the cloud.",
+    body: (
+      <>
+        <P>
+          Dictation apps have a blind spot: they need somewhere to put the words. If no text field is focused
+          &mdash; you&rsquo;re staring at your desktop, a full-screen video, a Finder window &mdash; there&rsquo;s
+          nowhere for the transcript to go. The thought you wanted to capture waits until you find an app to type
+          into, and by then it&rsquo;s often gone.
+        </P>
+        <P>
+          OpenWhisp&rsquo;s <strong>floating Scratchpad</strong> fixes that. It&rsquo;s a small, always-on-top note
+          panel you can summon anytime and talk straight into &mdash; no target app required.
+        </P>
+
+        <H2>How it works</H2>
+        <UL>
+          <li>Open the Scratchpad from the OpenWhisp menu-bar icon (or run <code className="font-mono text-[0.9em] text-speak">open &quot;openwhisp://scratchpad&quot;</code> from a launcher).</li>
+          <li>The panel floats on top of your other windows and takes focus.</li>
+          <li>Start a dictation with your trigger key &mdash; the text appends into the active note. Or just type.</li>
+          <li>Keep several notes in a list; each shows a small provenance line (when it was last dictated vs. typed), newest first.</li>
+        </UL>
+
+        <H2>A capture surface, kept on your Mac</H2>
+        <P>
+          The Scratchpad is a quick-capture buffer, not a cloud notes service. Your notes are saved on device and
+          persist between launches, and nothing leaves your Mac &mdash; the same{" "}
+          <A href="/blog/private-on-device-ai-dictation/">local-first, private</A> posture as the rest of OpenWhisp.
+          It&rsquo;s the fastest way to get a fleeting thought out of your head and into text when there&rsquo;s no
+          document open to hold it.
+        </P>
+
+        <H2>Where it fits</H2>
+        <P>
+          Think of it as the voice equivalent of a sticky note: a fleeting to-do while you&rsquo;re heads-down in a
+          call, a quote you want to keep while reading, a reminder mid-task. When you&rsquo;re ready, copy it into
+          wherever it belongs. And because you can open it from a URL, you can bind it to a{" "}
+          <A href="/blog/automate-dictation-shortcuts-webhooks/">launcher hotkey</A> and have a capture note one
+          keystroke away.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can I dictate on a Mac without a text field focused?",
+        a: "Yes. OpenWhisp's floating Scratchpad is an always-on-top note panel you can open from the menu bar (or the openwhisp://scratchpad URL) and dictate into anytime, even when no other app has a text field focused.",
+      },
+      {
+        q: "Where are Scratchpad notes stored?",
+        a: "On your Mac. The Scratchpad keeps a local list of notes that persist between launches; nothing is uploaded to any server.",
+      },
+      {
+        q: "Can I open the Scratchpad with a shortcut?",
+        a: "Yes. It responds to the openwhisp://scratchpad URL, so you can trigger it from Raycast, Alfred, or any launcher and bind that to a hotkey.",
+      },
+    ],
+    related: ["hands-free-dictation-mac", "automate-dictation-shortcuts-webhooks", "private-on-device-ai-dictation"],
+  },
+
+  {
+    slug: "hands-free-dictation-mac",
+    title: "Hands-free dictation on a Mac: talk without holding a key",
+    description:
+      "Tired of holding a key while you dictate? OpenWhisp's hands-free mode locks the mic open with one tap — speak with your hands free, tap or Esc to stop. On-device, with a silence safety net.",
+    keyword: "hands-free dictation mac",
+    datePublished: "2026-07-10",
+    dateModified: "2026-07-10",
+    readingTime: "4 min read",
+    answer:
+      "OpenWhisp now supports hands-free dictation on a Mac: instead of holding a key the whole time, you tap your trigger once to lock the mic open, speak freely, then tap again or press Esc to stop. A silence safety net ends a forgotten session automatically. Hold-to-talk still works exactly as before.",
+    body: (
+      <>
+        <P>
+          Push-to-talk is great for a quick sentence &mdash; hold the key, speak, release. But for anything longer
+          &mdash; a paragraph, a journal entry, thinking out loud &mdash; holding a key the entire time is a small,
+          constant strain, and it ties up a hand you might want for something else.
+        </P>
+        <P>
+          OpenWhisp&rsquo;s <strong>hands-free mode</strong> removes the hold. One tap locks the mic open; you speak
+          with both hands free; a tap or <Kbd>Esc</Kbd> stops it.
+        </P>
+
+        <H2>How to turn it on</H2>
+        <UL>
+          <li>Go to <strong>Settings › Dictation › Activation</strong> and set the activation style to <strong>&ldquo;Hands-free (tap to lock)&rdquo;</strong>. (Or leave it on hold-to-talk and just double-tap your trigger key to lock the mic for a single session.)</li>
+          <li>Tap your trigger key &mdash; the overlay shows a lock badge and &ldquo;Hands-free &mdash; tap key or Esc to stop.&rdquo;</li>
+          <li>Speak. The mic stays live with nothing held down.</li>
+          <li>Tap the trigger again to insert what you said, or press <Kbd>Esc</Kbd> to discard the session.</li>
+        </UL>
+
+        <H2>It won&rsquo;t record forever by accident</H2>
+        <P>
+          The obvious worry with a locked mic is walking away and leaving it running. OpenWhisp has a safety net:
+          <strong> auto-stop after a long silence</strong> is on by default, so a session you forget about ends
+          itself after a long quiet stretch instead of recording indefinitely. It&rsquo;s all{" "}
+          <A href="/blog/dictate-on-mac-offline/">on-device</A> &mdash; the audio never leaves your Mac.
+        </P>
+
+        <H2>You don&rsquo;t lose hold-to-talk</H2>
+        <P>
+          Hands-free is an addition, not a replacement. Holding the key still works exactly as before, so you can use
+          the quick hold for a one-liner and switch to hands-free for the long stuff. Pair it with a{" "}
+          <A href="/blog/dictate-anywhere-mac-scratchpad/">floating Scratchpad</A> and you can lock the mic, lean back,
+          and talk a whole note into existence without touching the keyboard again.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can I dictate on a Mac without holding a key down?",
+        a: "Yes. OpenWhisp's hands-free mode locks the mic open with one tap of your trigger key. You speak with your hands free and tap again (or press Esc) to stop. Hold-to-talk remains available too.",
+      },
+      {
+        q: "What stops hands-free dictation from recording forever if I forget?",
+        a: "An auto-stop-after-long-silence safety net, on by default, ends a locked session after a long quiet stretch — so a forgotten session can't keep recording.",
+      },
+      {
+        q: "Is hands-free dictation still private and on-device?",
+        a: "Yes. Like all OpenWhisp dictation, hands-free transcription runs on-device and the audio never leaves your Mac.",
+      },
+    ],
+    related: ["dictate-anywhere-mac-scratchpad", "dictate-on-mac-offline", "wispr-flow-alternative"],
+  },
+
+  {
+    slug: "transcribe-audio-video-files-mac",
+    title: "Transcribe audio and video files locally on your Mac (with SRT/VTT subtitles)",
+    description:
+      "Drop an MP3 or MP4 into OpenWhisp and get a transcript — or .srt/.vtt subtitles — generated entirely on your Mac. Batch queue, automatic chunking, and watch folders. No upload, no cloud.",
+    keyword: "transcribe audio video files mac offline",
+    datePublished: "2026-07-10",
+    dateModified: "2026-07-10",
+    readingTime: "5 min read",
+    answer:
+      "OpenWhisp can transcribe audio and video files on a Mac completely offline: add an MP3, MP4, M4A, WAV, or WEBM and it runs your on-device engine, showing a live per-file queue. Long files are chunked automatically, and finished transcripts export to plain text, SubRip (.srt), or WebVTT (.vtt) with timestamps. Set a watch folder and dropped media transcribes itself.",
+    body: (
+      <>
+        <P>
+          Live dictation is only half of speech-to-text. The other half is the pile of recordings you already have:
+          a meeting recording, a lecture, a podcast episode, a screen-capture video you need captions for. Most
+          tools that transcribe those files upload them to a server. OpenWhisp does it <strong>entirely on your
+          Mac.</strong>
+        </P>
+
+        <H2>Drop in a file, get a transcript</H2>
+        <UL>
+          <li>Open <strong>Settings › File Transcription</strong> and add one or more media files &mdash; MP3, MP4, M4A, WAV, WEBM, and more.</li>
+          <li>OpenWhisp decodes each to 16&nbsp;kHz audio and runs it through your on-device engine, one file at a time.</li>
+          <li>A live queue shows each file&rsquo;s progress: Queued &rarr; Loading model &rarr; Transcribing &rarr; Done. Long files are chunked automatically.</li>
+          <li>Export a finished transcript as plain text, <strong>.srt</strong>, or <strong>.vtt</strong> &mdash; the subtitle formats carry chunk-level timestamps.</li>
+        </UL>
+
+        <H2>Subtitles, generated on device</H2>
+        <P>
+          The SubRip (.srt) and WebVTT (.vtt) exports make this a genuine local captioning tool. Feed it a video&rsquo;s
+          audio and you get a timestamped subtitle file you can drop straight into a video editor or a web player &mdash;
+          without sending the footage to anyone. For sensitive recordings (interviews, internal meetings, anything under
+          NDA), that&rsquo;s the difference between &ldquo;can&rsquo;t use a transcription service&rdquo; and
+          &ldquo;done in the background.&rdquo;
+        </P>
+
+        <H2>Set it and forget it: watch folders</H2>
+        <P>
+          You can point OpenWhisp at a <strong>watch folder</strong>: any media dropped into it transcribes itself
+          automatically (it waits for a file to finish copying before starting). Route your recorder&rsquo;s output
+          folder there and transcripts appear without you lifting a finger.
+        </P>
+
+        <H2>Why local matters here</H2>
+        <P>
+          Cloud transcription services charge per minute and require you to upload the file &mdash; a non-starter for
+          long or confidential recordings. Because OpenWhisp runs{" "}
+          <A href="/blog/dictate-on-mac-offline/">Whisper-class models on your own hardware</A>, batch transcription
+          is free, works offline, and keeps every file on your machine. It&rsquo;s the same engine behind live
+          dictation, pointed at files instead of your microphone.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can I transcribe a video or audio file on a Mac without uploading it?",
+        a: "Yes. OpenWhisp transcribes MP3, MP4, M4A, WAV, WEBM and other media files entirely on-device — the file never leaves your Mac. Add files in Settings › File Transcription and export the result as text, SRT, or VTT.",
+      },
+      {
+        q: "Can OpenWhisp generate subtitles (SRT/VTT)?",
+        a: "Yes. Finished transcripts export to SubRip (.srt) and WebVTT (.vtt) with chunk-level timestamps, so you can caption a video locally.",
+      },
+      {
+        q: "Can it transcribe a folder of files automatically?",
+        a: "Yes. Set up a watch folder and any media dropped into it is transcribed automatically once the file finishes copying.",
+      },
+    ],
+    related: ["dictate-on-mac-offline", "best-mac-dictation-apps", "private-on-device-ai-dictation"],
+  },
+
+  {
+    slug: "automate-dictation-shortcuts-webhooks",
+    title: "Automate your dictation: run Shortcuts, webhooks, and files when you finish speaking",
+    description:
+      "OpenWhisp can do something the moment a dictation finishes — append to a file, run a Shortcut, POST a webhook, open a URL. Plus an openwhisp:// scheme to drive it from Raycast or Alfred. Fail-open, on-device.",
+    keyword: "automate dictation mac shortcuts webhook",
+    datePublished: "2026-07-10",
+    dateModified: "2026-07-10",
+    readingTime: "6 min read",
+    answer:
+      "OpenWhisp's Rules and output targets let you automate what happens when a dictation finishes: append it to a Markdown file, run a macOS Shortcut, POST it to a webhook, open a URL, or run a script — triggered by what you said. An openwhisp:// URL scheme also lets Raycast, Alfred, or any launcher start dictation. Everything fails open: if an action fails, your words are still typed.",
+    body: (
+      <>
+        <P>
+          Dictation usually ends the same way: the text lands in whatever app you&rsquo;re in. But often that&rsquo;s
+          just step one &mdash; you wanted the note in your journal, the task in Things, the idea POSTed to a webhook
+          that kicks off a workflow. OpenWhisp can now do that <em>automatically</em>, the moment you stop speaking.
+        </P>
+
+        <H2>Output targets: send a dictation somewhere other than the focused app</H2>
+        <P>
+          In <strong>Settings › Output › Output target</strong> you pick where the final transcript goes:
+        </P>
+        <UL>
+          <li><strong>A file</strong> &mdash; append each dictation to an Obsidian daily note, a Logseq journal, or any <code className="font-mono text-[0.9em] text-speak">.md</code>/<code className="font-mono text-[0.9em] text-speak">.txt</code>, with an optional dated heading.</li>
+          <li><strong>A macOS Shortcut</strong> &mdash; hand the text to any Shortcut you&rsquo;ve built (add to Reminders, run AppleScript, whatever the Shortcuts ecosystem can do).</li>
+          <li><strong>A webhook</strong> &mdash; POST the transcript as JSON (text, language, app, timestamp) to Notion, Zapier, n8n, or your own endpoint, with optional auth headers.</li>
+        </UL>
+
+        <H2>Rules: trigger actions based on what you said</H2>
+        <P>
+          <strong>Rules</strong> (Settings › Rules) go a step further: they run actions when a transcript{" "}
+          <em>matches</em>. A rule is a match condition &mdash; starts-with, contains, exact, or regex, optionally
+          scoped to one app &mdash; plus an ordered list of actions: insert a snippet, open a URL (with{" "}
+          <code className="font-mono text-[0.9em] text-speak">{"{{text}}"}</code> for the transcript), run a script,
+          run a Shortcut, POST a webhook, or append to a file. Say the right trigger phrase and the automation fires.
+        </P>
+
+        <H2>Drive OpenWhisp from a launcher: the openwhisp:// scheme</H2>
+        <P>
+          OpenWhisp answers an <code className="font-mono text-[0.9em] text-speak">openwhisp://</code> URL, so any
+          launcher or script can control it &mdash; no CLI needed:
+        </P>
+        <Pre>{`open "openwhisp://record"                       # start / stop dictation
+open "openwhisp://paste-last-result"            # paste the last result
+open "openwhisp://refine?instruction=make%20it%20formal"
+
+# chain verbs — they run in order, all-or-nothing
+open "openwhisp://?switch-mode=email&record"`}</Pre>
+        <P>
+          Point Raycast or Alfred at one of these and bind it to a hotkey. The scheme deliberately exposes only a
+          small, validated allow-list of safe verbs &mdash; never a shell string or an arbitrary file path &mdash;
+          and rejects anything malformed as a whole.
+        </P>
+
+        <H2>Nothing gets dropped</H2>
+        <P>
+          The important design choice: every one of these is a <strong>fail-open side channel</strong>. If a webhook
+          is down, a Shortcut errors, or a file can&rsquo;t be written, your words still land in the focused app
+          exactly as they always did. An automation can never cost you a dictation. And it&rsquo;s all local by default
+          &mdash; Rules run on dictation only, so an{" "}
+          <A href="/blog/talk-to-claude-code-by-voice/">agent&rsquo;s</A> transcript never triggers them unless you opt
+          in.
+        </P>
+
+        <H2>For the tinkerers</H2>
+        <P>
+          This is OpenWhisp leaning into its <A href="/blog/wispr-flow-alternative/">hackable, open-source</A> nature:
+          your voice becomes a trigger for whatever you can wire up on your own machine, with the safety of knowing the
+          plumbing can only ever <em>add</em> to normal dictation, never break it.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can OpenWhisp run a Shortcut or webhook when I finish dictating?",
+        a: "Yes. Output targets can send the final transcript to a file, a macOS Shortcut, or a webhook, and Rules can run those actions (plus open URLs or run scripts) when a transcript matches a condition you set.",
+      },
+      {
+        q: "Can I start OpenWhisp dictation from Raycast or Alfred?",
+        a: "Yes. OpenWhisp answers an openwhisp:// URL scheme with a validated allow-list of verbs (record, refine, paste-last-result, switch-mode, and more), so any launcher or script can drive it.",
+      },
+      {
+        q: "What happens to my text if an automation fails?",
+        a: "Nothing is lost. Every output target and rule is fail-open: if a file, Shortcut, or webhook can't take the text, your words are still typed into the focused app as usual.",
+      },
+    ],
+    related: ["talk-to-claude-code-by-voice", "dictate-anywhere-mac-scratchpad", "wispr-flow-alternative"],
   },
 ];
 
