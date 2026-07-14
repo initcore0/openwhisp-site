@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>OpenWhisp — Local-first dictation for macOS</title>
-    <meta name="description" content="Local-first dictation for macOS. Hold a key, speak, release — your words are transcribed on-device with WhisperKit on Apple's Neural Engine and typed into any app. No account, no subscription, open source." />
+    <title>OpenWhisp — Realtime local dictation for macOS, and a voice for your AI agents</title>
+    <meta name="description" content="Realtime dictation for macOS that runs entirely on your device. Words appear as you speak, about 0.3s behind your voice. Doubles as a local MCP server so Claude Code and Cursor can use your voice. Free, open source, no account." />
     <link rel="canonical" href="https://openwhisp.app/" />
     <meta name="theme-color" content="#0B0E14" />
     <meta name="color-scheme" content="dark" />
@@ -14,8 +14,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="OpenWhisp" />
-    <meta property="og:title" content="OpenWhisp — Local-first dictation for macOS" />
-    <meta property="og:description" content="Hold a key, speak, release. Your words are transcribed on-device and typed into any app. No account, no subscription, open source." />
+    <meta property="og:title" content="OpenWhisp — Realtime local dictation for macOS, and a voice for your AI agents" />
+    <meta property="og:description" content="Words appear as you speak, ~0.3s behind your voice — entirely on-device. And the only dictation app your coding agent can talk to. Free and open source." />
     <meta property="og:url" content="https://openwhisp.app/" />
     <meta property="og:image" content="https://openwhisp.app/og-image.png" />
     <meta property="og:image:width" content="1200" />
@@ -24,8 +24,8 @@
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="OpenWhisp — Local-first dictation for macOS" />
-    <meta name="twitter:description" content="Hold a key, speak, release. On-device transcription, typed into any app. No account, no subscription, open source." />
+    <meta name="twitter:title" content="OpenWhisp — Realtime local dictation for macOS, and a voice for your AI agents" />
+    <meta name="twitter:description" content="Words appear as you speak, ~0.3s behind your voice — entirely on-device. And the only dictation app your coding agent can talk to. Free and open source." />
     <meta name="twitter:image" content="https://openwhisp.app/og-image.png" />
     <meta name="twitter:image:alt" content="OpenWhisp — a glowing waveform over the words 'Speak. It's typed. Nothing leaves your Mac.'" />
 
@@ -65,7 +65,7 @@
           "@type": "SoftwareApplication",
           "@id": "https://openwhisp.app/#app",
           "name": "OpenWhisp",
-          "description": "Local-first dictation for macOS. Hold a key, speak, release — your words are transcribed on-device and typed into any app.",
+          "description": "Realtime dictation for macOS that runs entirely on your device. Words appear as you speak, about 0.3s behind your voice, and it doubles as a local MCP server so AI coding agents can use your voice.",
           "applicationCategory": "UtilitiesApplication",
           "operatingSystem": "macOS 14.0 or later, Apple Silicon",
           "url": "https://openwhisp.app/",
@@ -77,12 +77,12 @@
           "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
           "image": "https://openwhisp.app/og-image.png",
           "featureList": [
-            "On-device speech-to-text with WhisperKit on the Apple Neural Engine",
+            "Realtime on-device speech-to-text — words appear about 0.3s behind your voice",
+            "Built-in MCP server so AI coding agents like Claude Code and Cursor can use your voice",
             "Voice editing of selected text in any app",
             "Built-in offline AI refinement",
             "Custom vocabulary and per-app modes",
-            "Searchable local transcription history",
-            "Twelve languages with auto-detection"
+            "Searchable local transcription history"
           ]
         },
         {
@@ -118,7 +118,15 @@
               "name": "How is it different from the built-in macOS dictation?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "OpenWhisp runs Whisper-class models for noticeably better accuracy, and adds things macOS dictation doesn't have: voice editing of selected text, AI refinement that runs offline, custom vocabulary, per-app modes, and a searchable local history."
+                "text": "OpenWhisp streams words in about 0.3 seconds behind your voice, already punctuated, and adds things macOS dictation doesn't have: voice editing of selected text, AI refinement that runs offline, custom vocabulary, per-app modes, a searchable local history, and a built-in MCP server so AI coding agents can use your voice."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can AI coding agents like Claude Code use OpenWhisp?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. OpenWhisp doubles as a local MCP server, so Claude Code, Cursor, and any MCP-aware agent can ask you questions out loud and take your spoken answer, rewrite text with your on-device model, and read your recent dictations. It works with any API key or Bedrock setup, over SSH, and in regulated environments, because nothing is ever sent to the cloud. It is off until you enable it, and you approve each agent and each capability."
               }
             },
             {
