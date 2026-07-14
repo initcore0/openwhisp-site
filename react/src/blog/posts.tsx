@@ -1281,10 +1281,10 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
       "OpenWhisp's new on-device Parakeet engine streams words to the screen about 0.3s behind your voice, with live punctuation — final text lands ~50ms after you release the key. Fully local, no cloud.",
     keyword: "realtime streaming dictation mac",
     datePublished: "2026-07-11",
-    dateModified: "2026-07-11",
+    dateModified: "2026-07-14",
     readingTime: "6 min read",
     answer:
-      "Parakeet is a new on-device dictation engine in OpenWhisp that streams words to the screen as you talk — partial text trails your voice by about 0.3 seconds, already punctuated and capitalized, and the final text lands roughly 50ms after you release the hotkey. It runs entirely on your Mac, and you pick it in Settings alongside WhisperKit; it isn't the default.",
+      "Parakeet is OpenWhisp's on-device dictation engine — and now its default. It streams words to the screen as you talk — partial text trails your voice by about 0.3 seconds, already punctuated and capitalized, and the final text lands roughly 50ms after you release the hotkey. It runs entirely on your Mac; a fresh install uses it from the first launch, and WhisperKit, whisper.cpp, and Apple Speech stay one click away.",
     body: (
       <>
         <P>
@@ -1341,13 +1341,15 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
           transcription only: there&rsquo;s no translation step, so your words come back in the language you spoke them.
         </P>
 
-        <H2>It&rsquo;s an engine you pick, not the default</H2>
+        <H2>The default engine &mdash; but not the only one</H2>
         <P>
-          Parakeet is compiled into the default OpenWhisp builds, but it&rsquo;s a <em>choice</em>, not a replacement.
-          You select it in <strong>Settings &rsaquo; Models</strong>, and WhisperKit is still there &mdash; as are
-          whisper.cpp and Apple Speech. The FluidAudio model repositories show up in{" "}
+          Parakeet tested well enough that it&rsquo;s now the <strong>default, recommended engine</strong>: a fresh
+          install downloads and uses it from the very first launch. If you were already using OpenWhisp, an update
+          leaves you on whatever engine you&rsquo;d chosen &mdash; it never swaps a working engine out from under you.
+          Either way it&rsquo;s not a lock-in: WhisperKit is still there in <strong>Settings &rsaquo; Models</strong>,
+          as are whisper.cpp and Apple Speech, and the FluidAudio model repositories show up in{" "}
           <strong>Settings &rsaquo; Storage</strong> with their sizes and a one-click delete, so you only keep the
-          variants you actually use. If you&rsquo;re still deciding, the{" "}
+          variants you actually use. Weighing the options? The{" "}
           <A href="/blog/best-mac-dictation-apps/">Mac dictation apps guide</A> and the{" "}
           <A href="/blog/wispr-flow-alternative/">Wispr Flow alternative</A> writeup put the trade-offs in context.
         </P>
@@ -1377,7 +1379,7 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
       },
       {
         q: "Is Parakeet the default engine now?",
-        a: "No. Parakeet is compiled into default OpenWhisp builds, but it's a selectable engine you choose in Settings › Models. WhisperKit remains available, along with whisper.cpp and Apple Speech.",
+        a: "Yes. Parakeet is the default, recommended transcription engine — a fresh install uses it from the first launch. Existing users keep whatever engine they'd already chosen. You can switch anytime in Settings › Models, where WhisperKit, whisper.cpp, and Apple Speech remain available.",
       },
       {
         q: "What languages does Parakeet support?",
