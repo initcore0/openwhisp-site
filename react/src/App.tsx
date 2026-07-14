@@ -316,10 +316,10 @@ export function App() {
               </a>
             </div>
             <ul className="mt-9 grid gap-4 md:grid-cols-3">
-              <Highlight icon={<WaveSine weight="duotone" />} title="Meet Parakeet Realtime">
-                A new on-device engine you can select that streams instead of batching: partials trail your
-                voice by about a third of a second &mdash; already punctuated and capitalized &mdash; and the
-                final text arrives ~50&nbsp;ms after you let go, with no end-of-dictation decode wait.
+              <Highlight icon={<WaveSine weight="duotone" />} title="Parakeet is the new default">
+                Our fast on-device engine now ships as the default: it streams instead of batching, so partials
+                trail your voice by about a third of a second &mdash; already punctuated &mdash; and the final
+                text arrives ~50&nbsp;ms after you let go, with no end-of-dictation decode wait.
               </Highlight>
               <Highlight icon={<UsersThree weight="duotone" />} title="Meeting transcription &amp; summary">
                 Record a call &mdash; system audio and your mic &mdash; then transcribe it, label who spoke
@@ -382,14 +382,14 @@ export function App() {
                 Words dictated, speaking speed, time saved, streaks, and which apps you use it in &mdash;
                 computed on-device from metadata only, never your transcripts.
               </Feature>
-              <Feature icon={<WaveSine weight="duotone" />} title="Realtime streaming engine">
-                Pick Parakeet in Settings for a true streaming engine &mdash; words appear about 0.3&nbsp;s behind
-                your voice with punctuation, and the final text lands ~50&nbsp;ms after you release the hotkey. Runs
-                fully on-device, with variants for English and ~40 auto-detected languages.
+              <Feature icon={<WaveSine weight="duotone" />} title="Parakeet, by default">
+                The default engine is now Parakeet &mdash; a true streaming engine, so words appear about
+                0.3&nbsp;s behind your voice with punctuation and the final text lands ~50&nbsp;ms after you release
+                the hotkey. Fully on-device, with variants for English and ~40 auto-detected languages.
               </Feature>
               <Feature icon={<Cpu weight="duotone" />} title="Three more engines">
-                WhisperKit stays the default &mdash; Whisper on Apple&rsquo;s Neural Engine via CoreML &mdash; and
-                whisper.cpp and Apple Speech are one click away. Pick the engine that fits per app.
+                Prefer another? WhisperKit (Whisper on Apple&rsquo;s Neural Engine via CoreML), whisper.cpp, and
+                Apple Speech are all one click away in Settings. Pick the engine that fits per app.
               </Feature>
               <Feature icon={<ClockCounterClockwise weight="duotone" />} title="History, re-transcribable">
                 A local, searchable list of everything you&rsquo;ve dictated. Opt in to keep the audio on-device
