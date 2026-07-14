@@ -2,34 +2,25 @@ import { useState } from "react";
 import {
   ShieldCheck,
   CurrencyDollarSimple,
-  Wrench,
   GithubLogo,
   DownloadSimple,
   CaretRight,
-  Microphone,
   TextAa,
   Brain,
   ClockCounterClockwise,
-  Globe,
   Cpu,
   Heart,
-  HardDrives,
   List,
   X,
   PaperPlaneTilt,
   CheckCircle,
   PlugsConnected,
-  HandTap,
-  SlidersHorizontal,
   FilmSlate,
   Lightning,
-  ChartLineUp,
   Command,
   UsersThree,
-  WaveSine,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
-import { Reveal } from "./components/Reveal";
 import { MagneticButton } from "./components/MagneticButton";
 import { EditDemo } from "./components/EditDemo";
 import { withBase } from "./base";
@@ -41,31 +32,6 @@ const DONATE = "https://buymeacoffee.com/initcore0";
 // HTML or the bundle — keeps it off the cheap email-scraper radar.
 const CONTACT_EMAIL = ["maksym", ".", "naboka", "@", "gmail", ".", "com"].join("");
 const CONTACT_ENDPOINT = `https://formsubmit.co/ajax/${CONTACT_EMAIL}`;
-
-// The on-device refinement models OpenWhisp can download and run locally.
-const MODELS = [
-  {
-    name: "Qwen2.5 0.5B",
-    note: "Fastest, lowest memory. The default.",
-    size: "491 MB",
-    license: "Apache-2.0",
-    featured: true,
-  },
-  {
-    name: "Qwen2.5 1.5B",
-    note: "Higher quality, a little heavier.",
-    size: "1.12 GB",
-    license: "Apache-2.0",
-    featured: false,
-  },
-  {
-    name: "SmolLM2 360M",
-    note: "Smallest footprint, for tight RAM.",
-    size: "271 MB",
-    license: "Apache-2.0",
-    featured: false,
-  },
-] as const;
 
 // The three tools the Agent Bridge exposes over MCP (docs/AGENT_BRIDGE.md in the app repo).
 const AGENT_TOOLS = [
@@ -110,8 +76,8 @@ export function App() {
           </a>
           {/* Desktop nav */}
           <nav className="hidden items-center gap-7 text-sm font-medium text-muted-d md:flex" aria-label="Primary">
-            <a className="transition-colors hover:text-listen" href="#features">Features</a>
             <a className="transition-colors hover:text-listen" href="#mcp">MCP</a>
+            <a className="transition-colors hover:text-listen" href="#features">Features</a>
             <a className="transition-colors hover:text-listen" href="#privacy">Privacy</a>
             <a className="transition-colors hover:text-listen" href={withBase("/changelog/")}>Changelog</a>
             <a className="transition-colors hover:text-listen" href={withBase("/blog/")}>Blog</a>
@@ -153,9 +119,8 @@ export function App() {
         >
           <nav className="mx-auto flex max-w-[1180px] flex-col gap-1 px-4 py-4" aria-label="Mobile">
             {[
-              { href: "#features", label: "Features" },
               { href: "#mcp", label: "MCP" },
-              { href: "#models", label: "Private AI" },
+              { href: "#features", label: "Features" },
               { href: "#privacy", label: "Privacy" },
               { href: "/changelog/", label: "Changelog" },
               { href: "/blog/", label: "Blog" },
@@ -206,19 +171,20 @@ export function App() {
           />
           <div className="relative mx-auto grid max-w-[1180px] items-center gap-14 px-6 py-20 md:grid-cols-[1.05fr_0.95fr] md:py-28">
             <div className="cascade">
-              <Eyebrow>Local-first dictation for macOS</Eyebrow>
+              <Eyebrow>Realtime local dictation for macOS</Eyebrow>
               <h1 className="font-display text-[2.6rem] font-bold leading-[1.04] tracking-tight text-listen md:text-6xl">
                 Speak. It&rsquo;s typed.
                 <br />
                 <span className="text-speak">Nothing leaves your Mac.</span>
               </h1>
-              <p className="mt-6 max-w-[44ch] text-lg leading-relaxed text-text-d">
-                Hold a key, talk, release. OpenWhisp transcribes your voice on-device and types it
-                straight into any app &mdash; then lets you{" "}
-                <a href="#refine" className="border-b border-refine/45 text-refine transition-colors hover:border-refine">
-                  edit text by voice
-                </a>{" "}
-                too. No account, no subscription, no audio sent to the cloud.
+              <p className="mt-6 max-w-[46ch] text-lg leading-relaxed text-text-d">
+                Words appear <em className="not-italic font-semibold text-listen">as you talk</em> &mdash; about a
+                third of a second behind your voice, already punctuated. Release the key and they land in any app.
+                And it&rsquo;s the only dictation app{" "}
+                <a href="#mcp" className="border-b border-speak/45 text-speak transition-colors hover:border-speak">
+                  your coding agent can talk to
+                </a>
+                .
               </p>
               <div className="mt-8 flex flex-wrap gap-3.5">
                 <MagneticButton href={REPO} variant="primary">
@@ -251,9 +217,13 @@ export function App() {
           </div>
         </section>
 
-        {/* PILLARS — 2-col zig (asymmetric), not 3 equal cards */}
+        {/* PILLARS — the three reasons, stated once */}
         <section aria-label="Why OpenWhisp" className="border-y border-line bg-ink-2">
           <div className="mx-auto grid max-w-[1180px] gap-px overflow-hidden rounded-2xl px-6 py-16 md:grid-cols-3">
+            <Pillar icon={<Lightning weight="duotone" className="h-7 w-7" />} title="Realtime, not batch">
+              Powered by Parakeet, our default engine: words stream in ~0.3&nbsp;s behind your voice with
+              punctuation, and the final text lands the instant you let go.
+            </Pillar>
             <Pillar icon={<ShieldCheck weight="duotone" className="h-7 w-7" />} title="Never phones home">
               Transcription runs entirely on your machine and works offline. Your audio never leaves the Mac
               unless you explicitly turn on a cloud model.
@@ -262,142 +232,110 @@ export function App() {
               No price, no account, no subscription, no usage meter. It runs on hardware you already own, and the
               source is yours to read and change.
             </Pillar>
-            <Pillar icon={<Wrench weight="duotone" className="h-7 w-7" />} title="A power user&rsquo;s kit">
-              Swap the LLM backend, edit the prompts, set per-app modes, teach it your vocabulary. Sensible
-              defaults out of the box, hackable underneath.
-            </Pillar>
           </div>
         </section>
 
-        {/* HOW IT WORKS — a real 3-step sequence (order carries meaning) */}
-        <section id="how" className="mx-auto max-w-[1180px] px-6 py-20 md:py-24">
-          <Eyebrow>The whole interaction</Eyebrow>
-          <h2 className="max-w-[16ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
-            Three moves, then it&rsquo;s in your document
-          </h2>
-          <ol className="mt-11 grid gap-6 md:grid-cols-3">
-            <Reveal as="li" delay={0}>
-              <Step n="01" title="Hold the key">
-                Press and hold your push-to-talk key &mdash; <Kbd>Fn</Kbd> or <Kbd>&#8963; Space</Kbd>. A quiet
-                overlay appears at the bottom of the screen.
-              </Step>
-            </Reveal>
-            <Reveal as="li" delay={90}>
-              <Step n="02" title="Speak naturally">
-                Say your sentence. Your words stream into the overlay as you talk, with filler words and stray
-                punctuation cleaned up on the fly.
-              </Step>
-            </Reveal>
-            <Reveal as="li" delay={180}>
-              <Step n="03" title="Release to insert">
-                Let go and the finished text is typed into the focused app. Changed your mind mid-sentence? Press{" "}
-                <Kbd>Esc</Kbd> to cancel.
-              </Step>
-            </Reveal>
-          </ol>
-        </section>
-
-        {/* NEW THIS RELEASE — a concise spotlight on the flagship additions */}
-        <section className="border-y border-line bg-ink-2 py-16 md:py-20">
-          <div className="mx-auto max-w-[1180px] px-6">
-            <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-              <div>
-                <Eyebrow>New this release</Eyebrow>
-                <h2 className="max-w-[24ch] font-display text-2xl font-semibold tracking-tight text-listen md:text-[2rem]">
-                  27 new features shipped &mdash; led by the new realtime streaming engine
-                </h2>
-              </div>
+        {/* AGENT BRIDGE — the differentiator, straight after the pillars */}
+        <section id="mcp" className="relative overflow-hidden py-20 md:py-24">
+          <div
+            className="pointer-events-none absolute inset-0"
+            style={{
+              background:
+                "radial-gradient(55% 60% at 15% 25%, color-mix(in srgb, var(--color-speak) 10%, transparent), transparent 70%)",
+            }}
+          />
+          <div className="relative mx-auto max-w-[1180px] px-6">
+            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-speak">
+              <PlugsConnected weight="duotone" className="h-4 w-4" />
+              Agent Bridge &middot; built-in MCP server
+            </p>
+            <h2 className="mt-5 max-w-[22ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
+              Give your coding agent a voice &mdash; yours
+            </h2>
+            <p className="mt-4 max-w-[64ch] leading-relaxed text-text-d">
+              OpenWhisp doubles as a local{" "}
               <a
-                href={withBase("/changelog/")}
-                className="inline-flex items-center gap-1.5 font-display text-sm font-semibold text-speak transition-colors hover:text-listen"
+                href="https://modelcontextprotocol.io"
+                rel="noopener"
+                className="border-b border-speak/45 text-speak transition-colors hover:border-speak"
               >
-                See the full changelog
-                <CaretRight weight="bold" className="h-4 w-4" />
-              </a>
+                MCP
+              </a>{" "}
+              server for Claude Code, Cursor, and any MCP-aware agent. Instead of stopping mid-task to wait for
+              typed input, your agent asks you out loud &mdash; you answer by voice and it keeps working.{" "}
+              <span className="text-listen">No other dictation app ships this.</span>
+            </p>
+
+            <div className="mt-11 grid items-start gap-10 md:grid-cols-[1fr_1.05fr]">
+              <ul className="grid gap-4">
+                {AGENT_TOOLS.map((t) => (
+                  <li key={t.name} className="rounded-2xl border border-line bg-ink-2 p-5">
+                    <div className="flex flex-wrap items-center gap-2.5">
+                      <span className="font-mono text-[13.5px] font-medium text-speak">{t.name}</span>
+                      {t.badge && (
+                        <span className="rounded-full border border-refine/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-refine">
+                          {t.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1.5 text-[15px] leading-relaxed text-muted-d">{t.desc}</p>
+                  </li>
+                ))}
+              </ul>
+              <AgentBridgeDemo />
             </div>
-            <ul className="mt-9 grid gap-4 md:grid-cols-3">
-              <Highlight icon={<WaveSine weight="duotone" />} title="Parakeet is the new default">
-                Our fast on-device engine now ships as the default: it streams instead of batching, so partials
-                trail your voice by about a third of a second &mdash; already punctuated &mdash; and the final
-                text arrives ~50&nbsp;ms after you let go, with no end-of-dictation decode wait.
-              </Highlight>
-              <Highlight icon={<UsersThree weight="duotone" />} title="Meeting transcription &amp; summary">
-                Record a call &mdash; system audio and your mic &mdash; then transcribe it, label who spoke
-                (Me vs. Them), and get a Markdown summary, all on your Mac.
-              </Highlight>
-              <Highlight icon={<HandTap weight="duotone" />} title="Hands-free dictation">
-                Tap to lock the mic open and speak with your hands free; tap again or hit <Kbd>Esc</Kbd> to
-                stop. Holding still works too.
-              </Highlight>
-            </ul>
+
+            <div className="mt-9 grid gap-4 md:grid-cols-2">
+              <p className="max-w-[52ch] text-[15px] leading-relaxed text-text-d">
+                <span className="font-semibold text-listen">Works where built-in voice modes don&rsquo;t.</span>{" "}
+                Any API key or Bedrock setup, over SSH, in regulated environments, in any editor &mdash; because
+                it never phones home in the first place.
+              </p>
+              <p className="max-w-[52ch] font-mono text-[13px] leading-relaxed text-muted-d">
+                <span className="text-speak">Off by default.</span> Nothing listens until you enable it, and you
+                approve each agent and each capability. It&rsquo;s a private socket on your Mac &mdash; no open
+                port, no cloud &mdash; and your hotkey always takes the mic back.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* FEATURES — light surface, 2-col asymmetric grid via divide lines */}
         <section id="features" className="bg-paper py-20 text-ink md:py-24">
           <div className="mx-auto max-w-[1180px] px-6">
-            <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#0a7d84]">What you get</p>
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-[#0a7d84]">Also in the box</p>
             <h2 className="mt-4 max-w-[20ch] font-display text-3xl font-semibold tracking-tight md:text-[2.5rem]">
-              Built for everyday dictation, tuned for control
+              Everything else, still on your Mac
             </h2>
-            <div className="mt-11 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-              <Feature icon={<TextAa weight="duotone" />} title="Smart formatting">
-                Capitalization, punctuation, and filler removal are on by default. Say &ldquo;new line&rdquo; or
-                &ldquo;comma&rdquo; and it does the right thing.
-              </Feature>
-              <Feature icon={<TextAa weight="duotone" />} title="Custom vocabulary">
-                Teach it your names and jargon, and add &ldquo;heard &rarr; correct&rdquo; fixes so &ldquo;clod
-                code&rdquo; always lands as &ldquo;Claude Code.&rdquo;
+            <div className="mt-11 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+              <Feature icon={<TextAa weight="duotone" />} title="Writes like you meant it">
+                Filler words gone, punctuation right, your jargon spelled correctly. Say &ldquo;new
+                paragraph&rdquo; and get one.
               </Feature>
               <Feature icon={<Brain weight="duotone" />} title="Built-in offline AI">
-                Refine your text with a small AI model that runs entirely on your Mac &mdash; no setup, no
-                server, nothing leaves the machine. Or point it at your own server or OpenAI.
+                A small model runs on your Mac to polish text &mdash; no setup, no server. Dial it from a light
+                touch to a full polish, and revert to your exact words anytime.
               </Feature>
-              <Feature icon={<UsersThree weight="duotone" />} title="Meeting mode">
-                Record a call &mdash; system audio + mic &mdash; transcribe it, label who spoke (Me / Them),
-                and get a local Markdown summary. On your Mac, unless you pick a cloud model to summarize.
+              <Feature icon={<UsersThree weight="duotone" />} title="Meetings">
+                Record a call, label who spoke (Me / Them), and get a Markdown summary &mdash; all locally.
               </Feature>
-              <Feature icon={<FilmSlate weight="duotone" />} title="File transcription">
-                Drop in an audio or video file (or a watch folder) and export plain text or SRT/VTT subtitles
-                with timestamps &mdash; batch-queued and fully on-device.
+              <Feature icon={<FilmSlate weight="duotone" />} title="Files &amp; folders">
+                Drop in audio or video, or point it at a watch folder. Exports text or SRT/VTT subtitles.
               </Feature>
-              <Feature icon={<SlidersHorizontal weight="duotone" />} title="Adjustable AI cleanup">
-                Dial the AI from a light touch to a full polish &mdash; None, Low, Medium, High &mdash; and
-                revert to your exact words in one click, always.
-              </Feature>
-              <Feature icon={<Microphone weight="duotone" />} title="Voice editing">
-                Say &ldquo;scratch that,&rdquo; &ldquo;delete last sentence,&rdquo; or &ldquo;undo&rdquo;
-                mid-dictation. A deterministic, offline command layer &mdash; no AI required.
+              <Feature icon={<Command weight="duotone" />} title="Modes &amp; automation">
+                Per-app tone and language. Drive dictation from Raycast or Alfred with the{" "}
+                <code className="font-mono text-[0.85em]">openwhisp://</code> URL scheme.
               </Feature>
               <Feature icon={<Lightning weight="duotone" />} title="Rules &amp; output targets">
-                When a dictation finishes, run a Shortcut, hit a webhook, append to a file, or open a URL &mdash;
-                or route it out of the focused app entirely. Fails open: your words always land.
+                On finish: run a Shortcut, hit a webhook, append to a file. Fails open &mdash; your words always
+                land.
               </Feature>
-              <Feature icon={<Command weight="duotone" />} title="Modes, on demand">
-                Save a tone, instruction, and model as a named Mode &mdash; bind it to an app or invoke it from
-                a launcher. The <code className="font-mono text-[0.85em]">openwhisp://</code> URL scheme drives
-                dictation from Raycast or Alfred.
+              <Feature icon={<ClockCounterClockwise weight="duotone" />} title="Searchable history">
+                Everything you&rsquo;ve dictated, stored locally. Re-run any entry through a newer model.
               </Feature>
-              <Feature icon={<ChartLineUp weight="duotone" />} title="Usage Insights">
-                Words dictated, speaking speed, time saved, streaks, and which apps you use it in &mdash;
-                computed on-device from metadata only, never your transcripts.
-              </Feature>
-              <Feature icon={<WaveSine weight="duotone" />} title="Parakeet, by default">
-                The default engine is now Parakeet &mdash; a true streaming engine, so words appear about
-                0.3&nbsp;s behind your voice with punctuation and the final text lands ~50&nbsp;ms after you release
-                the hotkey. Fully on-device, with variants for English and ~40 auto-detected languages.
-              </Feature>
-              <Feature icon={<Cpu weight="duotone" />} title="Three more engines">
-                Prefer another? WhisperKit (Whisper on Apple&rsquo;s Neural Engine via CoreML), whisper.cpp, and
-                Apple Speech are all one click away in Settings. Pick the engine that fits per app.
-              </Feature>
-              <Feature icon={<ClockCounterClockwise weight="duotone" />} title="History, re-transcribable">
-                A local, searchable list of everything you&rsquo;ve dictated. Opt in to keep the audio on-device
-                and re-run any entry through a newer model &mdash; nothing uploaded.
-              </Feature>
-              <Feature icon={<Globe weight="duotone" />} title="Twelve languages">
-                Pick a language or let it auto-detect, with optional translate-to-English. Models range from
-                tiny to large-v3.
+              <Feature icon={<Cpu weight="duotone" />} title="Four engines">
+                Parakeet by default. WhisperKit, whisper.cpp, and Apple Speech are one click away &mdash; with
+                ~40 languages auto-detected.
               </Feature>
             </div>
           </div>
@@ -443,66 +381,6 @@ export function App() {
           </div>
         </section>
 
-        {/* AGENT BRIDGE — MCP server + CLI for coding agents */}
-        <section id="mcp" className="relative overflow-hidden border-y border-line bg-ink-2 py-20 md:py-24">
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(55% 60% at 15% 25%, color-mix(in srgb, var(--color-speak) 10%, transparent), transparent 70%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-[1180px] px-6">
-            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-speak">
-              <PlugsConnected weight="duotone" className="h-4 w-4" />
-              Agent Bridge &middot; built-in MCP server
-            </p>
-            <h2 className="mt-5 max-w-[22ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
-              Give your coding agent a voice &mdash; yours
-            </h2>
-            <p className="mt-4 max-w-[62ch] leading-relaxed text-text-d">
-              OpenWhisp doubles as a local{" "}
-              <a
-                href="https://modelcontextprotocol.io"
-                rel="noopener"
-                className="border-b border-speak/45 text-speak transition-colors hover:border-speak"
-              >
-                MCP
-              </a>{" "}
-              server and command-line tool for Claude Code, Cursor, Hermes, and OpenClaw. Instead of
-              stopping mid-task to wait for typed input, your agent asks you out loud &mdash; you answer by
-              voice and it keeps working. No other dictation app ships this.
-            </p>
-
-            <div className="mt-11 grid items-start gap-10 md:grid-cols-[1fr_1.05fr]">
-              <ul className="grid gap-4">
-                {AGENT_TOOLS.map((t) => (
-                  <li key={t.name} className="rounded-2xl border border-line bg-ink p-5">
-                    <div className="flex flex-wrap items-center gap-2.5">
-                      <span className="font-mono text-[13.5px] font-medium text-speak">{t.name}</span>
-                      {t.badge && (
-                        <span className="rounded-full border border-refine/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-refine">
-                          {t.badge}
-                        </span>
-                      )}
-                    </div>
-                    <p className="mt-1.5 text-[15px] leading-relaxed text-muted-d">{t.desc}</p>
-                  </li>
-                ))}
-              </ul>
-              <AgentBridgeDemo />
-            </div>
-
-            <p className="mt-9 max-w-[74ch] font-mono text-[13px] leading-relaxed text-muted-d">
-              <span className="text-speak">Off by default.</span> Nothing listens until you enable it in
-              Settings, and you approve each agent the first time it connects. The bridge is a private
-              socket on your Mac &mdash; no open port, no cloud, only signed clients &mdash; agents
-              can&rsquo;t touch cloud AI unless you allow it, and pressing your dictation hotkey always
-              takes the mic back from an agent.
-            </p>
-          </div>
-        </section>
-
         {/* PRIVACY */}
         <section id="privacy" className="mx-auto grid max-w-[1180px] items-center gap-14 px-6 py-20 md:grid-cols-2 md:py-24">
           <div>
@@ -525,66 +403,6 @@ export function App() {
             </ul>
           </div>
           <BoundaryDiagram />
-        </section>
-
-        {/* BUNDLED MODELS */}
-        <section id="models" className="relative overflow-hidden border-t border-line bg-ink-2 py-20 md:py-24">
-          <div
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(50% 55% at 22% 20%, color-mix(in srgb, var(--color-refine) 11%, transparent), transparent 70%)",
-            }}
-          />
-          <div className="relative mx-auto max-w-[1180px] px-6">
-            <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[0.18em] text-refine">
-              <HardDrives weight="duotone" className="h-4 w-4" />
-              Private AI &middot; runs on your hard drive
-            </p>
-            <h2 className="mt-5 max-w-[20ch] font-display text-3xl font-semibold tracking-tight text-listen md:text-[2.5rem]">
-              The AI lives on your Mac, not in someone&rsquo;s cloud
-            </h2>
-            <p className="mt-4 max-w-[58ch] leading-relaxed text-text-d">
-              Turn on AI cleanup and OpenWhisp downloads a small open-weights model that runs entirely on your own
-              machine &mdash; no API key, no account, no server to spin up. The weights sit in a folder on your
-              disk, the model runs there, and your text never leaves the computer. Pick the one that fits your
-              speed-versus-quality taste:
-            </p>
-
-            <ul className="mt-9 grid gap-4 sm:grid-cols-3">
-              {MODELS.map((m) => (
-                <li
-                  key={m.name}
-                  className={`rounded-2xl border p-5 ${
-                    m.featured
-                      ? "border-refine/35 bg-refine/[0.06]"
-                      : "border-line bg-ink"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-display text-[17px] font-semibold text-listen">{m.name}</span>
-                    {m.featured && (
-                      <span className="rounded-full border border-refine/40 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.1em] text-refine">
-                        Default
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-1 text-[13.5px] text-muted-d">{m.note}</p>
-                  <div className="mt-4 flex items-center gap-3 font-mono text-xs text-muted-d">
-                    <span className="text-text-d">{m.size}</span>
-                    <span className="text-line">|</span>
-                    <span>{m.license}</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-
-            <p className="mt-7 max-w-[60ch] font-mono text-[13px] leading-relaxed text-muted-d">
-              All three are <span className="text-text-d">Apache-2.0</span> licensed. The model downloads once,
-              like the speech models, then works offline. Default is off &mdash; you opt in. Prefer your own
-              setup? Point it at a local server instead, or at OpenAI.
-            </p>
-          </div>
         </section>
 
         {/* OPEN SOURCE */}
@@ -634,9 +452,17 @@ export function App() {
               An Apple Silicon Mac (M1 or newer) running macOS&nbsp;14 Sonoma or later.
             </Faq>
             <Faq q="How is it different from the built-in macOS dictation?">
-              OpenWhisp runs Whisper-class models for noticeably better accuracy, and adds things macOS
-              dictation doesn&rsquo;t have: voice editing of selected text, AI refinement that runs offline,
-              custom vocabulary, per-app modes, and a searchable local history.
+              OpenWhisp streams words in about 0.3 seconds behind your voice, already punctuated, and adds
+              things macOS dictation doesn&rsquo;t have: voice editing of selected text, AI refinement that runs
+              offline, custom vocabulary, per-app modes, a searchable local history, and a built-in MCP server
+              so AI coding agents can use your voice.
+            </Faq>
+            <Faq q="Can AI coding agents like Claude Code use OpenWhisp?">
+              Yes. OpenWhisp doubles as a local MCP server, so Claude Code, Cursor, and any MCP-aware agent can
+              ask you questions out loud and take your spoken answer, rewrite text with your on-device model,
+              and read your recent dictations. It works with any API key or Bedrock setup, over SSH, and in
+              regulated environments, because nothing is ever sent to the cloud. It is off until you enable it,
+              and you approve each agent and each capability.
             </Faq>
             <Faq q="How do I install OpenWhisp?">
               Download the DMG, drag OpenWhisp to your Applications folder, and open it. The build is signed and
@@ -901,16 +727,6 @@ function Pillar({ icon, title, children }: { icon: React.ReactNode; title: strin
   );
 }
 
-function Step({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
-  return (
-    <div className="h-full rounded-2xl border border-line bg-ink-2 p-7">
-      <span className="font-mono text-sm font-medium text-speak">{n}</span>
-      <h3 className="mt-4 font-display text-xl font-semibold text-listen">{title}</h3>
-      <p className="mt-2 text-[15px] leading-relaxed text-muted-d">{children}</p>
-    </div>
-  );
-}
-
 function Feature({ icon, title, children }: { icon: React.ReactNode; title: string; children: React.ReactNode }) {
   return (
     <article className="border-t border-[#e2e7ef] pt-5">
@@ -918,17 +734,6 @@ function Feature({ icon, title, children }: { icon: React.ReactNode; title: stri
       <h3 className="font-display text-lg font-semibold text-ink">{title}</h3>
       <p className="mt-1.5 text-[15px] leading-relaxed text-muted">{children}</p>
     </article>
-  );
-}
-
-// Dark-surface card for the "New this release" spotlight band.
-function Highlight({ icon, title, children }: { icon: React.ReactNode; title: React.ReactNode; children: React.ReactNode }) {
-  return (
-    <li className="rounded-2xl border border-line bg-ink p-5">
-      <div className="mb-3 text-speak [&>svg]:h-6 [&>svg]:w-6">{icon}</div>
-      <h3 className="font-display text-[17px] font-semibold text-listen">{title}</h3>
-      <p className="mt-1.5 text-[14.5px] leading-relaxed text-muted-d">{children}</p>
-    </li>
   );
 }
 
