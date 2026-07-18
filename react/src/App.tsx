@@ -289,7 +289,8 @@ export function App() {
               <p className="max-w-[52ch] text-[15px] leading-relaxed text-text-d">
                 <span className="font-semibold text-listen">Works where built-in voice modes don&rsquo;t.</span>{" "}
                 Any API key or Bedrock setup, over SSH, in regulated environments, in any editor &mdash; because
-                it never phones home in the first place.
+                it never phones home in the first place. It even picks up your project&rsquo;s branch and file
+                names so spoken code lands right, and a tap finishes your answer.
               </p>
               <p className="max-w-[52ch] font-mono text-[13px] leading-relaxed text-muted-d">
                 <span className="text-speak">Off by default.</span> Nothing listens until you enable it, and you
@@ -323,8 +324,9 @@ export function App() {
                 Drop in audio or video, or point it at a watch folder. Exports text or SRT/VTT subtitles.
               </Feature>
               <Feature icon={<Command weight="duotone" />} title="Modes &amp; automation">
-                Per-app tone and language. Drive dictation from Raycast or Alfred with the{" "}
-                <code className="font-mono text-[0.85em]">openwhisp://</code> URL scheme.
+                Per-app tone &mdash; casual in Slack, formal in Mail, verbatim in your terminal. Drive dictation
+                from Raycast or Alfred with the <code className="font-mono text-[0.85em]">openwhisp://</code> URL
+                scheme.
               </Feature>
               <Feature icon={<Lightning weight="duotone" />} title="Rules &amp; output targets">
                 On finish: run a Shortcut, hit a webhook, append to a file. Fails open &mdash; your words always
@@ -333,9 +335,9 @@ export function App() {
               <Feature icon={<ClockCounterClockwise weight="duotone" />} title="Searchable history">
                 Everything you&rsquo;ve dictated, stored locally. Re-run any entry through a newer model.
               </Feature>
-              <Feature icon={<Cpu weight="duotone" />} title="Four engines">
-                Parakeet by default. WhisperKit, whisper.cpp, and Apple Speech are one click away &mdash; with
-                ~40 languages auto-detected.
+              <Feature icon={<Cpu weight="duotone" />} title="Five engines">
+                Parakeet by default. WhisperKit, whisper.cpp, Apple Speech, and Apple&rsquo;s SpeechAnalyzer
+                (macOS&nbsp;26) are one click away &mdash; with ~40 languages auto-detected.
               </Feature>
             </div>
           </div>
