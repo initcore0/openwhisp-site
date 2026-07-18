@@ -1392,6 +1392,101 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
     ],
     related: ["dictate-on-mac-offline", "private-on-device-ai-dictation", "transcribe-audio-video-files-mac", "best-mac-dictation-apps"],
   },
+  {
+    slug: "per-app-refine-tone-mac",
+    title: "Per-app dictation tone on a Mac: casual in Slack, formal in Mail, verbatim in your terminal",
+    description:
+      "OpenWhisp can set how AI cleanup reshapes your dictation per app — casual in Slack, formal in Mail, and verbatim in code editors and terminals. Wispr Flow's best-loved feature, done on-device.",
+    keyword: "per-app dictation tone mac",
+    datePublished: "2026-07-18",
+    dateModified: "2026-07-18",
+    readingTime: "5 min read",
+    answer:
+      "OpenWhisp can now set the tone of AI cleanup per app: dictation into Slack comes out casual, an email in Mail comes out formal, and anything you say into a terminal or code editor is left verbatim — no AI rewrite at all. You pick a preset (verbatim, minimal, casual, formal, or a custom prompt) per app in Settings › Profiles, and it all runs on-device.",
+    body: (
+      <>
+        <P>
+          The same words want different polish depending on where they land. A Slack message can stay loose
+          and conversational; an email usually wants to read a notch more formal; and a command you dictate
+          into a terminal should be typed <em>exactly</em> as spoken &mdash; the last thing you want is an AI
+          &ldquo;improving&rdquo; a shell command. Most dictation tools apply one cleanup style everywhere.
+          OpenWhisp now sets it <strong>per app</strong>.
+        </P>
+        <P>
+          If you&rsquo;ve used <A href="/blog/wispr-flow-alternative/">Wispr Flow</A>, this is the feature
+          people rave about &mdash; and here it runs entirely on your Mac.
+        </P>
+
+        <H2>Pick a tone per app</H2>
+        <P>
+          In <strong>Settings &rsaquo; Profiles</strong>, each app gets a Refine preset:
+        </P>
+        <UL>
+          <li><strong>Verbatim</strong> &mdash; no AI pass at all; your exact words.</li>
+          <li><strong>Minimal cleanup</strong> &mdash; just capitalization, punctuation, and spelling.</li>
+          <li><strong>Casual</strong> &mdash; a relaxed, conversational tone.</li>
+          <li><strong>Formal</strong> &mdash; tightened up and more professional.</li>
+          <li><strong>Custom</strong> &mdash; write your own one-line tone instruction.</li>
+        </UL>
+        <P>
+          Turn on &ldquo;Apply per-app profiles,&rdquo; add an app, and choose its preset. For a custom tone, a
+          small prompt editor appears below the table so the settings screen doesn&rsquo;t re-sprawl.
+        </P>
+
+        <H2>Code editors and terminals stay verbatim &mdash; automatically</H2>
+        <P>
+          You don&rsquo;t have to configure the most important case. OpenWhisp ships knowing the common
+          terminals and code editors &mdash; Terminal, iTerm2, Warp, WezTerm, kitty, Ghostty, Alacritty,
+          Hyper, plus VS&nbsp;Code, Xcode, JetBrains IDEs, Sublime, Zed, Cursor, and more &mdash; and defaults
+          them to <strong>verbatim</strong>. A spoken command is never reshaped by an AI. Unknown apps fail
+          open (they just inherit your global setting), and an explicit preset always wins if you want to
+          override the default.
+        </P>
+
+        <H2>It shapes cleanup &mdash; it never translates or invents</H2>
+        <P>
+          The tone presets are deliberately conservative. Casual and formal reuse OpenWhisp&rsquo;s existing
+          cleanup guardrails with a single added sentence about tone &mdash; same language, transform-only, no
+          preamble. They keep the safety check that stops a small model from quietly{" "}
+          <A href="/blog/private-on-device-ai-dictation/">translating your words</A>: dictate in Russian and
+          the formal preset still hands you Russian. And a preset only ever shapes a cleanup pass that&rsquo;s
+          already running &mdash; if your global AI cleanup is off, a per-app tone quietly does nothing rather
+          than switching the model on behind your back.
+        </P>
+
+        <H2>How it fits with Modes</H2>
+        <P>
+          If you use <strong>Modes</strong> (saved dictation styles you invoke by name), the precedence is
+          simple: an active Mode wins, then the per-app preset, then your global cleanup dial. So you can set a
+          sensible per-app baseline and still override it on demand with a Mode when a particular message needs
+          something special.
+        </P>
+
+        <H2>Local, like the rest of it</H2>
+        <P>
+          Per-app tone runs on the same <A href="/blog/local-ai-is-enough-for-dictation/">on-device cleanup
+          model</A> as everything else in OpenWhisp &mdash; no cloud call, no account. It&rsquo;s the kind of
+          small, per-context control that makes dictation feel like it&rsquo;s actually paying attention to
+          where you&rsquo;re typing, without giving up the local-first guarantee.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Can I set a different dictation tone for each app on a Mac?",
+        a: "Yes. In OpenWhisp's Settings › Profiles, each app can have its own Refine preset — verbatim, minimal cleanup, casual, formal, or a custom prompt — so dictation into Slack, Mail, and your terminal each come out the way that app wants.",
+      },
+      {
+        q: "Will dictation into my terminal or code editor get rewritten by AI?",
+        a: "No. OpenWhisp defaults common terminals and code editors (Terminal, iTerm2, Warp, VS Code, Xcode, JetBrains, Cursor, and more) to verbatim automatically, so a spoken command is typed exactly as said. You can override it with an explicit preset if you want.",
+      },
+      {
+        q: "Do the tone presets run in the cloud?",
+        a: "No. Per-app tone uses OpenWhisp's on-device cleanup model — nothing is uploaded. The presets also keep the safeguard that prevents a small model from translating your words, so you always get text back in the language you spoke.",
+      },
+    ],
+    related: ["wispr-flow-alternative", "private-on-device-ai-dictation", "edit-text-by-voice-mac"],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
