@@ -139,9 +139,19 @@ for (const p of POSTS) {
 }
 
 // Regenerate sitemap.xml from the real route list (home + blog + every post).
-const routes = ["/", "/changelog/", "/blog/", ...POSTS.map((p) => `/blog/${p.slug}/`)];
+const changelogDate = (CHANGELOG.generated || "").slice(0, 10);
+const latestPostDate = POSTS.map((p) => p.dateModified).sort().at(-1);
+const routes = [
+  { path: "/", lastmod: [changelogDate, latestPostDate].sort().at(-1) },
+  { path: "/changelog/", lastmod: changelogDate },
+  { path: "/blog/", lastmod: latestPostDate },
+  ...POSTS.map((p) => ({ path: `/blog/${p.slug}/`, lastmod: p.dateModified })),
+];
 const urls = routes
-  .map((r) => `  <url>\n    <loc>${SITE}${r}</loc>\n    <changefreq>monthly</changefreq>\n  </url>`)
+  .map((r) => {
+    const lastmod = r.lastmod ? `\n    <lastmod>${r.lastmod}</lastmod>` : "";
+    return `  <url>\n    <loc>${SITE}${r.path}</loc>${lastmod}\n  </url>`;
+  })
   .join("\n");
 writeFileSync(
   `${root}dist/sitemap.xml`,
