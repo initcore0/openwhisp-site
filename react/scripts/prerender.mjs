@@ -24,7 +24,7 @@ const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 // Rewrite the shared head for a route and optionally inject extra JSON-LD.
-function headFor({ title, description, canonical, jsonld }) {
+function headFor({ title, description, canonical, jsonld, article }) {
   let h = template
     .replace(/<title>[^<]*<\/title>/, `<title>${esc(title)}</title>`)
     .replace(/(<meta name="description" content=")[^"]*(")/, `$1${esc(description)}$2`)
@@ -34,6 +34,14 @@ function headFor({ title, description, canonical, jsonld }) {
     .replace(/(<meta property="og:description" content=")[^"]*(")/, `$1${esc(description)}$2`)
     .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${esc(title)}$2`)
     .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${esc(description)}$2`);
+  if (article) {
+    h = h.replace('<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />');
+    h = h.replace(
+      "</head>",
+      `<meta property="article:published_time" content="${esc(article.published)}" />\n` +
+        `<meta property="article:modified_time" content="${esc(article.modified)}" />\n</head>`,
+    );
+  }
   if (jsonld) {
     h = h.replace("</head>", `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>\n</head>`);
   }
@@ -130,7 +138,13 @@ for (const p of POSTS) {
   };
   writePage(
     `/blog/${p.slug}/`,
-    headFor({ title: p.title, description: p.description, canonical, jsonld }).replace(
+    headFor({
+      title: p.title,
+      description: p.description,
+      canonical,
+      jsonld,
+      article: { published: p.datePublished, modified: p.dateModified },
+    }).replace(
       marker,
       `<div id="root">${render(`/blog/${p.slug}/`)}</div>`,
     ),
@@ -158,6 +172,43 @@ writeFileSync(
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`,
 );
 console.log(`prerender: sitemap.xml (${routes.length} urls)`);
+
+// Atom feed for the blog — one more discovery channel for crawlers and readers.
+{
+  const posts = [...POSTS].sort((a, b) => b.datePublished.localeCompare(a.datePublished));
+  const updated = posts.map((p) => p.dateModified).sort().at(-1);
+  const entries = posts
+    .map((p) => {
+      const url = `${SITE}/blog/${p.slug}/`;
+      return [
+        "  <entry>",
+        `    <title>${esc(p.title)}</title>`,
+        `    <link href="${url}"/>`,
+        `    <id>${url}</id>`,
+        `    <published>${p.datePublished}T00:00:00Z</published>`,
+        `    <updated>${p.dateModified}T00:00:00Z</updated>`,
+        `    <summary>${esc(p.description)}</summary>`,
+        "  </entry>",
+      ].join("\n");
+    })
+    .join("\n");
+  writeFileSync(
+    `${root}dist/feed.xml`,
+    `<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>OpenWhisp blog</title>
+  <subtitle>Guides and honest comparisons on dictating and editing text by voice on a Mac — on-device, private, and free.</subtitle>
+  <link href="${SITE}/feed.xml" rel="self"/>
+  <link href="${SITE}/blog/"/>
+  <id>${SITE}/blog/</id>
+  <updated>${updated}T00:00:00Z</updated>
+  <author><name>OpenWhisp</name></author>
+${entries}
+</feed>
+`,
+  );
+  console.log(`prerender: feed.xml (${posts.length} entries)`);
+}
 
 rmSync(`${root}dist-ssr`, { recursive: true, force: true });
 console.log("prerender: done");
