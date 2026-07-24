@@ -19,6 +19,7 @@ import {
   Lightning,
   Command,
   UsersThree,
+  Broadcast,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { MagneticButton } from "./components/MagneticButton";
@@ -322,6 +323,10 @@ export function App() {
               </Feature>
               <Feature icon={<FilmSlate weight="duotone" />} title="Files &amp; folders">
                 Drop in audio or video, or point it at a watch folder. Exports text or SRT/VTT subtitles.
+              </Feature>
+              <Feature icon={<Broadcast weight="duotone" />} title="Live captions for streams">
+                Drop a Browser source into OBS and your speech becomes subtitles &mdash; served from your own
+                Mac, and translatable to English as you speak.
               </Feature>
               <Feature icon={<Command weight="duotone" />} title="Modes &amp; automation">
                 Per-app tone &mdash; casual in Slack, formal in Mail, verbatim in your terminal. Drive dictation
