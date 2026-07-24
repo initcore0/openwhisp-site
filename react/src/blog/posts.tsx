@@ -1487,6 +1487,117 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
     ],
     related: ["wispr-flow-alternative", "private-on-device-ai-dictation", "edit-text-by-voice-mac"],
   },
+  {
+    slug: "live-captions-obs-twitch-mac",
+    title: "Live captions for OBS and Twitch, generated on your own Mac",
+    description:
+      "Add live subtitles to your stream without a captioning service. OpenWhisp serves a caption page from your Mac — drop it into OBS as a Browser source. Free, local, and it can translate as you speak.",
+    keyword: "live captions obs twitch mac",
+    datePublished: "2026-07-23",
+    dateModified: "2026-07-23",
+    readingTime: "6 min read",
+    answer:
+      "OpenWhisp's Stream Overlay puts live subtitles on your stream without a captioning subscription. Turn it on and it serves a caption page from a local web server on your Mac; add that URL to OBS (or any streaming software) as a Browser source and your speech appears as movie-style captions over a transparent background. It runs entirely on-device, and with a translate-capable engine it can caption you in English while you speak another language.",
+    body: (
+      <>
+        <P>
+          Live captions make a stream more watchable &mdash; for viewers with the sound off, for anyone who
+          isn&rsquo;t a native speaker, and for accessibility generally. The usual way to get them is a
+          captioning service: a monthly fee, your microphone audio streamed to somebody else&rsquo;s servers,
+          and a caption track that stops working when your connection hiccups.
+        </P>
+        <P>
+          OpenWhisp does it locally instead. The <strong>Stream Overlay</strong> turns your speech into
+          subtitles on your own machine and serves them to OBS as a normal Browser source.
+        </P>
+
+        <H2>How it works</H2>
+        <P>
+          When you enable the overlay, OpenWhisp starts a small web server on your Mac (loopback only, port
+          9280 by default) that serves a single self-contained caption page. Your speech is transcribed
+          on-device and pushed to that page as you talk. OBS just renders a web page &mdash; it never needs
+          internet access, and the page pulls in no external assets.
+        </P>
+        <UL>
+          <li>Open <strong>Settings &rsaquo; More features &rsaquo; Stream Overlay</strong> and switch on the server.</li>
+          <li>Style the captions: font and size, text colour, background (including <strong>fully transparent</strong>), how many subtitle lines stay on screen, characters per line, and how long captions linger after you stop talking.</li>
+          <li>Set the canvas to match your Browser source &mdash; 1920&times;1080 by default.</li>
+          <li>Hit <strong>Copy URL</strong>, add a Browser source in OBS, and paste it with the same width and height.</li>
+          <li>Click <strong>Start Captions</strong> and talk.</li>
+        </UL>
+        <P>
+          The captions behave the way subtitles should: your current sentence word-wraps to the line budget,
+          older lines scroll off the top, and the whole thing fades out after a configurable stretch of
+          silence so you&rsquo;re not left with a stale sentence frozen on screen.
+        </P>
+
+        <H2>Captions don&rsquo;t hijack your keyboard</H2>
+        <P>
+          This is the part that makes it usable while you actually stream. Starting captions runs a
+          hands-free session whose transcript goes <em>only</em> to the overlay &mdash; nothing is typed into
+          whatever app happens to be focused. Long silences don&rsquo;t end it either, so a pause while you
+          read chat won&rsquo;t kill your subtitles. Stop Captions, <Kbd>Esc</Kbd>, or your normal dictation
+          hotkey ends the session.
+        </P>
+
+        <H2>Speak one language, caption in another</H2>
+        <P>
+          Because captions run through a normal dictation session, they inherit your language settings
+          &mdash; which means the overlay can translate. Pick a translate-capable engine, switch on{" "}
+          <strong>Translate to English</strong>, and your viewers read English while you speak Russian,
+          Spanish, or any other supported language.
+        </P>
+        <Note>
+          <strong>Which engines translate?</strong> WhisperKit and whisper.cpp can. Parakeet (the{" "}
+          <A href="/blog/parakeet-realtime-streaming-dictation-mac/">default realtime engine</A>), Apple
+          Speech, and SpeechAnalyzer are transcription-only, so the translate toggle is disabled on them
+          rather than quietly doing nothing. Switch the engine in Settings &rsaquo; Models when you want
+          translated captions.
+        </Note>
+
+        <H2>It works with more than OBS</H2>
+        <P>
+          There&rsquo;s nothing OBS-specific about it. Anything that can display a web page can show the
+          captions &mdash; Streamlabs, vMix, a second monitor for an in-person talk, a browser window beside
+          your slides. If your software has a browser or webview source, paste the URL into it.
+        </P>
+
+        <H2>Why local matters here</H2>
+        <P>
+          Captioning services charge monthly and require your microphone audio to leave your machine &mdash;
+          an awkward trade for a private call, a client workshop, or anything under NDA. OpenWhisp&rsquo;s
+          overlay is a local server on loopback: the audio, the transcription, and the caption page all stay
+          on your Mac, in line with the rest of its{" "}
+          <A href="/blog/private-on-device-ai-dictation/">on-device approach</A>. It&rsquo;s also free and
+          open source, so there&rsquo;s no per-hour meter on your own voice.
+        </P>
+        <P>
+          Already using OpenWhisp for{" "}
+          <A href="/blog/transcribe-audio-video-files-mac/">file transcription and subtitles</A>? This is the
+          live counterpart &mdash; same on-device engines, pointed at your stream instead of a file.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "How do I add live captions to OBS on a Mac?",
+        a: "Enable OpenWhisp's Stream Overlay in Settings › More features, copy the URL it gives you, and add it in OBS as a Browser source using the same width and height as the overlay canvas. Click Start Captions and your speech appears as subtitles over a transparent background.",
+      },
+      {
+        q: "Do live captions require a subscription or send my audio to a server?",
+        a: "No. OpenWhisp is free and open source, and the overlay is a local web server on your own Mac's loopback interface. Your audio is transcribed on-device and never uploaded; the caption page is self-contained, so OBS doesn't need internet access to render it.",
+      },
+      {
+        q: "Can the captions be translated into English while I speak another language?",
+        a: "Yes, with a translate-capable engine. Choose WhisperKit or whisper.cpp in Settings › Models and turn on Translate to English — your captions come out in English while you speak your own language. Parakeet, Apple Speech, and SpeechAnalyzer are transcription-only, so the toggle is disabled on those engines.",
+      },
+      {
+        q: "Does it work with streaming software other than OBS?",
+        a: "Yes. The overlay is just a web page served from your Mac, so anything with a browser or webview source — Streamlabs, vMix, or even a plain browser window on a second screen — can display the captions.",
+      },
+    ],
+    related: ["transcribe-audio-video-files-mac", "private-on-device-ai-dictation", "parakeet-realtime-streaming-dictation-mac"],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
