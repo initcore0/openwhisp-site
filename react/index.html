@@ -69,7 +69,7 @@
           "name": "OpenWhisp",
           "description": "Realtime dictation for macOS that runs entirely on your device. Words appear as you speak, about 0.3s behind your voice, and it doubles as a local MCP server so AI coding agents can use your voice.",
           "applicationCategory": "UtilitiesApplication",
-          "operatingSystem": "macOS 14.0 or later, Apple Silicon",
+          "operatingSystem": "macOS 15.0 or later, Apple Silicon",
           "url": "https://openwhisp.app/",
           "downloadUrl": "https://github.com/initcore0/openwhisp/releases/latest",
           "softwareVersion": "1.0.0",
@@ -112,7 +112,15 @@
               "name": "What are the system requirements?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "An Apple Silicon Mac (M1 or newer) running macOS 14 Sonoma or later."
+                "text": "An Apple Silicon Mac (M1 or newer) running macOS 15 Sequoia or later."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can OpenWhisp translate what I say?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, and it happens on your Mac. Turn on \u201cTranslate to English,\u201d download the language pair once, and dictation in any supported language lands as English text \u2014 translated by Apple\u2019s on-device framework, with nothing sent to a server. It works with every transcription engine, and an optional live preview shows the translation while you speak."
               }
             },
             {

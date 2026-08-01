@@ -118,7 +118,7 @@ export const POSTS: Post[] = [
 
         <H2>Getting started</H2>
         <P>
-          OpenWhisp needs an Apple Silicon Mac on macOS 14 or later. Download it from the{" "}
+          OpenWhisp needs an Apple Silicon Mac on macOS 15 or later. Download it from the{" "}
           <A href="https://openwhisp.app/">OpenWhisp site</A> or grab the source on{" "}
           <A href={REPO}>GitHub</A>. The download is signed and notarized by Apple, so it opens with a double-click.
         </P>
@@ -389,7 +389,7 @@ export const POSTS: Post[] = [
 
         <H2>Set it up in three steps</H2>
         <UL>
-          <li>Download and open OpenWhisp (Apple Silicon Mac, macOS 14+).</li>
+          <li>Download and open OpenWhisp (Apple Silicon Mac, macOS 15+).</li>
           <li>Let it download a speech model on first use &mdash; this one step needs the internet, like installing any app.</li>
           <li>After that, turn Wi-Fi off if you like. Hold your push-to-talk key, speak, release, and the text lands in the focused app.</li>
         </UL>
@@ -1337,8 +1337,10 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
           Parakeet is built on the Apache-2.0 <A href="https://github.com/FluidInference/FluidAudio">FluidAudio</A>{" "}
           SDK and runs NVIDIA Parakeet models through CoreML &mdash; entirely on your Mac. Nothing is uploaded, which
           keeps it in line with{" "}
-          <A href="/blog/private-on-device-ai-dictation/">OpenWhisp&rsquo;s on-device, no-cloud approach</A>. It&rsquo;s
-          transcription only: there&rsquo;s no translation step, so your words come back in the language you spoke them.
+          <A href="/blog/private-on-device-ai-dictation/">OpenWhisp&rsquo;s on-device, no-cloud approach</A>. The model
+          itself only transcribes &mdash; but you can still{" "}
+          <A href="/blog/on-device-translation-dictation-mac/">translate to English</A>, because OpenWhisp translates
+          the transcribed text with Apple&rsquo;s on-device framework rather than asking the speech engine to do it.
         </P>
 
         <H2>The default engine &mdash; but not the only one</H2>
@@ -1383,7 +1385,7 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
       },
       {
         q: "What languages does Parakeet support?",
-        a: "For live dictation there's an English realtime model, a best-accuracy English model, an ultra-light 120M model, and a multilingual model covering roughly 40 languages with auto-detect. File transcription, meetings, and history re-transcription use a separate 25-language batch model. Parakeet is transcription only — it does not translate.",
+        a: "For live dictation there's an English realtime model, a best-accuracy English model, an ultra-light 120M model, and a multilingual model covering roughly 40 languages with auto-detect. File transcription, meetings, and history re-transcription use a separate 25-language batch model. The Parakeet models only transcribe, but you can still translate to English — OpenWhisp translates the transcribed text on-device with Apple's Translation framework (macOS 15+).",
       },
       {
         q: "Does Parakeet run in the cloud?",
@@ -1497,7 +1499,7 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
     dateModified: "2026-07-23",
     readingTime: "6 min read",
     answer:
-      "OpenWhisp's Stream Overlay puts live subtitles on your stream without a captioning subscription. Turn it on and it serves a caption page from a local web server on your Mac; add that URL to OBS (or any streaming software) as a Browser source and your speech appears as movie-style captions over a transparent background. It runs entirely on-device, and with a translate-capable engine it can caption you in English while you speak another language.",
+      "OpenWhisp's Stream Overlay puts live subtitles on your stream without a captioning subscription. Turn it on and it serves a caption page from a local web server on your Mac; add that URL to OBS (or any streaming software) as a Browser source and your speech appears as movie-style captions over a transparent background. It runs entirely on-device, and it can caption you in English while you speak another language.",
     body: (
       <>
         <P>
@@ -1543,16 +1545,17 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
         <H2>Speak one language, caption in another</H2>
         <P>
           Because captions run through a normal dictation session, they inherit your language settings
-          &mdash; which means the overlay can translate. Pick a translate-capable engine, switch on{" "}
-          <strong>Translate to English</strong>, and your viewers read English while you speak Russian,
-          Spanish, or any other supported language.
+          &mdash; which means the overlay can translate. Switch on <strong>Translate to English</strong>,
+          download the language pair, and your viewers read English while you speak Russian, Spanish, or any
+          other supported language.
         </P>
         <Note>
-          <strong>Which engines translate?</strong> WhisperKit and whisper.cpp can. Parakeet (the{" "}
-          <A href="/blog/parakeet-realtime-streaming-dictation-mac/">default realtime engine</A>), Apple
-          Speech, and SpeechAnalyzer are transcription-only, so the translate toggle is disabled on them
-          rather than quietly doing nothing. Switch the engine in Settings &rsaquo; Models when you want
-          translated captions.
+          <strong>This works on every engine now.</strong> Translation runs on the transcribed text using
+          Apple&rsquo;s on-device Translation framework, so you can keep the fast{" "}
+          <A href="/blog/parakeet-realtime-streaming-dictation-mac/">default engine</A> and still caption in
+          English &mdash; no engine switching required. See{" "}
+          <A href="/blog/on-device-translation-dictation-mac/">how on-device translation works</A>. Requires
+          macOS&nbsp;15 or later.
         </Note>
 
         <H2>It works with more than OBS</H2>
@@ -1589,7 +1592,7 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
       },
       {
         q: "Can the captions be translated into English while I speak another language?",
-        a: "Yes, with a translate-capable engine. Choose WhisperKit or whisper.cpp in Settings › Models and turn on Translate to English — your captions come out in English while you speak your own language. Parakeet, Apple Speech, and SpeechAnalyzer are transcription-only, so the toggle is disabled on those engines.",
+        a: "Yes. Turn on Translate to English in Settings › Dictation and download the language pair — your captions come out in English while you speak your own language. This works with every transcription engine, including the default, because translation runs on the transcribed text via Apple's on-device Translation framework (macOS 15+).",
       },
       {
         q: "Does it work with streaming software other than OBS?",
@@ -1597,6 +1600,126 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
       },
     ],
     related: ["transcribe-audio-video-files-mac", "private-on-device-ai-dictation", "parakeet-realtime-streaming-dictation-mac"],
+  },
+  {
+    slug: "on-device-translation-dictation-mac",
+    title: "Speak any language, type English — on-device translation with no cloud",
+    description:
+      "OpenWhisp translates your dictation on your Mac using Apple's Translation framework. Works with every engine, shows a live preview while you speak, and never sends a word to a server.",
+    keyword: "on-device translation dictation mac",
+    datePublished: "2026-08-01",
+    dateModified: "2026-08-01",
+    readingTime: "6 min read",
+    answer:
+      "OpenWhisp can translate your speech to English as you dictate, entirely on your Mac. It uses Apple's Translation framework on the transcribed text, so translation works with any transcription engine — turn on “Translate to English,” download the language pair once, and your dictation lands in English. An experimental live preview shows the translation in the overlay while you're still speaking.",
+    body: (
+      <>
+        <P>
+          Translation is the most cloud-shaped feature in software. Every major translator is a web service:
+          your words go to a server, a model there does the work, the result comes back. That&rsquo;s an
+          uncomfortable trade for the things people most often need translated &mdash; a message to a client,
+          notes from a medical appointment, anything covered by an NDA.
+        </P>
+        <P>
+          OpenWhisp does it on your Mac instead. Speak Russian, Spanish, French, or any supported language, and
+          English text appears in whatever app you&rsquo;re typing into. Nothing is uploaded.
+        </P>
+
+        <H2>How it works: translate the text, not the audio</H2>
+        <P>
+          The obvious way to build this is to ask the speech engine to translate &mdash; Whisper models can
+          transcribe-and-translate in one pass. OpenWhisp used to work that way, and it had a real cost: only
+          some engines could do it, so turning on translation meant giving up the{" "}
+          <A href="/blog/parakeet-realtime-streaming-dictation-mac/">fast realtime engine</A>.
+        </P>
+        <P>
+          Now translation happens on the <em>text</em>, using Apple&rsquo;s own Translation framework &mdash;
+          the same on-device translation built into macOS. Your speech is transcribed by whichever engine you
+          prefer, and the resulting text is translated locally. One immediate consequence:{" "}
+          <strong>every engine can translate now</strong>, including Parakeet, the default. You no longer
+          trade speed for languages.
+        </P>
+        <Note>
+          <strong>Requires macOS 15 (Sequoia) or later.</strong> That's what provides the on-device
+          translation framework, and it's now OpenWhisp's minimum version.
+        </Note>
+
+        <H2>Setting it up</H2>
+        <UL>
+          <li>Open <strong>Settings &rsaquo; Dictation</strong> and turn on <strong>Translate to English</strong>.</li>
+          <li>A status row appears for your language pair. If it isn&rsquo;t on your Mac yet, download it from there &mdash; it takes a few minutes, and the row updates when it&rsquo;s ready.</li>
+          <li>Set your spoken language, or leave it on <strong>Auto Detect</strong>.</li>
+          <li>Dictate. The text that lands in your app is English.</li>
+        </UL>
+        <P>
+          The language packs are the same ones macOS uses for system translation, downloaded once and then
+          available offline &mdash; so this keeps working on a plane or behind a firewall, like the rest of{" "}
+          <A href="/blog/dictate-on-mac-offline/">OpenWhisp&rsquo;s offline story</A>.
+        </P>
+
+        <H2>Watch it happen: the live translation preview</H2>
+        <P>
+          Here&rsquo;s the part that changes how translation <em>feels</em>. Normally translation is invisible
+          until the end: the overlay streams your spoken words, and the English only materialises at the moment
+          it pastes. If the translation is wrong, you find out too late &mdash; after you&rsquo;ve already sent
+          the message.
+        </P>
+        <P>
+          Switch on <strong>Live translation preview (experimental)</strong> and the dictation overlay shows a
+          running English translation <em>while you speak</em>, with your spoken words kept on a single dimmed
+          line above it. You can watch the translation form, judge whether it&rsquo;s saying what you meant, and
+          rephrase mid-sentence if it isn&rsquo;t.
+        </P>
+        <UL>
+          <li>It&rsquo;s <strong>off by default</strong> &mdash; each session it&rsquo;s on does extra on-device translation work while you talk.</li>
+          <li>It&rsquo;s <strong>display-only</strong>. The preview never writes into your document; what gets pasted still comes from the normal translation path.</li>
+          <li>It updates on sentence boundaries or after a short pause, so it isn&rsquo;t re-translating every syllable.</li>
+        </UL>
+
+        <H2>It never costs you your words</H2>
+        <P>
+          The design rule underneath all of this is worth stating plainly: <strong>if translation can&rsquo;t
+          run, you get your original text &mdash; never nothing.</strong> Language pack not downloaded,
+          translation fails, something times out: your dictation is inserted untranslated. A translation
+          feature should never be able to eat what you said.
+        </P>
+
+        <H2>Why local translation matters</H2>
+        <P>
+          A cloud translator means every sentence you translate is a sentence you&rsquo;ve sent to someone
+          else&rsquo;s server. For a lot of people that&rsquo;s simply not allowed &mdash; regulated
+          industries, legal work, medical notes &mdash; and for everyone else it&rsquo;s a quiet ongoing
+          disclosure. Doing it on-device removes the question entirely: there&rsquo;s no request to audit, no
+          retention policy to read, and it works with no connection at all. It&rsquo;s the same reasoning
+          behind{" "}
+          <A href="/blog/private-on-device-ai-dictation/">OpenWhisp&rsquo;s on-device AI cleanup</A>, applied
+          to the feature people are most nervous about sending away.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "Does OpenWhisp translate dictation without the internet?",
+        a: "Yes. Translation runs on your Mac using Apple's Translation framework. You download a language pair once (a few minutes), and after that translation works offline — nothing is sent to a server.",
+      },
+      {
+        q: "Which transcription engines support translation?",
+        a: "All of them. Translation is applied to the transcribed text rather than performed by the speech engine, so it works with Parakeet (the default), WhisperKit, whisper.cpp, Apple Speech, and SpeechAnalyzer alike. You no longer have to switch engines to translate.",
+      },
+      {
+        q: "Can I see the translation while I'm still speaking?",
+        a: "Yes, with the experimental live translation preview. The dictation overlay shows a running English translation as you talk, with your spoken words on a dimmed line above it. It's off by default, and it's display-only — the text that gets pasted comes from the normal translation path.",
+      },
+      {
+        q: "What happens if the translation fails or the language pack isn't installed?",
+        a: "You get your original words. OpenWhisp's rule is that a failed translation inserts the untranslated transcript rather than losing your dictation.",
+      },
+      {
+        q: "What macOS version do I need for on-device translation?",
+        a: "macOS 15 (Sequoia) or later, which is also OpenWhisp's minimum supported version. The on-device translation framework it relies on is part of macOS 15.",
+      },
+    ],
+    related: ["private-on-device-ai-dictation", "dictate-on-mac-offline", "parakeet-realtime-streaming-dictation-mac"],
   },
 ];
 
