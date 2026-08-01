@@ -20,6 +20,7 @@ import {
   Command,
   UsersThree,
   Broadcast,
+  Translate,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { MagneticButton } from "./components/MagneticButton";
@@ -196,7 +197,7 @@ export function App() {
                 </MagneticButton>
               </div>
               <p className="mt-5 font-mono text-[13px] text-muted-d">
-                Free &amp; open source &middot; macOS&nbsp;14+ &middot; Apple&nbsp;Silicon &middot; MIT
+                Free &amp; open source &middot; macOS&nbsp;15+ &middot; Apple&nbsp;Silicon &middot; MIT
               </p>
             </div>
 
@@ -328,6 +329,10 @@ export function App() {
                 Drop a Browser source into OBS and your speech becomes subtitles &mdash; served from your own
                 Mac, and translatable to English as you speak.
               </Feature>
+              <Feature icon={<Translate weight="duotone" />} title="Translation, on your Mac">
+                Speak any supported language and type English. Runs on Apple&rsquo;s on-device translation
+                &mdash; works with every engine, and an optional live preview shows it as you talk.
+              </Feature>
               <Feature icon={<Command weight="duotone" />} title="Modes &amp; automation">
                 Per-app tone &mdash; casual in Slack, formal in Mail, verbatim in your terminal. Drive dictation
                 from Raycast or Alfred with the <code className="font-mono text-[0.85em]">openwhisp://</code> URL
@@ -456,7 +461,13 @@ export function App() {
               subscription, no usage meter.
             </Faq>
             <Faq q="What are the system requirements?">
-              An Apple Silicon Mac (M1 or newer) running macOS&nbsp;14 Sonoma or later.
+              An Apple Silicon Mac (M1 or newer) running macOS&nbsp;15 Sequoia or later.
+            </Faq>
+            <Faq q="Can OpenWhisp translate what I say?">
+              Yes, and it happens on your Mac. Turn on &ldquo;Translate to English,&rdquo; download the
+              language pair once, and dictation in any supported language lands as English text &mdash;
+              translated by Apple&rsquo;s on-device framework, with nothing sent to a server. It works with
+              every transcription engine, and an optional live preview shows the translation while you speak.
             </Faq>
             <Faq q="How is it different from the built-in macOS dictation?">
               OpenWhisp streams words in about 0.3 seconds behind your voice, already punctuated, and adds
@@ -502,7 +513,7 @@ export function App() {
               </Button>
             </div>
             <p className="mt-5 font-mono text-[13px] text-muted-d">
-              Signed &amp; notarized by Apple &middot; macOS&nbsp;14+ &middot; Apple&nbsp;Silicon
+              Signed &amp; notarized by Apple &middot; macOS&nbsp;15+ &middot; Apple&nbsp;Silicon
             </p>
           </div>
         </section>
