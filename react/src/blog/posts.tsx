@@ -1721,6 +1721,152 @@ open "openwhisp://?switch-mode=email&record"`}</Pre>
     ],
     related: ["private-on-device-ai-dictation", "dictate-on-mac-offline", "parakeet-realtime-streaming-dictation-mac"],
   },
+  {
+    slug: "openwhisp-plugins-local-control-plane",
+    title: "Plugins: a meme generator today, a local control plane for your voice tomorrow",
+    description:
+      "OpenWhisp now has a plugin system, and the first plugin makes memes from a spoken description. The bigger idea: your voice driving local tools, so sensitive text never gets pasted into a random website.",
+    keyword: "openwhisp plugins voice local",
+    datePublished: "2026-08-04",
+    dateModified: "2026-08-04",
+    readingTime: "7 min read",
+    answer:
+      "OpenWhisp now ships a plugin system: optional surfaces that add their own window, settings, and spoken commands. The first plugin is a voice-driven meme generator — describe a meme and it picks a template, writes the captions, and renders it locally. The point isn't memes: it's that your voice can drive real tools without your words leaving the machine.",
+    body: (
+      <>
+        <P>
+          Start with the fun part, because it really is fun. Say &ldquo;<em>create a meme</em> about code review
+          taking three days,&rdquo; and OpenWhisp opens a window with a finished meme in it: a template it
+          chose, captions it wrote, rendered and ready to export. It works, it&rsquo;s genuinely funny, and it
+          takes about four seconds.
+        </P>
+        <P>
+          Now the part that matters. The meme generator is the <em>first</em> plugin, not the point of plugins.
+          It exists to prove a system.
+        </P>
+
+        <H2>What a plugin actually is</H2>
+        <P>
+          A plugin is an optional surface layered on top of OpenWhisp. It can contribute its own window, its own
+          section in Settings, a menu-bar shortcut, and &mdash; the interesting one &mdash;{" "}
+          <strong>spoken commands that route mid-dictation</strong>.
+        </P>
+        <P>
+          That last one is what makes it more than a menu item. When you&rsquo;re dictating and your words start
+          with a phrase a plugin declared, the dictation is routed to that plugin instead of being typed. The
+          meme plugin declares triggers like <em>&ldquo;create a meme,&rdquo;</em>{" "}
+          <em>&ldquo;make a meme,&rdquo;</em> and &mdash; because the whole app is multilingual &mdash;{" "}
+          <em>&ldquo;сделай мем.&rdquo;</em> Your voice becomes the interface to the tool.
+        </P>
+        <Note>
+          Matching is deliberately strict: prefix-only, on word boundaries, exact &mdash; no fuzzy matching. A
+          false positive would redirect your dictation <em>away from the thing you were typing into</em>, so a
+          near-miss costs you text. Anything that doesn&rsquo;t match falls through to normal dictation,
+          untouched.
+        </Note>
+
+        <H2>The actual vision: a local control plane</H2>
+        <P>
+          Here is the pattern this is aimed at. You have some text &mdash; a contract clause, a patient note, an
+          internal postmortem, a customer&rsquo;s email &mdash; and you want to <em>do</em> something with it.
+          Summarize it. Reformat it. Turn it into a table. Draft a reply.
+        </P>
+        <P>
+          Today the honest answer for most people is: open a browser tab, find a tool, and paste it in. Which
+          means that clause, that note, that postmortem now lives on a server you don&rsquo;t control, under
+          terms you didn&rsquo;t read, retained for a period you can&rsquo;t verify. Everyone knows this is bad.
+          Everyone does it anyway, because the alternative is doing it by hand.
+        </P>
+        <P>
+          Plugins are the alternative. A surface that does one useful thing, that you drive{" "}
+          <strong>with your voice</strong>, running <strong>on your machine</strong>, where the sensitive text
+          never leaves in the first place. Not &ldquo;we promise we don&rsquo;t train on your data&rdquo;
+          &mdash; there&rsquo;s no request to make a promise about.
+        </P>
+        <P>
+          OpenWhisp already holds the pieces that make this possible: the microphone, on-device transcription,{" "}
+          <A href="/blog/local-ai-is-enough-for-dictation/">a local AI model</A>,{" "}
+          <A href="/blog/on-device-translation-dictation-mac/">on-device translation</A>, and the accessibility
+          grants to read and write text in any app. Plugins turn that from a dictation app into a{" "}
+          <strong>control plane</strong>: the place your voice reaches the tools, with the tools kept local.
+        </P>
+
+        <H2>Third parties are the point &mdash; and the hard part</H2>
+        <P>
+          A control plane with one vendor&rsquo;s plugins is just a feature list. The goal is that other people
+          build the surfaces &mdash; the ones we&rsquo;d never think of, for the workflows we don&rsquo;t have.
+          That&rsquo;s where the interesting long tail lives.
+        </P>
+        <P>
+          It&rsquo;s also where the genuinely hard problem is, and it&rsquo;s worth being blunt about the current
+          state: <strong>plugins today are in-repo and reviewed.</strong> You can&rsquo;t yet install one
+          without rebuilding, and third-party plugins are not supported. That isn&rsquo;t an oversight
+          &mdash; it&rsquo;s the trust question being deferred rather than fudged.
+        </P>
+        <P>
+          Think about what you&rsquo;d be granting. OpenWhisp holds microphone access, accessibility rights to
+          read and type into any window, and your clipboard. Handing that to arbitrary downloaded code, in
+          process, is exactly the security posture this app exists to avoid. The groundwork that <em>is</em>{" "}
+          shipped reflects that:
+        </P>
+        <UL>
+          <li><strong>Off until you turn it on.</strong> Compiled in doesn&rsquo;t mean enabled — a fresh install has every plugin switched off, and you enable them one at a time.</li>
+          <li><strong>A plugin can&rsquo;t promote itself.</strong> Anything found in a user-writable folder is listed but flagged non-runnable, no matter what its manifest claims. Reviewed plugins always win an id collision, so nothing can shadow a built-in.</li>
+          <li><strong>Clipboard access is declared and enforced.</strong> A plugin that didn&rsquo;t declare it causes no pasteboard read at all — the check runs before the read, not as a courtesy. (The meme plugin deliberately declines it.)</li>
+          <li><strong>Network hosts are disclosed</strong> next to each plugin, so you can see what it talks to before enabling it.</li>
+        </UL>
+        <P>
+          And the roadmap to third-party plugins is committed, in order: manifest/script-driven plugins first
+          (install without rebuilding), then out-of-process executables &mdash; the only tier with{" "}
+          <em>real</em> isolation, reusing the same local-socket pattern behind the{" "}
+          <A href="/blog/talk-to-claude-code-by-voice/">Agent Bridge</A>. Loadable dylibs are permanently ruled
+          out: in-process third-party code alongside those permissions is not a trade worth making.
+        </P>
+
+        <H2>Why the first plugin is a joke generator</H2>
+        <P>
+          Choosing memes first was not an accident. A meme generator exercises nearly every seam a serious
+          plugin needs &mdash; a window, settings, network calls, a local AI round-trip, voice triggers,
+          rendering, export &mdash; while being completely harmless if it gets something wrong. A bad caption
+          is a bad caption. It let the system get tested against something real, iteratively, without anyone&rsquo;s
+          contract clause riding on it.
+        </P>
+        <P>
+          Same instinct as the rest of OpenWhisp: build the boring, careful infrastructure, then prove it with
+          something you'd actually use on a Tuesday afternoon.
+        </P>
+
+        <H2>Try it</H2>
+        <UL>
+          <li>Open <strong>Settings &rsaquo; Plugins</strong> and switch on the Meme Generator.</li>
+          <li>Hit its menu-bar shortcut, or just dictate &ldquo;create a meme about &hellip;&rdquo; anywhere.</li>
+          <li>Edit the captions, drag the boxes, export or copy.</li>
+        </UL>
+        <P>
+          It&rsquo;s a toy. The system under it isn&rsquo;t.
+        </P>
+      </>
+    ),
+    faq: [
+      {
+        q: "What are OpenWhisp plugins?",
+        a: "Plugins are optional surfaces layered on top of OpenWhisp. A plugin can add its own window, its own settings, a menu-bar shortcut, and spoken commands that route a dictation to it mid-sentence. They ship with the app but are off until you enable one.",
+      },
+      {
+        q: "Can I install third-party plugins?",
+        a: "Not yet. Plugins currently live in the repository and are reviewed, so installing one means a rebuild. Third-party support is on the roadmap in a deliberate order — manifest/script-driven plugins first, then out-of-process executables for real isolation. Loadable dylibs are permanently ruled out because in-process third-party code would sit alongside microphone, accessibility, and clipboard permissions.",
+      },
+      {
+        q: "How does the voice-driven meme generator work?",
+        a: "Enable it in Settings › Plugins, then dictate something starting with one of its trigger phrases — \"create a meme\", \"make a meme\", and others including Russian. It picks a template, writes the captions with your local AI model, and renders the image on your Mac so you can edit, export, or copy it.",
+      },
+      {
+        q: "Do plugins send my data anywhere?",
+        a: "Each plugin discloses the network hosts it talks to, shown next to it in Settings before you enable it. Clipboard access is gated: a plugin that didn't declare it causes no pasteboard read at all. The broader goal is that plugins let you act on sensitive text locally, instead of pasting it into a website.",
+      },
+    ],
+    related: ["local-ai-is-enough-for-dictation", "talk-to-claude-code-by-voice", "private-on-device-ai-dictation"],
+  },
 ];
 
 export function getPost(slug: string): Post | undefined {
