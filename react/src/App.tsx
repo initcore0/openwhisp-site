@@ -21,6 +21,7 @@ import {
   UsersThree,
   Broadcast,
   Translate,
+  PuzzlePiece,
 } from "@phosphor-icons/react";
 import { Waveform } from "./components/Waveform";
 import { MagneticButton } from "./components/MagneticButton";
@@ -332,6 +333,10 @@ export function App() {
               <Feature icon={<Translate weight="duotone" />} title="Translation, on your Mac">
                 Speak any supported language and type English. Runs on Apple&rsquo;s on-device translation
                 &mdash; works with every engine, and an optional live preview shows it as you talk.
+              </Feature>
+              <Feature icon={<PuzzlePiece weight="duotone" />} title="Plugins">
+                Optional surfaces you drive by voice &mdash; say &ldquo;create a meme about&hellip;&rdquo; and the
+                first one builds it locally. Off until you enable them.
               </Feature>
               <Feature icon={<Command weight="duotone" />} title="Modes &amp; automation">
                 Per-app tone &mdash; casual in Slack, formal in Mail, verbatim in your terminal. Drive dictation
