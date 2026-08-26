@@ -174,8 +174,12 @@ export function App() {
           />
           <div className="relative mx-auto grid max-w-[1180px] items-center gap-14 px-6 py-20 md:grid-cols-[1.05fr_0.95fr] md:py-28">
             <div className="cascade">
-              <Eyebrow>Realtime local dictation for macOS</Eyebrow>
+              <Eyebrow>OpenWhisp &middot; realtime local dictation for macOS</Eyebrow>
               <h1 className="font-display text-[2.6rem] font-bold leading-[1.04] tracking-tight text-listen md:text-6xl">
+                {/* The brand name leads the heading for search engines; the tagline
+                    is what a human reads. Hidden text keeps the visual design while
+                    making the H1 text itself carry the product name. */}
+                <span className="sr-only">OpenWhisp: </span>
                 Speak. It&rsquo;s typed.
                 <br />
                 <span className="text-speak">Nothing leaves your Mac.</span>
@@ -460,6 +464,12 @@ export function App() {
               No. Transcription runs entirely on your Mac and works offline. Audio is never uploaded, and the
               recording is deleted after each transcription. The only time any text leaves your machine is if
               you explicitly choose the optional OpenAI provider for AI cleanup.
+            </Faq>
+            <Faq q="Is OpenWhisp the same as OpenWISP?">
+              No &mdash; different projects with confusingly similar names. <strong>OpenWISP</strong> (with an
+              <em>i</em>) is a network-management system for wifi and IoT. <strong>OpenWhisp</strong> (with an{" "}
+              <em>h</em>, as in <em>whisper</em>) is this app: a free, open-source realtime dictation app for
+              macOS that runs entirely on your device.
             </Faq>
             <Faq q="How much does OpenWhisp cost?">
               Nothing. OpenWhisp is free and open source under the MIT license &mdash; no account, no

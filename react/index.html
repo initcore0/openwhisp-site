@@ -64,6 +64,28 @@
       "@context": "https://schema.org",
       "@graph": [
         {
+          "@type": "Organization",
+          "@id": "https://openwhisp.app/#org",
+          "name": "OpenWhisp",
+          "alternateName": ["OpenWhisp App", "OpenWhisp dictation", "Open Whisp"],
+          "url": "https://openwhisp.app/",
+          "logo": "https://openwhisp.app/apple-touch-icon.png",
+          "description": "OpenWhisp is a free, open-source realtime dictation app for macOS that runs entirely on-device.",
+          "sameAs": [
+            "https://github.com/initcore0/openwhisp",
+            "https://github.com/initcore0/openwhisp-site"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://openwhisp.app/#website",
+          "name": "OpenWhisp",
+          "alternateName": "OpenWhisp — local dictation for macOS",
+          "url": "https://openwhisp.app/",
+          "inLanguage": "en",
+          "publisher": { "@id": "https://openwhisp.app/#org" }
+        },
+        {
           "@type": "SoftwareApplication",
           "@id": "https://openwhisp.app/#app",
           "name": "OpenWhisp",
@@ -72,7 +94,11 @@
           "operatingSystem": "macOS 15.0 or later, Apple Silicon",
           "url": "https://openwhisp.app/",
           "downloadUrl": "https://github.com/initcore0/openwhisp/releases/latest",
-          "softwareVersion": "1.0.0",
+          "softwareVersion": "1.1.2",
+          "author": { "@id": "https://openwhisp.app/#org" },
+          "publisher": { "@id": "https://openwhisp.app/#org" },
+          "applicationSubCategory": "Speech recognition, dictation, transcription",
+          "softwareRequirements": "macOS 15 or later, Apple Silicon",
           "license": "https://github.com/initcore0/openwhisp/blob/main/LICENSE",
           "sameAs": "https://github.com/initcore0/openwhisp",
           "isAccessibleForFree": true,
@@ -97,6 +123,14 @@
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "No. Transcription runs entirely on your Mac and works offline. Audio is never uploaded, and the recording is deleted after each transcription. The only time any text leaves your machine is if you explicitly choose the optional OpenAI provider for AI cleanup."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is OpenWhisp the same as OpenWISP?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No \u2014 they are different projects with similar names. OpenWISP (spelled with an i) is a network management system for wifi and IoT networks. OpenWhisp (spelled with an h, as in whisper) is a free, open-source realtime dictation app for macOS that runs entirely on your device."
               }
             },
             {
