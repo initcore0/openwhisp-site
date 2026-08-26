@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
 
+# Explicit allows for the major search crawlers.
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 Sitemap: https://openwhisp.app/sitemap.xml
